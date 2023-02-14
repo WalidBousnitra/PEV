@@ -21,12 +21,12 @@ class AlgoritmoGenetico {
 	
 	/*run() {
 		Iniciar poblacion
-		Evaluar población
-		Para cada generación {
+		Evaluar poblaciï¿½n
+		Para cada generaciï¿½n {
 		//Seleccion
 		//Cruce
 		//Mutacion
-		evaluar población
+		evaluar poblaciï¿½n
 		}
 		Devolver mejor
 		}*/
