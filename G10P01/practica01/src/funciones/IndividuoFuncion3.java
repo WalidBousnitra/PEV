@@ -1,5 +1,6 @@
 package funciones;
 
+import java.util.Random;
 import Individuos.Individuo;
 
 public class IndividuoFuncion3 extends Individuo<Boolean>{
@@ -9,6 +10,13 @@ public class IndividuoFuncion3 extends Individuo<Boolean>{
 	public IndividuoFuncion3(double valorError){
 		super(new int[2],valorError,new double[]{-5,-5},new double[]{5,5});
 		d = 2;
+	}
+	
+	@Override
+	public Boolean[] iniCromosoma(Random rand) {
+		Boolean[] cromosoma = new Boolean[getTamTotal()];
+		for(int i = 0; i < getTamTotal(); i++) cromosoma[i] = rand.nextBoolean();
+		return cromosoma;
 	}
 	
 	@Override
@@ -30,5 +38,10 @@ public class IndividuoFuncion3 extends Individuo<Boolean>{
 			sol+=getCromosoma()[i].toString();
 		
 		return sol;
+	}
+
+	@Override
+	public void mutar(int i) {
+		getCromosoma()[i] = !getCromosoma()[i];		
 	}
 }

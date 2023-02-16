@@ -1,5 +1,4 @@
 package Individuos;
-
 import java.util.Random;
 
 public abstract class Individuo<T> {
@@ -10,6 +9,7 @@ public abstract class Individuo<T> {
 	private double[] max;
 	private int tamTotal;
 	private double valorError;
+	private Random rand;
 	
 	public Individuo(int[] tamGenes, double valorError, double[] min, double[] max) {
 		this.setTamGenes(tamGenes);
@@ -22,11 +22,13 @@ public abstract class Individuo<T> {
 			sum+=tamGenes[i];
 		}
 		this.setTamTotal(sum);
-		/*this.cromosoma(new ArrayList<T>(getTamTotal()));
-		/*for(int i = 0; i < tamTotal; i++) cromosoma.add(rand.nextBoolean());*/
+		this.cromosoma = iniCromosoma(rand);
 	}
 
 	public abstract double getValor();
+	public abstract T[] iniCromosoma(Random rand);
+	protected abstract String getGenotipo(int var);
+	public abstract void mutar(int i);
 	
 	public double getFitness() {
 		return this.getValor();
@@ -40,45 +42,14 @@ public abstract class Individuo<T> {
 		 return min[var] + Integer.parseInt(getGenotipo(var),2) * ((max[var] - min[var])/Math.pow(2,getTamTotal())-1);
 	}
 
-	protected abstract String getGenotipo(int var);
-
-	public double[] getMin() {
-		return min;
-	}
-
-	public void setMin(double[] min) {
-		this.min = min;
-	}
-
-	public double[] getMax() {
-		return max;
-	}
-
-	public void setMax(double[] max) {
-		this.max = max;
-	}
-
-	public int[] getTamGenes() {
-		return tamGenes;
-	}
-
-	public void setTamGenes(int[] tamGenes) {
-		this.tamGenes = tamGenes;
-	}
-
-	public int getTamTotal() {
-		return tamTotal;
-	}
-
-	public void setTamTotal(int tamTotal) {
-		this.tamTotal = tamTotal;
-	}
-
-	public T[] getCromosoma() {
-		return cromosoma;
-	}
-
-	public void setCromosoma(T[] cromosoma) {
-		this.cromosoma = cromosoma;
-	}
+	public double[] getMin() {return min;}
+	public void setMin(double[] min) {this.min = min;}
+	public double[] getMax() {return max;}
+	public void setMax(double[] max) {this.max = max;}
+	public int[] getTamGenes() {return tamGenes;}
+	public void setTamGenes(int[] tamGenes) {this.tamGenes = tamGenes;}
+	public int getTamTotal() {return tamTotal;}
+	public void setTamTotal(int tamTotal) {this.tamTotal = tamTotal;}
+	public T[] getCromosoma() {return cromosoma;}
+	public void setCromosoma(T[] cromosoma) {this.cromosoma = cromosoma;}
 }

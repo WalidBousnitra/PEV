@@ -1,10 +1,9 @@
 package mutaciones;
 
 import java.util.Random;
-
 import Individuos.Individuo;
 
-public class Mutacion {
+public class Mutacion{
 	
 	private double p;
 	private Random rand;
@@ -13,13 +12,13 @@ public class Mutacion {
 		p = probMutacion;
 	}
 	
-	public <T> Individuo<T> mutar(Individuo<T> individuo) {
+	public void setP(int p) {this.p = p;}
+	
+	public void mutar(Individuo<?> individuo) {
 		
-		/*for(int i = 0; i < individuo.tamGenes; ++i) {
+		for(int i = 0; i < individuo.getTamTotal(); ++i) {
 			if(rand.nextDouble()<p)
-				//Individuo.getCromosoma(i).invertir(); por generalizar 
-		}*/
-		
-		return individuo;
+				individuo.mutar(i);
+		}
 	}
 }
