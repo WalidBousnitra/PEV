@@ -27,7 +27,7 @@ class AlgoritmoGenetico {
 	public void run() {
 		
 		for(int i = 0; i < tamPoblacion; i++) {
-			poblacion[i] = new IndividuoFuncion1(probCruce);
+			poblacion[i] = new IndividuoFuncion1(precision);
 			fitness[i] = poblacion[i].getFitness();
 		}
 		

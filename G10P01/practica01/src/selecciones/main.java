@@ -1,19 +1,22 @@
 package selecciones;
 
-import java.util.Random;
+public class main {
 
-import Individuos.Individuo;
-
-public class EstocasticoUni extends AlgoritmoSeleccion{
+	public static void main() {
+		
+		int[] individuos = new int[] {1,2,3,4,5,6,7,8,9,10};
+		
+		seleccionar(individuos,new double[]{0.18,0.16,0.15,0.13,0.11,0.09,0.07,0.06,0.03,0.02});
+		for(int i = 0; i<6; ++i) {
+			System.out.print(String.valueOf(individuos[i])+ " ");
+		}
+	}
 	
-	private Random rand;
-
-	@Override
-	public <T> void seleccionar(Individuo<T>[] individuos, double[] fitness) {
+	public static void seleccionar(int[] individuos, double[] fitness) {
 		double fitnessTotal = 0;
 		double[] probSeleccion = new double[fitness.length+1];
-		Individuo<T>[] newIndividuos = individuos;
-		double r = rand.nextDouble();
+		int[] newIndividuos = individuos;
+		double r = 0.1;
 		for(int i = 0; i<fitness.length; i++) {
 			fitnessTotal += fitness[i];
 		}
@@ -23,8 +26,8 @@ public class EstocasticoUni extends AlgoritmoSeleccion{
 		}
 		
 		for(int i = 0; i<individuos.length; i++) {
-			double number = (r+i)/individuos.length;
-			for(int j = 1; j < probSeleccion.length; j++) {
+			double number = (r+i)/6;
+			for(int j = 1; j <probSeleccion.length; j++) {
 				if(probSeleccion[j-1] < number && number <= probSeleccion[j]) {
 					newIndividuos[i] = individuos[j-1];
 					break;
@@ -33,5 +36,6 @@ public class EstocasticoUni extends AlgoritmoSeleccion{
 		}
 		individuos = newIndividuos;
 	}
+
 
 }
