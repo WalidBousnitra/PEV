@@ -10,6 +10,7 @@ public class Mutacion{
 	
 	public Mutacion(double probMutacion) {
 		p = probMutacion;
+		rand = new Random();
 	}
 	
 	public void setP(int p) {this.p = p;}

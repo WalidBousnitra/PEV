@@ -12,17 +12,18 @@ public abstract class Individuo<T> {
 	private Random rand;
 	
 	public Individuo(int[] tamGenes, double valorError, double[] min, double[] max) {
+		this.rand = new Random();
 		this.setTamGenes(tamGenes);
 		this.valorError = valorError;
 		this.setMin(min);
 		this.setMax(max);
 		int sum = 0;
 		for(int i = 0 ; i < tamGenes.length; ++i){
-			tamGenes[i] = tamGen(this.valorError, min[0], max[0]);
+			tamGenes[i] = tamGen(this.valorError, min[i], max[i]);
 			sum+=tamGenes[i];
 		}
 		this.setTamTotal(sum);
-		this.cromosoma = iniCromosoma(rand);
+		this.cromosoma = iniCromosoma(getRand());
 	}
 
 	public abstract double getValor();
@@ -52,4 +53,12 @@ public abstract class Individuo<T> {
 	public void setTamTotal(int tamTotal) {this.tamTotal = tamTotal;}
 	public T[] getCromosoma() {return cromosoma;}
 	public void setCromosoma(T[] cromosoma) {this.cromosoma = cromosoma;}
+
+	public Random getRand() {
+		return rand;
+	}
+
+	public void setRand(Random rand) {
+		this.rand = rand;
+	}
 }

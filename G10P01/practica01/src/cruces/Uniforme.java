@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Uniforme extends AlgoritmosCruce{
+public class Uniforme<T> extends AlgoritmosCruce<T>{
 	
 	private Random rand;
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T[]> cruzar(T[] padre1, T[] padre2, double p) {
+	public List<T[]> cruzar(T[] padre1, T[] padre2, double p) {
 		
 		List<T[]> hijos = new ArrayList<T[]>();
 		

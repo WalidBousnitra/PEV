@@ -35,7 +35,10 @@ public class IndividuoFuncion3 extends Individuo<Boolean>{
 		String sol = "";
 		
 		for(int i = getTamGenes()[var]*var ; i < ( getTamGenes()[var]*var+  getTamGenes()[var]); ++i)
-			sol+=getCromosoma()[i].toString();
+			if(getCromosoma()[i])
+				sol += "1";
+			else
+				sol+="0";
 		
 		return sol;
 	}

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Monopunto extends AlgoritmosCruce{
+public class Monopunto<T> extends AlgoritmosCruce<T>{
 
 	private Random rand;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T[]> cruzar(T[] padre1, T[] padre2, double p) {
-		
+	public java.util.List<T[]> cruzar(T[] padre1, T[] padre2, double p) {
 		List<T[]> hijos = new ArrayList<T[]>();
 		
 		T[] hijo1 = (T[]) new Object[padre1.length];
@@ -33,5 +32,4 @@ public class Monopunto extends AlgoritmosCruce{
 				
 		return hijos;
 	}
-
 }

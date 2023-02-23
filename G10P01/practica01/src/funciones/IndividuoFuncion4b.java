@@ -1,23 +1,23 @@
 package funciones;
 
 import java.util.Random;
-
 import Individuos.Individuo;
-public class IndividuoFuncion4a extends Individuo<Boolean>{
+
+public class IndividuoFuncion4b extends Individuo<Double>{
 	
 	private int m;
 	private int d;
 	
-	public IndividuoFuncion4a(int d, double valorError){
+	public IndividuoFuncion4b(int d, double valorError){
 		super(new int[d],valorError,rellena(d,0),rellena(d,Math.PI));
 		this.d = d;
 		m = 10;
 	}
 	
 	@Override
-	public Boolean[] iniCromosoma(Random rand) {
-		Boolean[] cromosoma = new Boolean[getTamTotal()];
-		for(int i = 0; i < getTamTotal(); i++) cromosoma[i] = rand.nextBoolean();
+	public Double[] iniCromosoma(Random rand) {
+		Double[] cromosoma = new Double[getTamTotal()];
+		for(int i = 0; i < getTamTotal(); i++) cromosoma[i] = rand.nextDouble(this.getMin()[0],this.getMax()[0]);
 		return cromosoma;
 	}
 	
@@ -48,20 +48,15 @@ public class IndividuoFuncion4a extends Individuo<Boolean>{
 	}	
 	
 	public String getGenotipo(int var) {
-		
-		String sol = "";
-		
-		for(int i = getTamGenes()[var]*var ; i < (getTamGenes()[var]*var+ getTamGenes()[var]); ++i)
-			if(getCromosoma()[i])
-				sol += "1";
-			else
-				sol+="0";;
-		
-		return sol;
+		return getCromosoma()[var].toString();
+	}
+	
+	public double getFenotipo(int var) {
+		 return getCromosoma()[var];
 	}
 
 	@Override
 	public void mutar(int i) {
-		getCromosoma()[i] = !getCromosoma()[i];		
+		getCromosoma()[i] = getRand().nextDouble(this.getMin()[0],this.getMax()[0]);
 	}
 }
