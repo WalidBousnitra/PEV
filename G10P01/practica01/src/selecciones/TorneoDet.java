@@ -1,29 +1,30 @@
 package selecciones;
 
+import java.util.List;
 import java.util.Random;
 
 import Individuos.Individuo;
 
 public class TorneoDet extends AlgoritmoSeleccion{
 	
-	private Random rand;
+	private Random rand = new Random();
 
 	@Override
-	public <T> void seleccionar(Individuo<T>[] individuos, double[] fitness) {
+	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		
-		Individuo<T>[] newIndividuos = individuos;
+		List<Individuo<T>> newIndividuos = individuos;
 		
-		for(int i = 0; i< individuos.length; i++) {
-			int k1 = rand.nextInt(0,individuos.length);
-			int k2 = rand.nextInt(0,individuos.length);
-			int k3 = rand.nextInt(0,individuos.length);
+		for(int i = 0; i< individuos.size(); i++) {
+			int k1 = rand.nextInt(0,individuos.size());
+			int k2 = rand.nextInt(0,individuos.size());
+			int k3 = rand.nextInt(0,individuos.size());
 			
-			if (individuos[k1].getFitness() >= individuos[k2].getFitness() && individuos[k1].getFitness() >= individuos[k3].getFitness())
-				newIndividuos[i] = individuos[k1];
-		    else if (individuos[k2].getFitness() >= individuos[k1].getFitness() && individuos[k2].getFitness() >= individuos[k3].getFitness())
-		    	newIndividuos[i] = individuos[k2];
+			if (individuos.get(k1).getFitness() >= individuos.get(k2).getFitness() && individuos.get(k1).getFitness() >= individuos.get(k3).getFitness())
+				newIndividuos.add(i, individuos.get(k1));
+		    else if (individuos.get(k2).getFitness() >= individuos.get(k1).getFitness() && individuos.get(k2).getFitness() >= individuos.get(k3).getFitness())
+		    	newIndividuos.add(i, individuos.get(k2));
 		    else
-		    	newIndividuos[i] = individuos[k3];
+		    	newIndividuos.add(i, individuos.get(k3));
 		}
 		individuos = newIndividuos;
 	}

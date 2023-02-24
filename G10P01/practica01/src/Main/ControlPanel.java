@@ -1,13 +1,14 @@
 package Main;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 public class ControlPanel extends JPanel{
@@ -18,8 +19,9 @@ public class ControlPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel poblacionLabel, generacionesLabel, tasaCruceLabel, tasaMutacionLabel, precisionLabel, metodoSeleccionLabel, metodoCruceLabel, tasaElitismoLabel, funcionLabel, dimensionLabel;
-    private JSpinner poblacionTextField, generacionesTextField, tasaCruceTextField, tasaMutacionTextField,precisionLabelTextField, tasaElitismoTextField, dimension;
-    private JComboBox<String> seleccion,cruce, funcion;
+    private JSpinner poblacionTextField, generacionesTextField, tasaCruceTextField, tasaMutacionTextField, tasaElitismoTextField, dimension;
+    private JComboBox<String> seleccion,cruce, funcionspinner;
+    private JTextField precisionLabelTextField;
     private JButton ejecutarButton;
     
     public ControlPanel() {
@@ -36,7 +38,7 @@ public class ControlPanel extends JPanel{
          tasaMutacionLabel = new JLabel("Probabiliad de Mutacion:");
          tasaMutacionTextField = new JSpinner(new SpinnerNumberModel(10,0,100,1));
          precisionLabel = new JLabel("Precision:");
-         precisionLabelTextField = new JSpinner(new SpinnerNumberModel(0.001,0,1,0.001));
+         precisionLabelTextField = new JTextField("0.001");
          metodoSeleccionLabel = new JLabel("Metodo de Seleccion:");
          seleccion = new JComboBox<String>();
          seleccion.addItem("Estocastico Universal");
@@ -54,12 +56,12 @@ public class ControlPanel extends JPanel{
          tasaElitismoLabel = new JLabel("Probabilidad de elitismo:");
          tasaElitismoTextField = new JSpinner(new SpinnerNumberModel(2,0,100,1));
          funcionLabel = new JLabel("Funcion a estudiar:");
-         funcion = new JComboBox<String>();
-         funcion.addItem("Funcion1(calibracion y prueba)");
-         funcion.addItem("Funcion2(GrieWank)");
-         funcion.addItem("Funcion3(Styblinski-tang)");
-         funcion.addItem("Funcion4a(Michalewicz)");
-         funcion.addItem("Funcion4b(Michalewicz)");
+         funcionspinner = new JComboBox<String>();
+         funcionspinner.addItem("Funcion1(calibracion y prueba)");
+         funcionspinner.addItem("Funcion2(GrieWank)");
+         funcionspinner.addItem("Funcion3(Styblinski-tang)");
+         funcionspinner.addItem("Funcion4a(Michalewicz)");
+         funcionspinner.addItem("Funcion4b(Michalewicz)");
          dimensionLabel = new JLabel("Dimension variables:");
          dimension = new JSpinner(new SpinnerNumberModel(1,1,100,1));
          ejecutarButton = new JButton("Ejecutar algoritmo");
@@ -67,15 +69,26 @@ public class ControlPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AlgoritmoGenetico instancia =  new AlgoritmoGenetico((int)poblacionTextField.getValue(),(int) generacionesTextField.getValue(),
-						(double)tasaCruceTextField.getValue()/100, (double)tasaMutacionTextField.getValue()/100, (double)precisionLabelTextField.getValue()/100,
-						(String)funcion.getSelectedItem(), (String)seleccion.getSelectedItem(), (String)cruce.getSelectedItem(), (double)tasaElitismoTextField.getValue(),
-						(int)dimension.getValue());
+				
+				int tamPoblacion = (Integer)poblacionTextField.getValue();
+				int maxGeneraciones = (Integer) generacionesTextField.getValue();
+				double probCruce = (Double.valueOf((Integer)tasaCruceTextField.getValue()))/100;
+				double probMutacion = (Double.valueOf((Integer)tasaMutacionTextField.getValue()))/100;
+				double precision = Double.parseDouble(precisionLabelTextField.getText());
+				String funcion = (String)funcionspinner.getSelectedItem();
+				String metodoSeleccion = (String)seleccion.getSelectedItem();
+				String metodoCruce = (String)cruce.getSelectedItem();
+				double probElitismo = (Double.valueOf((Integer)tasaElitismoTextField.getValue()))/100;
+				int d = (Integer)dimension.getValue();
+
+				AlgoritmoGenetico instancia =  new AlgoritmoGenetico(tamPoblacion, maxGeneraciones, probCruce,
+				  probMutacion, precision, funcion, metodoSeleccion, metodoCruce, probElitismo,d);
 				instancia.run();
+				new GraphicPanel();
 			}
          });
-
-         setLayout(new GridLayout(5, 2));
+         
+         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
          add(poblacionLabel);
          add(poblacionTextField);
          add(generacionesLabel);
@@ -91,7 +104,7 @@ public class ControlPanel extends JPanel{
          add(metodoCruceLabel);
          add(cruce);
          add(funcionLabel);
-         add(funcion);
+         add(funcionspinner);
          add(dimensionLabel);
          add(dimension);
          add(tasaElitismoLabel);

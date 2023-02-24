@@ -1,50 +1,40 @@
 package Main;
 
-import java.awt.GridLayout;
+import javax.swing.*;
+import org.math.plot.*;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-public class GraphicPanel extends JPanel{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class GraphicPanel {
 	
-	private JLabel poblacionLabel, generacionesLabel, tasaCruceLabel, tasaMutacionLabel;
-    private JTextField poblacionTextField, generacionesTextField, tasaCruceTextField, tasaMutacionTextField;
-    private JButton ejecutarButton;
-
+	//arrays necesarios
+	//mejor de cada generacion (rojo)
+	//mejor absoluto(azul)
+	//media aptitud(verde)
+	
+	
 	public GraphicPanel() {
-		//initGUI();
+		//inicializar arrays
+		initGUI();
 	}
 	
 	public void initGUI() {
-		 poblacionLabel = new JLabel("Tamaño de la población:");
-         poblacionTextField = new JTextField(10);
-         generacionesLabel = new JLabel("Número de generaciones:");
-         generacionesTextField = new JTextField(10);
-         tasaCruceLabel = new JLabel("Tasa de cruce (entre 0 y 1):");
-         tasaCruceTextField = new JTextField(10);
-         tasaMutacionLabel = new JLabel("Tasa de mutación (entre 0 y 1):");
-         tasaMutacionTextField = new JTextField(10);
-
-         ejecutarButton = new JButton("Ejecutar algoritmo");
-
-         setLayout(new GridLayout(5, 2));
-         add(poblacionLabel);
-         add(poblacionTextField);
-         add(generacionesLabel);
-         add(generacionesTextField);
-         add(tasaCruceLabel);
-         add(tasaCruceTextField);
-         add(tasaMutacionLabel);
-         add(tasaMutacionTextField);
-         add(new JLabel()); // celda vacía para alinear botón
-         add(ejecutarButton);
+		// define your data
+		double[] x = { 1, 2, 3, 4, 5, 6 };
+		double[] y = { 45, 89, 6, 32, 63, 12 };
+		
+		// create your PlotPanel (you can use it as a JPanel)
+		Plot2DPanel plot = new Plot2DPanel();
+		
+		// define the legend position
+		plot.addLegend("SOUTH");
+		
+		// add a line plot to the PlotPanel
+		plot.addLinePlot("my plot", x, y);
+		
+		// put the PlotPanel in a JFrame like a JPanel
+		JFrame frame = new JFrame("a plot panel");
+		frame.setSize(600, 600);
+		frame.setContentPane(plot);
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 	}
-	
 }

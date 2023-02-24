@@ -1,18 +1,19 @@
 package selecciones;
 
+import java.util.List;
 import java.util.Random;
 
 import Individuos.Individuo;
 
 public class Ruleta extends AlgoritmoSeleccion{
 	
-	private Random rand;
+	private Random rand = new Random();
 
 	@Override
-	public <T> void seleccionar(Individuo<T>[] individuos, double[] fitness) {
+	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		double fitnessTotal = 0;
 		double[] probSeleccion = new double[fitness.length+1];
-		Individuo<T>[] newIndividuos = individuos;
+		List<Individuo<T>> newIndividuos = individuos;
 		
 		for(int i = 0; i<fitness.length; i++) {
 			fitnessTotal += fitness[i];
@@ -22,11 +23,11 @@ public class Ruleta extends AlgoritmoSeleccion{
 			probSeleccion[i] = fitness[i-1]/fitnessTotal + probSeleccion[i-1];
 		}
 		
-		for(int i = 0; i<individuos.length; i++) {
+		for(int i = 0; i<individuos.size(); i++) {
 			double r = rand.nextDouble();
 			for(int j = 1; j <probSeleccion.length; j++) {
 				if(probSeleccion[j-1] < r && r <= probSeleccion[j]) {
-					newIndividuos[i] = individuos[j-1];
+					newIndividuos.add(i, individuos.get(j-1));
 					break;
 				}
 			}
