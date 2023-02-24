@@ -3,8 +3,6 @@ package Main;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -20,7 +18,7 @@ public class ControlPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel poblacionLabel, generacionesLabel, tasaCruceLabel, tasaMutacionLabel, precisionLabel, metodoSeleccionLabel, metodoCruceLabel, tasaElitismoLabel, funcionLabel, dimensionLabel;
-    private JSpinner poblacionTextField, generacionesTextField, tasaCruceTextField, tasaMutacionTextField, tasaElitismoTextField, dimension;
+    private JSpinner poblacionTextField, generacionesTextField, tasaCruceTextField, tasaMutacionTextField,precisionLabelTextField, tasaElitismoTextField, dimension;
     private JComboBox<String> seleccion,cruce, funcion;
     private JButton ejecutarButton;
     
@@ -37,6 +35,8 @@ public class ControlPanel extends JPanel{
          tasaCruceTextField = new JSpinner(new SpinnerNumberModel(10,0,100,1));
          tasaMutacionLabel = new JLabel("Probabiliad de Mutacion:");
          tasaMutacionTextField = new JSpinner(new SpinnerNumberModel(10,0,100,1));
+         precisionLabel = new JLabel("Precision:");
+         precisionLabelTextField = new JSpinner(new SpinnerNumberModel(0.001,0,1,0.001));
          metodoSeleccionLabel = new JLabel("Metodo de Seleccion:");
          seleccion = new JComboBox<String>();
          seleccion.addItem("Estocastico Universal");
@@ -67,8 +67,11 @@ public class ControlPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//AlgoritmoGenetico instancia =  new AlgoritmoGenetico(flags, flags, alignmentX, alignmentX, alignmentX, name, name, name, alignmentX, flags);
-				//instancia.run();
+				AlgoritmoGenetico instancia =  new AlgoritmoGenetico((int)poblacionTextField.getValue(),(int) generacionesTextField.getValue(),
+						(double)tasaCruceTextField.getValue()/100, (double)tasaMutacionTextField.getValue()/100, (double)precisionLabelTextField.getValue()/100,
+						(String)funcion.getSelectedItem(), (String)seleccion.getSelectedItem(), (String)cruce.getSelectedItem(), (double)tasaElitismoTextField.getValue(),
+						(int)dimension.getValue());
+				instancia.run();
 			}
          });
 
@@ -81,6 +84,8 @@ public class ControlPanel extends JPanel{
          add(tasaCruceTextField);
          add(tasaMutacionLabel);
          add(tasaMutacionTextField);
+         add(precisionLabel);
+         add(precisionLabelTextField);
          add(metodoSeleccionLabel);
          add(seleccion);
          add(metodoCruceLabel);
