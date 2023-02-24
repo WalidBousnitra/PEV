@@ -1,9 +1,10 @@
 package Individuos;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Individuo<T> {
 	
-	private T[] cromosoma;
+	private List<T> cromosoma;
 	private int[] tamGenes;
 	private double[] min;
 	private double[] max;
@@ -27,7 +28,7 @@ public abstract class Individuo<T> {
 	}
 
 	public abstract double getValor();
-	public abstract T[] iniCromosoma(Random rand);
+	public abstract List<T> iniCromosoma(Random rand);
 	protected abstract String getGenotipo(int var);
 	public abstract void mutar(int i);
 	
@@ -51,8 +52,8 @@ public abstract class Individuo<T> {
 	public void setTamGenes(int[] tamGenes) {this.tamGenes = tamGenes;}
 	public int getTamTotal() {return tamTotal;}
 	public void setTamTotal(int tamTotal) {this.tamTotal = tamTotal;}
-	public T[] getCromosoma() {return cromosoma;}
-	public void setCromosoma(T[] cromosoma) {this.cromosoma = cromosoma;}
+	public List<T> getCromosoma() {return cromosoma;}
+	public void setCromosoma(List<T> cromosoma) {this.cromosoma = cromosoma;}
 
 	public Random getRand() {
 		return rand;

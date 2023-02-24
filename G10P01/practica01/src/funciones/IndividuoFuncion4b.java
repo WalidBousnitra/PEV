@@ -1,5 +1,7 @@
 package funciones;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import Individuos.Individuo;
 
@@ -15,9 +17,9 @@ public class IndividuoFuncion4b extends Individuo<Double>{
 	}
 	
 	@Override
-	public Double[] iniCromosoma(Random rand) {
-		Double[] cromosoma = new Double[getTamTotal()];
-		for(int i = 0; i < getTamTotal(); i++) cromosoma[i] = rand.nextDouble(this.getMin()[0],this.getMax()[0]);
+	public List<Double> iniCromosoma(Random rand) {
+		List<Double> cromosoma = new ArrayList<Double>(getTamTotal());
+		for(int i = 0; i < getTamTotal(); i++) cromosoma.add(i, rand.nextDouble(this.getMin()[0],this.getMax()[0]));
 		return cromosoma;
 	}
 	
@@ -48,15 +50,15 @@ public class IndividuoFuncion4b extends Individuo<Double>{
 	}	
 	
 	public String getGenotipo(int var) {
-		return getCromosoma()[var].toString();
+		return getCromosoma().get(var).toString();
 	}
 	
 	public double getFenotipo(int var) {
-		 return getCromosoma()[var];
+		 return getCromosoma().get(var);
 	}
 
 	@Override
 	public void mutar(int i) {
-		getCromosoma()[i] = getRand().nextDouble(this.getMin()[0],this.getMax()[0]);
+		getCromosoma().set(i, getRand().nextDouble(this.getMin()[0],this.getMax()[0]));
 	}
 }

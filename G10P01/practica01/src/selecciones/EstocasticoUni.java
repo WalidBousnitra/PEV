@@ -8,7 +8,7 @@ import Individuos.Individuo;
 
 public class EstocasticoUni extends AlgoritmoSeleccion{
 	
-	private Random rand = new Random();;
+	private Random rand = new Random();
 
 	@Override
 	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
@@ -33,6 +33,7 @@ public class EstocasticoUni extends AlgoritmoSeleccion{
 				}
 			}
 		}
+		individuos.clear(); 
 		individuos = newIndividuos;
 	}
 

@@ -1,5 +1,6 @@
 package selecciones;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ public class TorneoDet extends AlgoritmoSeleccion{
 	@Override
 	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		
-		List<Individuo<T>> newIndividuos = individuos;
+		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		
 		for(int i = 0; i< individuos.size(); i++) {
 			int k1 = rand.nextInt(0,individuos.size());
@@ -26,6 +27,7 @@ public class TorneoDet extends AlgoritmoSeleccion{
 		    else
 		    	newIndividuos.add(i, individuos.get(k3));
 		}
+		individuos.clear();
 		individuos = newIndividuos;
 	}
 

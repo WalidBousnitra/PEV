@@ -1,5 +1,6 @@
 package selecciones;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -13,7 +14,7 @@ public class Ruleta extends AlgoritmoSeleccion{
 	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		double fitnessTotal = 0;
 		double[] probSeleccion = new double[fitness.length+1];
-		List<Individuo<T>> newIndividuos = individuos;
+		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		
 		for(int i = 0; i<fitness.length; i++) {
 			fitnessTotal += fitness[i];
@@ -32,6 +33,7 @@ public class Ruleta extends AlgoritmoSeleccion{
 				}
 			}
 		}
+		individuos.clear();
 		individuos = newIndividuos;
 	}
 	

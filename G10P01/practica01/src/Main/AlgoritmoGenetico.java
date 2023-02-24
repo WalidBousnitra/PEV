@@ -23,7 +23,7 @@ class AlgoritmoGenetico {
 	private List<Individuo<Boolean>> poblacion;
 	private double[] fitness;
 	private AlgoritmoSeleccion seleccion;
-	private AlgoritmosCruce<Boolean> cruce;
+	private AlgoritmosCruce cruce;
 	private Individuo<Boolean> elMejor;
 	private int pos_mejor;
 
@@ -41,7 +41,7 @@ class AlgoritmoGenetico {
 		this.metodoCruce = metodoCruce;
 		this.poblacion = new ArrayList<Individuo<Boolean>>();
 		this.seleccion = iniciarSeleccion();
-		//this.cruce = iniciarCruce();
+		this.cruce = iniciarCruce();
 		this.fitness = new double[tamPoblacion];
 		
 	}
@@ -51,18 +51,15 @@ class AlgoritmoGenetico {
 		iniciarPoablacion();
 		
 		for(int i = 0; i < maxGeneraciones; i++) {
-			seleccion.seleccionar(poblacion,fitness);
-				
-			for(int j = 0; j < tamPoblacion; j++) {
-				//cruce.cruzar
-			}
 			
-			for(int j = 0; j < tamPoblacion; j++) {
-				mutacion.mutar(poblacion.get(j));
-			}
-			for(int j = 0; j < tamPoblacion; j++) {
+			//seleccion.seleccionar(poblacion,fitness);
+
+			cruce.cruzar(poblacion);
+			
+			//for(int j = 0; j < tamPoblacion; j++)
+				//mutacion.mutar(poblacion.get(j));
+			for(int j = 0; j < tamPoblacion; j++)
 				fitness[j] = poblacion.get(j).getFitness();
-			}
 		}
 		elMejor = poblacion.get(0);
 		pos_mejor = 0;
@@ -130,19 +127,20 @@ class AlgoritmoGenetico {
 		
 		return null;
 	}
-/*	private AlgoritmosCruce<Boolean> iniciarCruce() {
+	
+	private AlgoritmosCruce iniciarCruce() {
 
 		switch(metodoCruce) {
-		/*case "Aritmetico":
-			return new Aritmetico();
+		case "Aritmetico":
+			return new Aritmetico(probCruce);
 		case "BLX-alfa":
-			return new BLXalfa();
+			return new BLXalfa(probCruce);
 		case "Monopunto":
-			return new Monopunto();
+			return new Monopunto(probCruce);
 		case "Uniforme":
-			return new Uniforme();
+			return new Uniforme(probCruce);
 		}
 		
 		return null;
-	}*/
+	}
 }

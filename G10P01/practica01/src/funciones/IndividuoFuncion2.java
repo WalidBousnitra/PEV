@@ -1,5 +1,7 @@
 package funciones;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import Individuos.Individuo;
 
@@ -13,9 +15,9 @@ public class IndividuoFuncion2 extends Individuo<Boolean>{
 	}
 	
 	@Override
-	public Boolean[] iniCromosoma(Random rand) {
-		Boolean[] cromosoma = new Boolean[getTamTotal()];
-		for(int i = 0; i < getTamTotal(); i++) cromosoma[i] = rand.nextBoolean();
+	public List<Boolean> iniCromosoma(Random rand) {
+		List<Boolean> cromosoma = new ArrayList<Boolean>(getTamTotal());
+		for(int i = 0; i < getTamTotal(); i++) cromosoma.add(i, rand.nextBoolean());
 		return cromosoma;
 	}
 	
@@ -37,13 +39,13 @@ public class IndividuoFuncion2 extends Individuo<Boolean>{
 		String sol = "";
 		
 		for(int i = getTamGenes()[var]*var ; i < (getTamGenes()[var]*var+ getTamGenes()[var]); ++i)
-			sol+=getCromosoma()[i].toString();
+			sol+=getCromosoma().get(i).toString();
 		
 		return sol;
 	}
 
 	@Override
 	public void mutar(int i) {
-		getCromosoma()[i] = !getCromosoma()[i];		
+		getCromosoma().set(i,!getCromosoma().get(i));
 	}
 }

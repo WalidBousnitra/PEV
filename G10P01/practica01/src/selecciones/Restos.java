@@ -17,7 +17,7 @@ public class Restos extends AlgoritmoSeleccion{
 		double[] probSeleccion = new double[fitness.length+1];
 		boolean[] seleccionado = new boolean[individuos.size()];
 
-		List<Individuo<T>> newIndividuos = individuos;
+		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		k = individuos.size();
 		int nIndiv = 0;
 		
@@ -71,6 +71,7 @@ public class Restos extends AlgoritmoSeleccion{
 			pos++;
 		}
 		
+		individuos.clear();
 		individuos = newIndividuos;
 	}
 

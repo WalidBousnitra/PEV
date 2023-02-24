@@ -1,5 +1,6 @@
 package selecciones;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -17,7 +18,7 @@ public class Truncamiento extends AlgoritmoSeleccion{
 		double fitnessTotal = 0;
 		double[] probSeleccion = new double[fitness.length+1];
 		TreeMap<Double, Individuo<T>> mapSeleccion = new TreeMap<Double, Individuo<T>>();
-		List<Individuo<T>> newIndividuos = individuos;
+		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		double r = rand.nextDouble();
 		for(int i = 0; i<fitness.length; i++) {
 			fitnessTotal += fitness[i];
@@ -39,6 +40,7 @@ public class Truncamiento extends AlgoritmoSeleccion{
 			newIndividuos.add(j, newIndividuos.get(j-1));
 		}
 
+		individuos.clear();
 		individuos = newIndividuos;
 	}
 
