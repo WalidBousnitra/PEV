@@ -9,7 +9,7 @@ import mutaciones.Mutacion;
 import selecciones.*;
 
 class AlgoritmoGenetico {
-
+	
 	private int tamPoblacion;
 	private int maxGeneraciones;
 	private double probCruce;
@@ -48,6 +48,7 @@ class AlgoritmoGenetico {
 		this.mejores = new double[maxGeneraciones];
 		this.absolutos = new double[maxGeneraciones];
 		this.media = new double[maxGeneraciones];
+		this.probElitismo = probElitismo;
 		
 	}
 
@@ -56,6 +57,7 @@ class AlgoritmoGenetico {
 		iniciarPoblacion();
 		
 		for(int i = 0; i < maxGeneraciones; i++) {
+
 			
 			poblacion = seleccion.seleccionar(poblacion,fitness);
 
