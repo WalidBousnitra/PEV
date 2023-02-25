@@ -51,19 +51,19 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 
         // Crear spinners para los parámetros
         JSpinner spinner1 = new JSpinner(new SpinnerNumberModel(100,2,10000,10));
-        spinner1.setPreferredSize(new Dimension(10, 10));
+        spinner1.setPreferredSize(new Dimension(50, 50));
         JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(100,1,10000,10));
-        spinner2.setPreferredSize(new Dimension(10, 10));
+        spinner2.setPreferredSize(new Dimension(50, 50));
         JSpinner spinner3 = new JSpinner(new SpinnerNumberModel(10,0,100,1));
-        spinner3.setPreferredSize(new Dimension(10, 10));
+        spinner3.setPreferredSize(new Dimension(50, 50));
         JSpinner spinner4 = new JSpinner(new SpinnerNumberModel(10,0,100,1));
-        spinner4.setPreferredSize(new Dimension(10, 10));
+        spinner4.setPreferredSize(new Dimension(50, 50));
         JTextField spinner5 = new JTextField("0.001");
-        spinner5.setPreferredSize(new Dimension(10, 10));
+        spinner5.setPreferredSize(new Dimension(50, 50));
         JSpinner spinner6 = new JSpinner(new SpinnerNumberModel(2,0,100,1));
-        spinner6.setPreferredSize(new Dimension(10, 10));
+        spinner6.setPreferredSize(new Dimension(50, 50));
         JSpinner spinner7 = new JSpinner(new SpinnerNumberModel(1,1,100,1));
-        spinner7.setPreferredSize(new Dimension(10, 10));
+        spinner7.setPreferredSize(new Dimension(50, 50));
         
         // Crear combo box para los parámetros
         String[] opciones = {"Estocastico Universal","Restos","Ruleta","Torneo Determinista","Torneo Probabilistico","Truncamiento"};
@@ -139,4 +139,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
          setVisible(true);
     }
 
+    public void parametros() {
+    	
+    }
 }

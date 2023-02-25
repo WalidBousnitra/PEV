@@ -22,7 +22,7 @@ public class GraphicPanel extends JPanel{
 		this.mejores = mejores;
 		this.absolutos = absolutos;
 		this.media = media;
-		plot.setPreferredSize(new Dimension(600,600));
+		plot.setPreferredSize(new Dimension(500,500));
 		// define the legend position
 		plot.addLegend("SOUTH");
 		initGUI(panel);
@@ -31,7 +31,7 @@ public class GraphicPanel extends JPanel{
 	public void initGUI(JPanel panel) {
 
 		plot.removeAllPlots();
-		
+
 		// add a line plot to the PlotPanel
 		plot.addLinePlot("absolutos", Color.blue, absolutos);
 		// add a line plot to the PlotPanel
