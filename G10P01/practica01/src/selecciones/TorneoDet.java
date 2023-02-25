@@ -11,7 +11,7 @@ public class TorneoDet extends AlgoritmoSeleccion{
 	private Random rand = new Random();
 
 	@Override
-	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
+	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		
 		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		
@@ -27,8 +27,7 @@ public class TorneoDet extends AlgoritmoSeleccion{
 		    else
 		    	newIndividuos.add(i, individuos.get(k3));
 		}
-		individuos.clear();
-		individuos = newIndividuos;
+		return newIndividuos;
 	}
 
 }

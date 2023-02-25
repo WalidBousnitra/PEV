@@ -11,7 +11,7 @@ public class TorneoProb extends AlgoritmoSeleccion{
 	private Random rand = new Random();
 
 	@Override
-	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
+	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		
 		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		double p = rand.nextDouble(0.5, 1);
@@ -25,8 +25,7 @@ public class TorneoProb extends AlgoritmoSeleccion{
 			else
 				menorFit(i, individuos,newIndividuos,k1,k2,k3);
 		}
-		individuos.clear();
-		individuos = newIndividuos;
+		return newIndividuos;
 	}
 	
 	private <T> void menorFit(int i, List<Individuo<T>> individuos, List<Individuo<T>> newIndividuos, int k1, int k2, int k3) {

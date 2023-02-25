@@ -2,6 +2,8 @@ package Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -49,10 +51,10 @@ public class ControlPanel extends JPanel{
          seleccion.addItem("Truncamiento");
          metodoCruceLabel = new JLabel("Metodo de Cruce:");
          cruce = new JComboBox<String>();
-         cruce.addItem("Aritmetico");
-         cruce.addItem("BLX-alfa");
          cruce.addItem("Monopunto");
          cruce.addItem("Uniforme");
+         cruce.addItem("Aritmetico");
+         cruce.addItem("BLX-alfa");
          tasaElitismoLabel = new JLabel("Probabilidad de elitismo:");
          tasaElitismoTextField = new JSpinner(new SpinnerNumberModel(2,0,100,1));
          funcionLabel = new JLabel("Funcion a estudiar:");
@@ -84,7 +86,8 @@ public class ControlPanel extends JPanel{
 				AlgoritmoGenetico instancia =  new AlgoritmoGenetico(tamPoblacion, maxGeneraciones, probCruce,
 				  probMutacion, precision, funcion, metodoSeleccion, metodoCruce, probElitismo,d);
 				instancia.run();
-				new GraphicPanel();
+				List<double[]> datos = instancia.datos();
+				new GraphicPanel(datos.get(0),datos.get(1),datos.get(2));
 			}
          });
          

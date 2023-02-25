@@ -11,7 +11,7 @@ public class Restos extends AlgoritmoSeleccion{
 	private Random rand = new Random();
 	
 	@Override
-	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
+	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		
 		double fitnessTotal = 0;
 		double[] probSeleccion = new double[fitness.length+1];
@@ -71,8 +71,7 @@ public class Restos extends AlgoritmoSeleccion{
 			pos++;
 		}
 		
-		individuos.clear();
-		individuos = newIndividuos;
+		return newIndividuos;
 	}
 
 }

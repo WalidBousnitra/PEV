@@ -32,7 +32,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean>{
 		for( int i = 0; i < var ; ++i)
 			sum+=getTamGenes()[i];
 		
-		for(int i = sum ; i< sum + getTamGenes()[var]; ++i) {
+		for(int  i =sum ; i< sum + getTamGenes()[var]; ++i) {
 			if(getCromosoma().get(i))
 				sol += "1";
 			else

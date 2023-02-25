@@ -52,13 +52,17 @@ public class IndividuoFuncion4a extends Individuo<Boolean>{
 	public String getGenotipo(int var) {
 		
 		String sol = "";
+		int sum = 0;
 		
-		for(int i = getTamGenes()[var]*var ; i < (getTamGenes()[var]*var+ getTamGenes()[var]); ++i)
+		for( int i = 0; i < var ; ++i)
+			sum+=getTamGenes()[i];
+		
+		for(int  i =sum ; i< sum + getTamGenes()[var]; ++i) {
 			if(getCromosoma().get(i))
 				sol += "1";
 			else
-				sol+="0";;
-		
+				sol+="0";
+		}
 		return sol;
 	}
 

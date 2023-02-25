@@ -1,5 +1,6 @@
 package cruces;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,21 +15,37 @@ public abstract class AlgoritmosCruce{
 		this.p =p;
 	}
 	
-	public <T> void cruzar(List<Individuo<T>> individuos) {
-
-		for(int  i = 0; i< individuos.size(); i++) {
+	public <T> List<Individuo<T>> cruzar(List<Individuo<T>> individuos) {
+		
+		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
+		List<Individuo<T>> parejas = new ArrayList<Individuo<T>>();
+		boolean[] elegidos = new boolean[individuos.size()];
+		
+		for(int i = 0; i<individuos.size(); i++)
 			if(rand.nextDouble()<p) {
-				for(int  j = 0; j< individuos.size(); j++) {
-					if(i!=j && rand.nextDouble()<p) {
-						List<List<T>> hijos = pareja(individuos.get(i).getCromosoma(),
-								individuos.get(j).getCromosoma());
-						individuos.get(i).setCromosoma(hijos.get(0));
-						individuos.get(i).setCromosoma(hijos.get(1));
-					}
-				}
+				elegidos[i] = true;
+				parejas.add(individuos.get(i));
 			}
+		for(int i = 0; parejas.size()%2!=0; i++)
+			if(rand.nextDouble()<p) {
+				elegidos[i%individuos.size()] = true;
+				parejas.add(individuos.get(i%individuos.size()));
+			}
+		
+		for(int i = 0; i<individuos.size(); i++)
+			if(!elegidos[i])
+				newIndividuos.add(individuos.get(i));
+		
+		for (int i = 0; i <parejas.size()-1; i=i+2) {
+			List<List<T>> hijos = pareja(parejas.get(i).getCromosoma(),
+					parejas.get(i+1).getCromosoma());
+			parejas.get(i).setCromosoma(hijos.get(0));
+			parejas.get(i+1).setCromosoma(hijos.get(1));
+			newIndividuos.add(parejas.get(i));
+			newIndividuos.add(parejas.get(i+1));
 		}
 		
+		return newIndividuos;
 	}
 	public abstract <T> List<List<T>> pareja(List<T> padre1, List<T> padre2);
 }

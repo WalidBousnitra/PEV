@@ -11,7 +11,8 @@ public class Ruleta extends AlgoritmoSeleccion{
 	private Random rand = new Random();
 
 	@Override
-	public <T> void seleccionar(List<Individuo<T>> individuos, double[] fitness) {
+	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
+		
 		double fitnessTotal = 0;
 		double[] probSeleccion = new double[fitness.length+1];
 		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
@@ -33,8 +34,7 @@ public class Ruleta extends AlgoritmoSeleccion{
 				}
 			}
 		}
-		individuos.clear();
-		individuos = newIndividuos;
+		return newIndividuos;
 	}
 	
 }

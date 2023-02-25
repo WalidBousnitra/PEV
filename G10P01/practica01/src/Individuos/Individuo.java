@@ -41,7 +41,7 @@ public abstract class Individuo<T> {
 	}
 	
 	public double getFenotipo(int var) {
-		 return min[var] + Integer.parseInt(getGenotipo(var),2) * ((max[var] - min[var])/Math.pow(2,getTamTotal())-1);
+		 return min[var] + Integer.parseInt(getGenotipo(var),2) * ((max[var] - min[var])/(Math.pow(2,getTamTotal())-1));
 	}
 
 	public double[] getMin() {return min;}
