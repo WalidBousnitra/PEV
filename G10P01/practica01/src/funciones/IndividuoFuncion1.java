@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import Individuos.Individuo;
 
-public class IndividuoFuncion1 extends Individuo<Boolean>{
+public class IndividuoFuncion1<T> extends Individuo<Boolean>{
 	
 	public IndividuoFuncion1(double valorError){
 		super(new int[2],valorError, new double[]{-3.000,4.100},new double[]{12.100,5.800});

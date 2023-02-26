@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Monopunto extends AlgoritmosCruce{
+public class Monopunto<T> extends AlgoritmosCruce<T>{
 	
 	private Random rand = new Random();
 
 	public Monopunto(double p) {
 		super(p);
 	}
-
+	
 	@Override
-	public <T> List<List<T>> pareja(List<T> padre1, List<T> padre2) {
+	public List<List<T>> pareja(List<T> padre1, List<T> padre2) {
 		List<List<T>> hijos = new ArrayList<List<T>>();
 		
 		List<T> hijo1 = new ArrayList<T>(padre1.size());

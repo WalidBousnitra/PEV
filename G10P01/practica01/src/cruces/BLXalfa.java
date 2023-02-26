@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Individuos.Individuo;
-
-public class BLXalfa extends AlgoritmosCruce{
+public class BLXalfa<T> extends AlgoritmosCruce<Double>{
 	
 	private Random rand = new Random();
 	
@@ -15,20 +13,20 @@ public class BLXalfa extends AlgoritmosCruce{
 	}
 
 	@Override
-	public <T> List<List<T>> pareja(List<T> padre1, List<T> padre2) {
+	public List<List<Double>> pareja(List<Double> padre1, List<Double> padre2) {
 		
-		List<List<T>> hijos = new ArrayList<List<T>>();
+		List<List<Double>> hijos = new ArrayList<List<Double>>();
 		
-		List<T> hijo1 = new ArrayList<>(padre1.size());
-		List<T> hijo2 = new ArrayList<>(padre1.size());
+		List<Double> hijo1 = new ArrayList<Double>(padre1.size());
+		List<Double> hijo2 = new ArrayList<Double>(padre1.size());
 		
 		for(int i = 0; i < padre1.size(); i++) {
-			//double cMax = Math.max(padre1.get(i), padre2.get(i));
-			//double cMin = Math.min(padre1.get(i), padre2.get(i));
-			//double I = cMax-cMin;
+			double cMax = Math.max(padre1.get(i), padre2.get(i));
+			double cMin = Math.min(padre1.get(i), padre2.get(i));
+			double I = cMax-cMin;
 			double alfa = rand.nextDouble();
-			//hijo1.add(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
-			//hijo2.add(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
+			hijo1.add(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
+			hijo2.add(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
 		}
 		
 		hijos.add(hijo1);

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import Individuos.Individuo;
 
-public class IndividuoFuncion3 extends Individuo<Boolean>{
+public class IndividuoFuncion3<T> extends Individuo<Boolean>{
 	
 	private int d;
 	

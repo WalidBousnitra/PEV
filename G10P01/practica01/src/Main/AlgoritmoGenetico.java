@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import Individuos.Individuo;
 import cruces.*;
+import elitismo.Elitismo;
 import funciones.*;
 import mutaciones.Mutacion;
 import selecciones.*;
 
-class AlgoritmoGenetico {
+class AlgoritmoGenetico<T> {
 	
 	private int tamPoblacion;
 	private int maxGeneraciones;
@@ -18,12 +19,13 @@ class AlgoritmoGenetico {
 	private String funcion;
 	private String metodoSeleccion;
 	private String metodoCruce;
-	private double probElitismo;
+	private Elitismo<T> probElitismo;
+	private List<Individuo<T>> elite;
 	private int d;
-	private List<Individuo<Boolean>> poblacion;
+	private List<Individuo<T>> poblacion;
 	private double[] fitness;
 	private AlgoritmoSeleccion seleccion;
-	private AlgoritmosCruce cruce;
+	private AlgoritmosCruce<T> cruce;
 
 	private double[] mejores;
 	private double[] absolutos;
@@ -32,7 +34,7 @@ class AlgoritmoGenetico {
 	
 	
 	public AlgoritmoGenetico(int tamPoblacion, int maxGeneraciones, double probCruce, double probMutacion, double precision, 
-						String funcion, String metodoSeleccion, String metodoCruce, double probElitismo, int d) {
+						String funcion, String metodoSeleccion, String metodoCruce, double probElitismo, boolean marcar, int d) {
 		this.tamPoblacion =  tamPoblacion;
 		this.maxGeneraciones = maxGeneraciones;
 		this.probCruce = probCruce;
@@ -41,14 +43,15 @@ class AlgoritmoGenetico {
 		this.funcion = funcion;
 		this.metodoSeleccion = metodoSeleccion;
 		this.metodoCruce = metodoCruce;
-		this.poblacion = new ArrayList<Individuo<Boolean>>();
+		this.poblacion = new ArrayList<Individuo<T>>();
 		this.seleccion = iniciarSeleccion();
 		this.cruce = iniciarCruce();
 		this.fitness = new double[tamPoblacion];
 		this.mejores = new double[maxGeneraciones];
 		this.absolutos = new double[maxGeneraciones];
 		this.media = new double[maxGeneraciones];
-		this.probElitismo = probElitismo;
+		this.probElitismo = new Elitismo<T>(marcar,probElitismo);
+		this.d = d;
 		
 	}
 
@@ -58,6 +61,7 @@ class AlgoritmoGenetico {
 		
 		for(int i = 0; i < maxGeneraciones; i++) {
 
+			probElitismo.extraer(poblacion);
 			
 			poblacion = seleccion.seleccionar(poblacion,fitness);
 
@@ -65,11 +69,14 @@ class AlgoritmoGenetico {
 
 			poblacion = mutacion.mutar(poblacion);
 			
+			poblacion = probElitismo.incorporar(poblacion,elite);
+			
 			calculos();
 		}
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void iniciarPoblacion() {
 		
 		double sumFitness = 0;
@@ -77,7 +84,7 @@ class AlgoritmoGenetico {
 		
 		switch(funcion) {
 		case "Funcion1(calibracion y prueba)":
-			poblacion = new ArrayList<Individuo<Boolean>>(tamPoblacion);
+			poblacion = new ArrayList<Individuo<T>>(tamPoblacion);
 			for(int i = 0; i < tamPoblacion; i++) {
 				poblacion.add(new IndividuoFuncion1(precision));
 				fitness[i] = poblacion.get(i).getFitness();
@@ -113,15 +120,15 @@ class AlgoritmoGenetico {
 					max = fitness[i];
 			}
 			break;
-		/*case "Funcion4b(Michalewicz)":
+		case "Funcion4b(Michalewicz)":
 			for(int i = 0; i < tamPoblacion; i++) {
 				poblacion.add(new IndividuoFuncion4b(d,precision));
 				fitness[i] = poblacion.get(i).getFitness();
 				sumFitness+=fitness[i];
-								if(max<fitness[i])
+				if(max<fitness[i])
 					max = fitness[i];
 			}
-			break;*/	
+			break;	
 		}
 		posDatos = 0;
 		mejores[0] = max;
@@ -152,7 +159,8 @@ class AlgoritmoGenetico {
 		return null;
 	}
 	
-	private AlgoritmosCruce iniciarCruce() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private AlgoritmosCruce<T> iniciarCruce() {
 
 		switch(metodoCruce) {
 		case "Aritmetico":
@@ -160,9 +168,9 @@ class AlgoritmoGenetico {
 		case "BLX-alfa":
 			return new BLXalfa(probCruce);
 		case "Monopunto":
-			return new Monopunto(probCruce);
+			return new Monopunto<T>(probCruce);
 		case "Uniforme":
-			return new Uniforme(probCruce);
+			return new Uniforme<T>(probCruce);
 		}
 		
 		return null;

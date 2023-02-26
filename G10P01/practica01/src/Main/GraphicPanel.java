@@ -15,7 +15,6 @@ public class GraphicPanel extends JPanel{
 	private double[] mejores;
 	private double[] absolutos;
 	private double[] media;
-	// create your PlotPanel (you can use it as a JPanel)
 	Plot2DPanel plot = new Plot2DPanel();
 	
 	public void actualizar(JPanel panel, double[] mejores, double[] absolutos, double[] media) {
@@ -23,7 +22,6 @@ public class GraphicPanel extends JPanel{
 		this.absolutos = absolutos;
 		this.media = media;
 		plot.setPreferredSize(new Dimension(500,500));
-		// define the legend position
 		plot.addLegend("SOUTH");
 		initGUI(panel);
 	}
@@ -31,10 +29,7 @@ public class GraphicPanel extends JPanel{
 	public void initGUI(JPanel panel) {
 
 		plot.removeAllPlots();
-
-		// add a line plot to the PlotPanel
 		plot.addLinePlot("absolutos", Color.blue, absolutos);
-		// add a line plot to the PlotPanel
 		plot.addLinePlot("mejores", Color.red, mejores);
 		plot.addLinePlot("media", Color.green, media);
 		

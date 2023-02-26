@@ -6,7 +6,7 @@ import java.util.Random;
 
 import Individuos.Individuo;
 
-public abstract class AlgoritmosCruce{
+public abstract class AlgoritmosCruce<T>{
 	
 	protected double p;
 	private Random rand = new Random();
@@ -15,7 +15,7 @@ public abstract class AlgoritmosCruce{
 		this.p =p;
 	}
 	
-	public <T> List<Individuo<T>> cruzar(List<Individuo<T>> individuos) {
+	public List<Individuo<T>> cruzar(List<Individuo<T>> individuos) {
 		
 		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		List<Individuo<T>> parejas = new ArrayList<Individuo<T>>();
@@ -47,5 +47,5 @@ public abstract class AlgoritmosCruce{
 		
 		return newIndividuos;
 	}
-	public abstract <T> List<List<T>> pareja(List<T> padre1, List<T> padre2);
+	public abstract List<List<T>> pareja(List<T> padre1, List<T> padre2);
 }
