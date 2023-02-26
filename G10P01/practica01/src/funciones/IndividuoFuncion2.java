@@ -9,7 +9,7 @@ public class IndividuoFuncion2<T> extends Individuo<Boolean>{
 	
 	private int d;
 	
-	public IndividuoFuncion2(double valorError){
+	public IndividuoFuncion2(String valorError){
 		super(new int[2],valorError,new double[]{-600,-600},new double[]{600,600});
 		d = 2;
 	}

@@ -11,47 +11,48 @@ import selecciones.*;
 
 class AlgoritmoGenetico<T> {
 	
+	//Parametros	
 	private int tamPoblacion;
 	private int maxGeneraciones;
-	private double probCruce;
+	private AlgoritmosCruce<T> cruce;
 	private Mutacion mutacion;
-	private double precision;
-	private String funcion;
-	private String metodoSeleccion;
-	private String metodoCruce;
+	private String precision;
+	private AlgoritmoSeleccion seleccion;
 	private Elitismo<T> probElitismo;
-	private List<Individuo<T>> elite;
+	private String funcion;
 	private int d;
+	
+	//Datos del Algoritmo
 	private List<Individuo<T>> poblacion;
 	private double[] fitness;
-	private AlgoritmoSeleccion seleccion;
-	private AlgoritmosCruce<T> cruce;
 
+	//Datos Grafica
 	private double[] mejores;
 	private double[] absolutos;
 	private double[] media;
 	private int posDatos;
 	
 	
-	public AlgoritmoGenetico(int tamPoblacion, int maxGeneraciones, double probCruce, double probMutacion, double precision, 
-						String funcion, String metodoSeleccion, String metodoCruce, double probElitismo, boolean marcar, int d) {
+	public AlgoritmoGenetico(int tamPoblacion, int maxGeneraciones, double probCruce, double probMutacion, String precision, 
+						 String metodoSeleccion, String metodoCruce, double probElitismo, boolean marcar, String funcion, int d) {
+		
+		//Inicializacion de parametros
 		this.tamPoblacion =  tamPoblacion;
 		this.maxGeneraciones = maxGeneraciones;
-		this.probCruce = probCruce;
+		this.cruce = iniciarCruce(metodoCruce, probCruce);
 		this.mutacion = new Mutacion(probMutacion);
 		this.precision = precision;
+		this.seleccion = iniciarSeleccion(metodoSeleccion);
+		this.probElitismo = new Elitismo<T>(marcar,probElitismo);
 		this.funcion = funcion;
-		this.metodoSeleccion = metodoSeleccion;
-		this.metodoCruce = metodoCruce;
+		this.d = d;
+		
+		//
 		this.poblacion = new ArrayList<Individuo<T>>();
-		this.seleccion = iniciarSeleccion();
-		this.cruce = iniciarCruce();
 		this.fitness = new double[tamPoblacion];
 		this.mejores = new double[maxGeneraciones];
 		this.absolutos = new double[maxGeneraciones];
 		this.media = new double[maxGeneraciones];
-		this.probElitismo = new Elitismo<T>(marcar,probElitismo);
-		this.d = d;
 		
 	}
 
@@ -69,7 +70,7 @@ class AlgoritmoGenetico<T> {
 
 			poblacion = mutacion.mutar(poblacion);
 			
-			poblacion = probElitismo.incorporar(poblacion,elite);
+			poblacion = probElitismo.incorporar(poblacion);
 			
 			calculos();
 		}
@@ -83,7 +84,7 @@ class AlgoritmoGenetico<T> {
 		double max = Double.MIN_VALUE;
 		
 		switch(funcion) {
-		case "Funcion1(calibracion y prueba)":
+		case "Función1(calibracion y prueba)":
 			poblacion = new ArrayList<Individuo<T>>(tamPoblacion);
 			for(int i = 0; i < tamPoblacion; i++) {
 				poblacion.add(new IndividuoFuncion1(precision));
@@ -93,7 +94,7 @@ class AlgoritmoGenetico<T> {
 					max = fitness[i];
 			}
 			break;
-		case "Funcion2(GrieWank)":
+		case "Función2(GrieWank)":
 			for(int i = 0; i < tamPoblacion; i++) {
 				poblacion.add(new IndividuoFuncion2(precision));
 				fitness[i] = poblacion.get(i).getFitness();
@@ -102,7 +103,7 @@ class AlgoritmoGenetico<T> {
 					max = fitness[i];
 			}
 			break;
-		case "Funcion3(Styblinski-tang)":
+		case "Función3(Styblinski-tang)":
 			for(int i = 0; i < tamPoblacion; i++) {
 				poblacion.add(new IndividuoFuncion3(precision));
 				fitness[i] = poblacion.get(i).getFitness();
@@ -111,7 +112,7 @@ class AlgoritmoGenetico<T> {
 					max = fitness[i];
 			}
 			break;
-		case "Funcion4a(Michalewicz)":
+		case "Función4a(Michalewicz)":
 			for(int i = 0; i < tamPoblacion; i++) {
 				poblacion.add(new IndividuoFuncion4a(d,precision));
 				fitness[i] = poblacion.get(i).getFitness();
@@ -120,7 +121,7 @@ class AlgoritmoGenetico<T> {
 					max = fitness[i];
 			}
 			break;
-		case "Funcion4b(Michalewicz)":
+		case "Función4b(Michalewicz)":
 			for(int i = 0; i < tamPoblacion; i++) {
 				poblacion.add(new IndividuoFuncion4b(d,precision));
 				fitness[i] = poblacion.get(i).getFitness();
@@ -139,10 +140,10 @@ class AlgoritmoGenetico<T> {
 	
 	
 	
-	private AlgoritmoSeleccion iniciarSeleccion() {
+	private AlgoritmoSeleccion iniciarSeleccion(String metodoSeleccion) {
 
 		switch(metodoSeleccion) {
-		case "Estocastico Universal":
+		case "Estocástico Universal":
 			return new EstocasticoUni();
 		case "Restos":
 			return new Restos();
@@ -150,20 +151,19 @@ class AlgoritmoGenetico<T> {
 			return new Ruleta();
 		case "Torneo Determinista":
 			return new TorneoDet();
-		case "Torneo Probabilistico":
+		case "Torneo Probabilístico":
 			return new TorneoProb();
 		case "Truncamiento":
 			return new Truncamiento();
 		}
-		
 		return null;
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private AlgoritmosCruce<T> iniciarCruce() {
+	private AlgoritmosCruce<T> iniciarCruce(String metodoCruce, double probCruce) {
 
 		switch(metodoCruce) {
-		case "Aritmetico":
+		case "Aritmético":
 			return new Aritmetico(probCruce);
 		case "BLX-alfa":
 			return new BLXalfa(probCruce);
@@ -181,7 +181,7 @@ class AlgoritmoGenetico<T> {
 		if(posDatos<maxGeneraciones) {
 			fitness[0] = poblacion.get(0).getFitness();
 			double sumFitness = fitness[0];
-			double max = Double.MIN_VALUE;
+			double max = fitness[0];
 			for(int j = 1; j < tamPoblacion; j++) {
 				fitness[j] = poblacion.get(j).getFitness();
 				sumFitness += fitness[j];

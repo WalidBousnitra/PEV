@@ -31,14 +31,14 @@ public class Restos extends AlgoritmoSeleccion{
 		List<Individuo<T>> restos = new ArrayList<Individuo<T>>(nIndiv);
 		double[] restosFitness = new double[nIndiv];
 		int pos = 0, pos2=0;
-		for(int i = 0; i<probSeleccion.length; ++i) {
-			if(probSeleccion[i]>=1) {
-				newIndividuos.add(pos, individuos.get(i));
-				seleccionado[i] = true;
+		for(int i = 1; i<probSeleccion.length; ++i) {
+			if(!seleccionado[i-1] && probSeleccion[i]>=1) {
+				newIndividuos.add(pos, individuos.get(i-1));
+				seleccionado[i-1] = true;
 				pos++;
-			}else {
-				restos.add(pos2,individuos.get(i));
-				restosFitness[pos2] = fitness[i];
+			}else if (!seleccionado[i-1]){
+				restos.add(pos2,individuos.get(i-1));
+				restosFitness[pos2] = fitness[i-1];
 				pos2++;
 			}
 		}
@@ -46,30 +46,27 @@ public class Restos extends AlgoritmoSeleccion{
 		switch(rand.nextInt(0,5)) {
 			case 0:
 				EstocasticoUni metodo = new EstocasticoUni();
-				metodo.seleccionar(restos, restosFitness);
+				restos = metodo.seleccionar(restos, restosFitness);
 				break;
 			case 1:
 				Ruleta metodo2 = new Ruleta();
-				metodo2.seleccionar(restos, restosFitness);
+				restos = metodo2.seleccionar(restos, restosFitness);
 				break;
 			case 2:
 				TorneoDet metodo3= new TorneoDet();
-				metodo3.seleccionar(restos, restosFitness);
+				restos = metodo3.seleccionar(restos, restosFitness);
 				break;
 			case 3:
 				TorneoProb metodo4 = new TorneoProb();
-				metodo4.seleccionar(restos, restosFitness);
+				restos = metodo4.seleccionar(restos, restosFitness);
 				break;
 			case 4:
 				Truncamiento metodo5 = new Truncamiento();
-				metodo5.seleccionar(restos, restosFitness);
+				restos = metodo5.seleccionar(restos, restosFitness);
 				break;
 		}
 		
-		for(int i = 0; i< restos.size(); i++) {
-			newIndividuos.add(pos, restos.get(i));
-			pos++;
-		}
+		newIndividuos.addAll(restos);
 		
 		return newIndividuos;
 	}

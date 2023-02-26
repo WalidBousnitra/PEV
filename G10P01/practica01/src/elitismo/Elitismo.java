@@ -16,32 +16,42 @@ public class Elitismo<T> {
 	}
 	
 	public void extraer(List<Individuo<T>> poblacion) {
+		List<Individuo<T>> copia = new ArrayList<Individuo<T>>(poblacion.size());
+		copia.addAll(poblacion);
 		elite = new ArrayList<Individuo<T>>();
-		boolean[] elegidos = new boolean[poblacion.size()];
+		int numElite = (int)(poblacion.size()*p);
 		if(activado) {
-			while (elite.size()<(int)(poblacion.size()*p)) {
-				double max = Double.MIN_VALUE;
+			while (elite.size()<numElite) {
 				Individuo<T> maximo = poblacion.get(0);
 				int pos = 0;
-				for(int i = 0; i< poblacion.size(); i++) {
-					if(!elegidos[i] && poblacion.get(i).getFitness()>max) {
-						max = poblacion.get(i).getFitness();
-						maximo = poblacion.get(i);
-						elegidos[i] = true;
-						elegidos[pos] = false;
-						pos = i;
+				for(int i = 0; i< copia.size(); i++) {
+					if(copia.get(i).getFitness()>copia.get(0).getFitness()) {
+						maximo = copia.get(i);
+					 	pos = i;
 					}
 				}
 				elite.add(maximo);
+				copia.remove(pos);
 			}
 		}
+				
 	}
 	
-	public List<Individuo<T>> incorporar(List<Individuo<T>> poblacion, List<Individuo<T>> elite) {
+	public List<Individuo<T>> incorporar(List<Individuo<T>> poblacion) {
 		
 		List<Individuo<T>> newPoblacion = new ArrayList<Individuo<T>>();
 		if(activado) {
-		
+			for(int i = 0 ; i<elite.size(); i++) {
+				Individuo<T> min = poblacion.get(0);
+				for(int j = 0; j<poblacion.size();j++){
+					if(poblacion.get(i).getFitness()<min.getFitness()) {
+						min = poblacion.get(i);
+					}
+				}
+				poblacion.remove(min);
+			}
+			newPoblacion.addAll(poblacion);
+			newPoblacion.addAll(elite);
 		}
 		else
 			return poblacion;
