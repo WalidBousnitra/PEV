@@ -21,17 +21,18 @@ public class GraphicPanel extends JPanel{
 		this.mejores = mejores;
 		this.absolutos = absolutos;
 		this.media = media;
-		plot.setPreferredSize(new Dimension(500,500));
+		plot.setPreferredSize(new Dimension(600,500));
 		plot.addLegend("SOUTH");
+		plot.setAxisLabels("Genereaciones","Evaluación");
 		initGUI(panel);
 	}
 	
 	public void initGUI(JPanel panel) {
 
 		plot.removeAllPlots();
-		plot.addLinePlot("absolutos", Color.blue, absolutos);
-		plot.addLinePlot("mejores", Color.red, mejores);
-		plot.addLinePlot("media", Color.green, media);
+		plot.addLinePlot("Mejor absoluto", Color.blue, absolutos);
+		plot.addLinePlot("Mejor de la generación", Color.red, mejores);
+		plot.addLinePlot("Media de la generación", Color.green, media);
 		
 		panel.add(plot);
 	}

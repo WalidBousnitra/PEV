@@ -52,6 +52,7 @@ public class Elitismo<T> {
 			}
 			newPoblacion.addAll(poblacion);
 			newPoblacion.addAll(elite);
+			elite.clear();
 		}
 		else
 			return poblacion;
