@@ -21,9 +21,9 @@ public class GraphicPanel extends JPanel{
 		this.mejores = mejores;
 		this.absolutos = absolutos;
 		this.media = media;
-		plot.setPreferredSize(new Dimension(600,500));
+		plot.setPreferredSize(new Dimension(749,500));
 		plot.addLegend("SOUTH");
-		plot.setAxisLabels("Genereaciones","Evaluación");
+		plot.setAxisLabels("Generaciones","Evaluación");
 		initGUI(panel);
 	}
 	

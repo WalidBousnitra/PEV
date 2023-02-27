@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -10,7 +11,10 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -29,8 +33,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	private String[] texto = {"nada","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
-			"Probabiliad de Mutación:","Probabilidad de elitismo:","Dimensión variables:","Precisión:"};
+			"Probabiliad de Mutación:","Probabilidad de elitismo:","Dimensión variables:","Precisión:","Método de Selección","Método de Cruce","Función"};
 	private JSpinner[] spinners;
+	private List<JComboBox<String>> comboBox;
 	private JTextField spinner5;
     private JButton ejecutarButton;
     private JPanel panelPrincipal;
@@ -47,7 +52,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     	
         setTitle("Ventana Principal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
 
         // Panel principal
         panelPrincipal = new JPanel(new BorderLayout());
@@ -55,6 +59,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         // Panel Titulo
         panelTitulo = new JPanel();
 		spinners = new JSpinner[7];
+		comboBox = new ArrayList<JComboBox<String>>(11);
     	initGUI();
     }
     
@@ -73,7 +78,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         gbcTexto.fill = GridBagConstraints.HORIZONTAL;
         gbcTexto.insets = new Insets(5, 5, 5, 5);
 
-        JLabel labelTexto = new JLabel("Parámetros necesarios:");
+        JLabel labelTexto = new JLabel("Parámetros:");
 
         paramsPanel.add(labelTexto, gbcTexto);
         
@@ -89,6 +94,23 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         spinners[5] = new JSpinner(new SpinnerNumberModel(2,0,100,1));
         spinners[6] = new JSpinner(new SpinnerNumberModel(1,1,100,1));
         spinner5 = new JTextField("0.001");
+        
+        // Crear combo box para los parámetros
+        String[] opciones = {"Estocástico Universal","Restos","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
+        comboBox.add(0,new JComboBox<>(opciones));
+        comboBox.add(1,new JComboBox<>(opciones));
+        comboBox.add(2,new JComboBox<>(opciones));
+        comboBox.add(3,new JComboBox<>(opciones));
+        comboBox.add(4,new JComboBox<>(opciones));
+        comboBox.add(5,new JComboBox<>(opciones));
+        comboBox.add(6,new JComboBox<>(opciones));
+        comboBox.add(7,new JComboBox<>(opciones));
+        comboBox.add(8,new JComboBox<>(opciones));
+        String[] opciones2 = {"Monopunto", "Uniforme", "Aritmético","BLX-alfa"};
+        comboBox.add(9,new JComboBox<>(opciones2));
+        String[] opciones3 = {"Función1(calibracion y prueba)","Función2(GrieWank)","Función3(Styblinski-tang)",
+       		 "Función4a(Michalewicz)","Función4b(Michalewicz)"};
+        comboBox.add(10,new JComboBox<>(opciones3));
         
         for (int i = 1; i <= 7; i++) {
             JLabel labelFila = new JLabel(texto[i]);
@@ -114,43 +136,24 @@ public class AlgoritmoGeneticoGUI extends JFrame{
             	paramsPanel.add(spinnerFila, gbcTexto);
 
             gbcTexto.gridx = 1;
-            gbcTexto.weightx = 0.5;
+            gbcTexto.weightx = 0.2;
         }
         
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 8; i <= 10; i++) {
             JLabel labelFila = new JLabel(texto[i]);
-            JSpinner spinnerFila = spinners[i];
+            JComboBox<String> comboFila = comboBox.get(i);
 
             gbcTexto.gridy = i;
             paramsPanel.add(labelFila, gbcTexto);
 
             gbcTexto.gridx = 2;
             gbcTexto.weightx = 0.0;
-            paramsPanel.add(spinnerFila, gbcTexto);
+            
+            paramsPanel.add(comboFila, gbcTexto);
 
             gbcTexto.gridx = 1;
             gbcTexto.weightx = 0.5;
         }
-        
-        // Crear combo box para los parámetros
-        String[] opciones = {"Estocástico Universal","Restos","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
-        JComboBox<String> comboBox = new JComboBox<>(opciones);
-        comboBox.setPreferredSize(new Dimension(50, 50));
-        String[] opciones2 = {"Monopunto", "Uniforme", "Aritmético","BLX-alfa"};
-        JComboBox<String> comboBox2 = new JComboBox<>(opciones2);
-        comboBox2.setPreferredSize(new Dimension(50, 50));
-        String[] opciones3 = {"Función1(calibracion y prueba)","Función2(GrieWank)","Función3(Styblinski-tang)",
-       		 "Función4a(Michalewicz)","Función4b(Michalewicz)"};
-        JComboBox<String> comboBox3 = new JComboBox<>(opciones3);
-        comboBox3.setPreferredSize(new Dimension(50, 50));
-        
-        // Añadir elementos al panel de parámetros
- 		paramsPanel.add(new JLabel("Método de Selección:"));
- 		paramsPanel.add(comboBox);
- 		paramsPanel.add(new JLabel("Método de Cruce:"));
- 		paramsPanel.add(comboBox2);
- 		paramsPanel.add(new JLabel("Función a estudiar:"));
- 		paramsPanel.add(comboBox3);
         
         gbcTexto.gridy = 11;
         gbcTexto.gridx = 0;
@@ -164,7 +167,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         // Crear segundo panel vacío para la gráfica
  		JPanel panelVacio = new JPanel();
  		GraphicPanel grafico = new GraphicPanel();
- 		panelVacio.add(grafico);
+ 		panelVacio.setBorder(BorderFactory.createLineBorder(Color.BLACK));
  		panelVacio.setPreferredSize(new Dimension(700, 600));
  		panelVacio.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
         
@@ -178,9 +181,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				double probCruce = (Double.valueOf((Integer)spinners[3].getValue()))/100;
 				double probMutacion = (Double.valueOf((Integer)spinners[4].getValue()))/100;
 				String precision = spinner5.getText();
-				String funcion = (String)comboBox3.getSelectedItem();
-				String metodoSeleccion = (String)comboBox.getSelectedItem();
-				String metodoCruce = (String)comboBox2.getSelectedItem();
+				String funcion = (String)comboBox.get(10).getSelectedItem();
+				String metodoSeleccion = (String)comboBox.get(8).getSelectedItem();
+				String metodoCruce = (String)comboBox.get(9).getSelectedItem();
 				double probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
 				boolean marcar2 = marcar.isSelected();
 				int d = (Integer)spinners[6].getValue();
@@ -201,7 +204,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 					List<double[]> datos2 = instancia2.datos();
 					grafico.actualizar(panelVacio,datos2.get(0), datos2.get(1), datos2.get(2));
 					panelVacio.revalidate();
-				break;
+					break;
 				}
 			}
          });
@@ -216,6 +219,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         add(panelPrincipal);
         pack();
         setVisible(true);
+		this.setLocationRelativeTo(null);
     }
     
     public void titulo() {
