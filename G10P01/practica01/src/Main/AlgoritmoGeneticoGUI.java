@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -38,6 +37,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	private List<JComboBox<String>> comboBox;
 	private JTextField spinner5;
     private JButton ejecutarButton;
+    private JButton reset;
     private JPanel panelPrincipal;
     private JPanel panelTitulo;
     private JSpinner spinnerFila;
@@ -89,10 +89,10 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 
         spinners[1] = new JSpinner(new SpinnerNumberModel(100,2,10000,10));   
         spinners[2] = new JSpinner(new SpinnerNumberModel(100,1,10000,10));
-        spinners[3] = new JSpinner(new SpinnerNumberModel(10,0,100,1));
-        spinners[4] = new JSpinner(new SpinnerNumberModel(10,0,100,1));
+        spinners[3] = new JSpinner(new SpinnerNumberModel(60,0,100,1));
+        spinners[4] = new JSpinner(new SpinnerNumberModel(5,0,100,1));
         spinners[5] = new JSpinner(new SpinnerNumberModel(2,0,100,1));
-        spinners[6] = new JSpinner(new SpinnerNumberModel(1,1,100,1));
+        spinners[6] = new JSpinner(new SpinnerNumberModel(2,1,100,1));
         spinner5 = new JTextField("0.001");
         
         // Crear combo box para los parámetros
@@ -163,6 +163,33 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         ejecutarButton = new JButton("Ejecutar");
         ejecutarButton.setPreferredSize(new Dimension(200, 40));
         paramsPanel.add(ejecutarButton, gbcTexto);
+        
+        gbcTexto.gridy = 12;
+        gbcTexto.gridx = 0;
+        gbcTexto.gridwidth = 3;
+        gbcTexto.weightx = 0.0;
+        gbcTexto.fill = GridBagConstraints.NONE;
+        reset = new JButton("<html><center>Valores</center><center>Predeterminados</center></html>");
+        reset.setPreferredSize(new Dimension(175, 40));
+        paramsPanel.add(reset, gbcTexto);
+        
+        reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				spinners[1].setValue(100);
+		        spinners[1].setValue(100);
+		        spinners[2].setValue(100);
+		        spinners[3].setValue(60);
+		        spinners[4].setValue(5);
+		        spinners[5].setValue(2);
+		        spinners[6].setValue(2);
+		        spinner5.setText("0.001");
+		        marcar.setSelected(false);
+			}
+        	
+        });
+        
         
         // Crear segundo panel vacío para la gráfica
  		JPanel panelVacio = new JPanel();
