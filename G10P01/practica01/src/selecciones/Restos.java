@@ -28,8 +28,8 @@ public class Restos extends AlgoritmoSeleccion{
 			probSeleccion[i] = fitness[i]/fitnessTotal*k;
 			nIndiv++;
 		}
-		List<Individuo<T>> restos = new ArrayList<Individuo<T>>(nIndiv);
-		double[] restosFitness = new double[nIndiv];
+		List<Individuo<T>> restos = new ArrayList<Individuo<T>>(nIndiv+1);
+		double[] restosFitness = new double[nIndiv+1];
 		int pos = 0, pos2=0;
 		for(int i = 1; i<probSeleccion.length; ++i) {
 			if(!seleccionado[i-1] && probSeleccion[i]>=1) {

@@ -70,4 +70,14 @@ public class IndividuoFuncion4a<T> extends Individuo<Boolean>{
 	public void mutar(int i) {
 		getCromosoma().set(i,!getCromosoma().get(i));		
 	}
+	
+	@Override
+	public int compareTo(Individuo<Boolean> o) {
+		if(o.getFitness()== this.getFitness())
+			return 0;
+		else if(o.getFitness()< this.getFitness())
+			return -1;
+		else 
+			return 1;
+	}
 }

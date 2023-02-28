@@ -43,7 +43,7 @@ class AlgoritmoGenetico<T> {
 		this.mutacion = new Mutacion(probMutacion);
 		this.precision = precision;
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
-		this.probElitismo = new Elitismo<T>(marcar,probElitismo);
+		this.probElitismo = new Elitismo<T>(marcar,probElitismo,tamPoblacion);
 		this.funcion = funcion;
 		this.d = d;
 		
@@ -60,18 +60,13 @@ class AlgoritmoGenetico<T> {
 		
 		iniciarPoblacion();
 		
-		for(int i = 0; i < maxGeneraciones; i++) {
+		for(int i = 1; i < maxGeneraciones; i++) {
 
 			probElitismo.extraer(poblacion);
-			
 			poblacion = seleccion.seleccionar(poblacion,fitness);
-
-			poblacion = cruce.cruzar(poblacion);
-
+			cruce.cruzar(poblacion);
 			poblacion = mutacion.mutar(poblacion);
-			
-			poblacion = probElitismo.incorporar(poblacion);
-			
+			probElitismo.incorporar(poblacion);
 			calculos();
 		}
 
@@ -190,7 +185,7 @@ class AlgoritmoGenetico<T> {
 			}
 			media[posDatos] = sumFitness/tamPoblacion;
 			mejores[posDatos] = max;
-			if(max > absolutos[posDatos-1])
+			if(max >= absolutos[posDatos-1])
 				absolutos[posDatos] = max;
 			else
 				absolutos[posDatos] = absolutos[posDatos-1]; 

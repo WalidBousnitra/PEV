@@ -160,7 +160,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         gbcTexto.gridwidth = 3;
         gbcTexto.weightx = 0.0;
         gbcTexto.fill = GridBagConstraints.NONE;
-        ejecutarButton = new JButton("Ejecutar");
+        ejecutarButton = new JButton("EJECUTAR");
         ejecutarButton.setPreferredSize(new Dimension(200, 40));
         paramsPanel.add(ejecutarButton, gbcTexto);
         
@@ -170,7 +170,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         gbcTexto.weightx = 0.0;
         gbcTexto.fill = GridBagConstraints.NONE;
         reset = new JButton("<html><center>Valores</center><center>Predeterminados</center></html>");
-        reset.setPreferredSize(new Dimension(175, 40));
+        reset.setPreferredSize(new Dimension(150, 40));
         paramsPanel.add(reset, gbcTexto);
         
         reset.addActionListener(new ActionListener() {

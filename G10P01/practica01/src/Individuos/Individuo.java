@@ -3,7 +3,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Individuo<T> {
+public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	
 	//Atributos
 	private Random rand;
@@ -41,7 +41,7 @@ public abstract class Individuo<T> {
 		return (int) (Math.log10(((max - min) / valorError) + 1) / Math.log10(2));
 	}
 	public double getFenotipo(int var) {
-		 return min[var] + Integer.parseInt(getGenotipo(var),2) * ((max[var] - min[var])/(Math.pow(2,getTamGenes()[var])-1));
+		 return formato(min[var] + Integer.parseInt(getGenotipo(var),2) * ((max[var] - min[var])/(Math.pow(2,getTamGenes()[var])-1)));
 	}
 	
 	//Funcion para dar el formato necesario

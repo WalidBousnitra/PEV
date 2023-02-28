@@ -15,10 +15,11 @@ public abstract class AlgoritmosCruce<T>{
 		this.p =p;
 	}
 	
-	public List<Individuo<T>> cruzar(List<Individuo<T>> individuos) {
+	public void cruzar(List<Individuo<T>> individuos) {
 		
-		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
 		List<Individuo<T>> parejas = new ArrayList<Individuo<T>>();
+		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
+		
 		boolean[] elegidos = new boolean[individuos.size()];
 		
 		for(int i = 0; i<individuos.size(); i++)
@@ -27,7 +28,7 @@ public abstract class AlgoritmosCruce<T>{
 				parejas.add(individuos.get(i));
 			}
 		for(int i = 0; parejas.size()%2!=0; i++)
-			if(rand.nextDouble()<p) {
+			if(rand.nextDouble()<p && !elegidos[i%individuos.size()]) {
 				elegidos[i%individuos.size()] = true;
 				parejas.add(individuos.get(i%individuos.size()));
 			}
@@ -44,8 +45,7 @@ public abstract class AlgoritmosCruce<T>{
 			newIndividuos.add(parejas.get(i));
 			newIndividuos.add(parejas.get(i+1));
 		}
-		
-		return newIndividuos;
+		individuos = newIndividuos;
 	}
 	public abstract List<List<T>> pareja(List<T> padre1, List<T> padre2);
 }

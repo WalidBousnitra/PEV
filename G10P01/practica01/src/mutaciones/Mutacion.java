@@ -20,18 +20,21 @@ public class Mutacion{
 		List<Individuo<T>> newPoblacion = new ArrayList<Individuo<T>>();
 		
 		for(int i = 0 ; i < poblacion.size(); i++) {
-			cromosoma(poblacion.get(i));
-			newPoblacion.add(poblacion.get(i));
+			newPoblacion.add(cromosoma(poblacion.get(i)));
 		}
 				
 		return newPoblacion;
 	}
 	
-	public <T> void cromosoma(Individuo<T> individuo) {
+	public <T> Individuo<T> cromosoma(Individuo<T> individuo) {
 		
-		for(int i = 0; i < individuo.getTamTotal(); ++i) {
+		Individuo<T> newIndividuo = individuo;
+		
+		for(int i = 0; i < newIndividuo.getTamTotal(); ++i) {
 			if(rand.nextDouble()<p)
-				individuo.mutar(i);
+				newIndividuo.mutar(i);
 		}
+		
+		return newIndividuo;
 	}
 }
