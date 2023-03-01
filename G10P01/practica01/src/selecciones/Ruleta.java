@@ -8,6 +8,10 @@ import Individuos.Individuo;
 
 public class Ruleta extends AlgoritmoSeleccion{
 	
+	public Ruleta(String funcion) {
+		super(funcion);
+	}
+
 	private Random rand = new Random();
 
 	@Override
@@ -29,7 +33,7 @@ public class Ruleta extends AlgoritmoSeleccion{
 			double r = rand.nextDouble();
 			for(int j = 1; j <probSeleccion.length; j++) {
 				if(probSeleccion[j-1] < r && r <= probSeleccion[j]) {
-					newIndividuos.add(i, individuos.get(j-1));
+					newIndividuos.add(i, crear(individuos.get(j-1)));
 					break;
 				}
 			}

@@ -10,6 +10,11 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 	private int m;
 	private int d;
 	
+	public IndividuoFuncion4b(Individuo<Double> obj){
+		super(obj);
+		m =10;
+	}
+	
 	public IndividuoFuncion4b(int d, String valorError){
 		super(new int[d],valorError,rellena(d,0),rellena(d,Math.PI));
 		this.d = d;

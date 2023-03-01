@@ -8,6 +8,10 @@ import Individuos.Individuo;
 
 public class TorneoProb extends AlgoritmoSeleccion{
 	
+	public TorneoProb(String funcion) {
+		super(funcion);
+	}
+
 	private Random rand = new Random();
 
 	@Override
@@ -30,20 +34,20 @@ public class TorneoProb extends AlgoritmoSeleccion{
 	
 	private <T> void menorFit(int i, List<Individuo<T>> individuos, List<Individuo<T>> newIndividuos, int k1, int k2, int k3) {
 		if (individuos.get(k1).getFitness() <= individuos.get(k2).getFitness() && individuos.get(k1).getFitness() <= individuos.get(k3).getFitness())
-			newIndividuos.add(i, individuos.get(k1));
+			newIndividuos.add(i, crear(individuos.get(k1)));
 	    else if (individuos.get(k2).getFitness() >= individuos.get(k1).getFitness() && individuos.get(k2).getFitness() <= individuos.get(k3).getFitness())
-	    	newIndividuos.add(i, individuos.get(k2));
+	    	newIndividuos.add(i, crear(individuos.get(k2)));
 	    else
 	    	newIndividuos.add(i, individuos.get(k3));
 	}
 
 	private <T> void mayorFit(int i, List<Individuo<T>> individuos, List<Individuo<T>> newIndividuos, int k1, int k2, int k3) {
 		if (individuos.get(k1).getFitness() >= individuos.get(k2).getFitness() && individuos.get(k1).getFitness() >= individuos.get(k3).getFitness())
-			newIndividuos.add(i, individuos.get(k1));
+			newIndividuos.add(i, crear(individuos.get(k1)));
 	    else if (individuos.get(k2).getFitness() >= individuos.get(k1).getFitness() && individuos.get(k2).getFitness() >= individuos.get(k3).getFitness())
-	    	newIndividuos.add(i, individuos.get(k2));
+	    	newIndividuos.add(i, crear(individuos.get(k2)));
 	    else
-	    	newIndividuos.add(i, individuos.get(k3));
+	    	newIndividuos.add(i, crear(individuos.get(k3)));
 	}
 
 }

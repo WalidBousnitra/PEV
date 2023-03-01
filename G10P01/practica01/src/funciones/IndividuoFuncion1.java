@@ -6,11 +6,16 @@ import java.util.Random;
 import Individuos.Individuo;
 
 public class IndividuoFuncion1<T> extends Individuo<Boolean>{
+
+	public IndividuoFuncion1(Individuo<Boolean> obj){
+		super(obj);
+	}
+
 	
 	public IndividuoFuncion1(String valorError){
 		super(new int[2],valorError, new double[]{-3.000,4.100},new double[]{12.100,5.800});
 	}
-	
+
 	@Override
 	public List<Boolean> iniCromosoma(Random rand) {
 		List<Boolean> cromosoma = new ArrayList<Boolean>(getTamTotal());

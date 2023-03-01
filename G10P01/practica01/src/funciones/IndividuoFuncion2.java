@@ -9,9 +9,14 @@ public class IndividuoFuncion2<T> extends Individuo<Boolean>{
 	
 	private int d;
 	
+	public IndividuoFuncion2(Individuo<Boolean> obj){
+		super(obj);
+		this.d = 2;
+	}
+	
 	public IndividuoFuncion2(String valorError){
 		super(new int[2],valorError,new double[]{-600,-600},new double[]{600,600});
-		d = 2;
+		this.d = 2;
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package selecciones;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
 
@@ -9,6 +10,10 @@ import Individuos.Individuo;
 public class EstocasticoUni extends AlgoritmoSeleccion{
 	
 	private Random rand = new Random();
+
+	public EstocasticoUni(String funcion) {
+		super(funcion);
+	}
 
 	@Override
 	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
@@ -29,12 +34,11 @@ public class EstocasticoUni extends AlgoritmoSeleccion{
 			double number = (r+i)/individuos.size();
 			for(int j = 1; j < probSeleccion.length; j++) {
 				if(probSeleccion[j-1] < number && number <= probSeleccion[j]) {
-					newIndividuos.add(i,individuos.get(j-1));
+					newIndividuos.add(i, crear(individuos.get(j-1)));
 					break;
 				}
 			}
 		}
 		return newIndividuos;
 	}
-
 }

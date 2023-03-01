@@ -1,6 +1,5 @@
 package mutaciones;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import Individuos.Individuo;
@@ -15,26 +14,20 @@ public class Mutacion{
 		rand = new Random();
 	}
 	
-	public <T> List<Individuo<T>> mutar(List<Individuo<T>> poblacion) {
-		
-		List<Individuo<T>> newPoblacion = new ArrayList<Individuo<T>>();
+	public <T> void mutar(List<Individuo<T>> poblacion) {
 		
 		for(int i = 0 ; i < poblacion.size(); i++) {
-			newPoblacion.add(cromosoma(poblacion.get(i)));
+
+			cromosoma(poblacion.get(i));
 		}
-				
-		return newPoblacion;
 	}
 	
-	public <T> Individuo<T> cromosoma(Individuo<T> individuo) {
-		
-		Individuo<T> newIndividuo = individuo;
-		
-		for(int i = 0; i < newIndividuo.getTamTotal(); ++i) {
-			if(rand.nextDouble()<p)
-				newIndividuo.mutar(i);
+	public <T> void cromosoma(Individuo<T> individuo) {
+
+		for(int i = 0; i<individuo.getCromosoma().size();i++) {
+			if(rand.nextDouble()<p) {
+				individuo.mutar(i);
+			}
 		}
-		
-		return newIndividuo;
 	}
 }

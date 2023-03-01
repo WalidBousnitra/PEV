@@ -10,6 +10,10 @@ import Individuos.Individuo;
 
 public class Truncamiento extends AlgoritmoSeleccion{
 	
+	public Truncamiento(String funcion) {
+		super(funcion);
+	}
+
 	private Random rand = new Random();
 
 	@Override
@@ -26,18 +30,18 @@ public class Truncamiento extends AlgoritmoSeleccion{
 		probSeleccion[0] = 0;
 		for(int i = 1; i<=fitness.length; i++) {
 			probSeleccion[i] = fitness[i-1]/fitnessTotal + probSeleccion[i-1];
-			mapSeleccion.put(probSeleccion[i], individuos.get(i));
+			mapSeleccion.put(probSeleccion[i], crear(individuos.get(i)));
 		}
 		int i  = 0;
 		for(Entry<Double, Individuo<T>> obj : mapSeleccion.entrySet()) {
 			if(i>=r*individuos.size())
 				break;
-			newIndividuos.add(i, obj.getValue());
+			newIndividuos.add(i, crear(obj.getValue()));
 			i++;
 		}
 		
 		for( int j = i; j< individuos.size(); j++) {
-			newIndividuos.add(j, newIndividuos.get(j-1));
+			newIndividuos.add(j, crear(newIndividuos.get(j-1)));
 		}
 
 		return newIndividuos;
