@@ -22,7 +22,7 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 	@Override
 	public List<Double> iniCromosoma(Random rand) {
 		List<Double> cromosoma = new ArrayList<Double>(getTamTotal());
-		for(int i = 0; i < getTamTotal(); i++) cromosoma.add(i, rand.nextDouble(this.getMin()[0],this.getMax()[0]));
+		for(int i = 0; i < getTamTotal(); i++) cromosoma.add(i, rand.nextDouble(this.getMin()[i],this.getMax()[i]));
 		return cromosoma;
 	}
 	

@@ -22,7 +22,7 @@ public abstract class AlgoritmosCruce<T>{
 		this.funcion=funcion;
 	}
 	
-	public abstract List<List<T>> pareja(List<T> padre1, List<T> padre2);
+	public abstract  List<Individuo<T>>  pareja(Individuo<T> padre1, Individuo<T> padre2);
 	
 	public List<Individuo<T>> cruzar(List<Individuo<T>> individuos) {
 		
@@ -47,10 +47,9 @@ public abstract class AlgoritmosCruce<T>{
 				newIndividuos.add(crear(individuos.get(i)));
 		
 		for (int i = 0; i <parejas.size()-1; i=i+2) {
-			List<List<T>> hijos = pareja(parejas.get(i).getCromosoma(),
-					parejas.get(i+1).getCromosoma());
-			//newIndividuos.add(crear(hijos.get(0)));
-			//newIndividuos.add(crear(hijos.get(1)));
+			 List<Individuo<T>>  hijos = pareja(parejas.get(i), parejas.get(i+1));
+			newIndividuos.add(crear(hijos.get(0)));
+			newIndividuos.add(crear(hijos.get(1)));
 		}
 		return newIndividuos;
 	}

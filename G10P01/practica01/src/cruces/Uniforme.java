@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Individuos.Individuo;
+
 public class Uniforme<T> extends AlgoritmosCruce<T>{
 	
 	private Random rand = new Random();
@@ -13,20 +15,17 @@ public class Uniforme<T> extends AlgoritmosCruce<T>{
 	}
 
 	@Override
-	public List<List<T>> pareja(List<T> padre1, List<T> padre2) {
-		List<List<T>> hijos = new ArrayList<List<T>>();
+	public List<Individuo<T>> pareja(Individuo<T> padre1, Individuo<T> padre2) {
 		
-		List<T> hijo1 = new ArrayList<T>(padre1.size());
-		List<T> hijo2 = new ArrayList<T>(padre1.size());
+		List<Individuo<T>> hijos = new ArrayList<Individuo<T>>(2);
 		
-		for(int i = 0; i < padre1.size(); i++)
+		Individuo<T> hijo1 = crear(padre1);
+		Individuo<T> hijo2 = crear(padre2);
+		
+		for(int i = 0; i < padre1.getCromosoma().size(); i++)
 			if(rand.nextDouble() <= p) {
-				hijo1.add(i, padre2.get(i));
-				hijo2.add(i, padre1.get(i));
-			}
-			else {
-				hijo1.add(i, padre1.get(i));
-				hijo2.add(i, padre2.get(i));
+				hijo1.getCromosoma().set(i, padre2.getCromosoma().get(i));
+				hijo2.getCromosoma().set(i, padre1.getCromosoma().get(i));
 			}
 		
 		hijos.add(hijo1);
