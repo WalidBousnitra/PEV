@@ -21,6 +21,7 @@ class AlgoritmoGenetico<T> {
 	private Elitismo<T> probElitismo;
 	private String funcion;
 	private int d;
+	private boolean[] marcados;
 	
 	//Datos del Algoritmo
 	private List<Individuo<T>> poblacion;
@@ -35,7 +36,7 @@ class AlgoritmoGenetico<T> {
 	
 	
 	public AlgoritmoGenetico(int tamPoblacion, int maxGeneraciones, double probCruce, double probMutacion, String precision, 
-						 String metodoSeleccion, String metodoCruce, double probElitismo, boolean marcar, String funcion, int d) {
+						 String metodoSeleccion, String metodoCruce, double probElitismo, boolean[] marcados, String funcion, int d) {
 		
 		//Inicializacion de parametros
 		this.tamPoblacion =  tamPoblacion;
@@ -45,7 +46,8 @@ class AlgoritmoGenetico<T> {
 		this.precision = precision;
 		this.funcion = funcion;
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
-		this.probElitismo = new Elitismo<T>(funcion,marcar,probElitismo,tamPoblacion);
+		this.marcados= marcados;
+		this.probElitismo = new Elitismo<T>(funcion,marcados[5],probElitismo,tamPoblacion);
 		this.d = d;
 
 		//
@@ -65,8 +67,12 @@ class AlgoritmoGenetico<T> {
 
 			probElitismo.extraer(poblacion);
 			poblacion = seleccion.seleccionar(poblacion,fitness);
-			cruce.cruzar(poblacion);
-			mutacion.mutar(poblacion);
+			if(marcados[3]) {
+				cruce.cruzar(poblacion);
+			}
+			if(marcados[4]) {
+				mutacion.mutar(poblacion);
+			}
 			probElitismo.incorporar(poblacion);
 			calculos();
 		}

@@ -40,8 +40,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     private JButton reset;
     private JPanel panelPrincipal;
     private JPanel panelTitulo;
-    private JSpinner spinnerFila;
-    private JCheckBox marcar = new JCheckBox("Añadir");
+    private List<JCheckBox> marcar = new ArrayList<JCheckBox>(5);
     
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
@@ -60,6 +59,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         panelTitulo = new JPanel();
 		spinners = new JSpinner[7];
 		comboBox = new ArrayList<JComboBox<String>>(11);
+		marcar.add(new JCheckBox("DUUMY"));
     	initGUI();
     }
     
@@ -114,26 +114,29 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         
         for (int i = 1; i <= 7; i++) {
             JLabel labelFila = new JLabel(texto[i]);
-            if (i!=7)
-            	spinnerFila = spinners[i];
 
             gbcTexto.gridy = i;
             paramsPanel.add(labelFila, gbcTexto);
 
             gbcTexto.gridx = 2;
             gbcTexto.weightx = 0.0;
-            if(i==5) {
-                JPanel panelElitismo = new JPanel();
-                panelElitismo.setLayout(new GridLayout(0, 2, 0, 0));
-                panelElitismo.add(spinners[5]);
-                panelElitismo.add(marcar);
-                paramsPanel.add(panelElitismo, gbcTexto);
-            }
-            else if(i==7){
+            if(i==7){
          		paramsPanel.add(spinner5,gbcTexto);
             }
-            else
-            	paramsPanel.add(spinnerFila, gbcTexto);
+            else if (i == 3 || i==4 || i ==5 ){
+                JPanel panelElitismo = new JPanel();
+                panelElitismo.setLayout(new GridLayout(0, 2, 0, 0));
+                panelElitismo.add(spinners[i]);
+                marcar.add(new JCheckBox("ACTIVAR"));
+                if(i<5) 
+                	marcar.get(i).setSelected(true);
+                panelElitismo.add(marcar.get(i));
+                paramsPanel.add(panelElitismo, gbcTexto);
+            }
+            else {
+            	marcar.add(new JCheckBox("DUMMY"));
+            	paramsPanel.add(spinners[i], gbcTexto);
+            }
 
             gbcTexto.gridx = 1;
             gbcTexto.weightx = 0.2;
@@ -185,11 +188,13 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		        spinners[5].setValue(2);
 		        spinners[6].setValue(2);
 		        spinner5.setText("0.001");
-		        marcar.setSelected(false);
+		        for(int i = 1; i < 5; i++) {
+		        	marcar.get(i).setSelected(true);
+		        }
+		        marcar.get(5).setSelected(false);
 			}
         	
         });
-        
         
         // Crear segundo panel vacío para la gráfica
  		JPanel panelVacio = new JPanel();
@@ -212,12 +217,16 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				String metodoSeleccion = (String)comboBox.get(8).getSelectedItem();
 				String metodoCruce = (String)comboBox.get(9).getSelectedItem();
 				double probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
-				boolean marcar2 = marcar.isSelected();
+				boolean[] marcados= new boolean[marcar.size()];
+				marcados[0] = false;
+				for(int i = 1; i< marcar.size() ;i ++) {
+					marcados[i] =  marcar.get(i).isSelected();
+				}
 				int d = (Integer)spinners[6].getValue();
 				switch(funcion) {
 				case "Funcion4b(Michalewicz)":
 					AlgoritmoGenetico<Double> instancia =  new AlgoritmoGenetico<Double>(tamPoblacion, maxGeneraciones, probCruce, probMutacion, precision, 
-							metodoSeleccion, metodoCruce, probElitismo, marcar2, funcion, d);
+							metodoSeleccion, metodoCruce, probElitismo, marcados, funcion, d);
 							instancia.run();
 							List<double[]> datos = instancia.datos();
 							grafico.actualizar(panelVacio,datos.get(0), datos.get(1), datos.get(2));
@@ -226,7 +235,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 
 				default:					
 					AlgoritmoGenetico<Boolean> instancia2 =  new AlgoritmoGenetico<Boolean>(tamPoblacion, maxGeneraciones, probCruce, probMutacion, precision, 
-							metodoSeleccion, metodoCruce, probElitismo, marcar2, funcion, d);
+							metodoSeleccion, metodoCruce, probElitismo, marcados, funcion, d);
 					instancia2.run();
 					List<double[]> datos2 = instancia2.datos();
 					grafico.actualizar(panelVacio,datos2.get(0), datos2.get(1), datos2.get(2));
