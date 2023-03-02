@@ -33,19 +33,19 @@ public class TorneoProb extends AlgoritmoSeleccion{
 	}
 	
 	private <T> void menorFit(int i, List<Individuo<T>> individuos, List<Individuo<T>> newIndividuos, int k1, int k2, int k3) {
-		if (individuos.get(k1).getFitness() <= individuos.get(k2).getFitness() && individuos.get(k1).getFitness() <= individuos.get(k3).getFitness())
+		if (individuos.get(k1).compareTo(individuos.get(k2)) == -1 && individuos.get(k1).compareTo(individuos.get(k3)) == -1 )
 			newIndividuos.add(i, crear(individuos.get(k1)));
-	    else if (individuos.get(k2).getFitness() >= individuos.get(k1).getFitness() && individuos.get(k2).getFitness() <= individuos.get(k3).getFitness())
-	    	newIndividuos.add(i, crear(individuos.get(k2)));
+	    else if (individuos.get(k2).compareTo(individuos.get(k1)) == -1  && individuos.get(k2).compareTo(individuos.get(k3)) == -1 )
+	    	newIndividuos.add(i, individuos.get(k2));
 	    else
-	    	newIndividuos.add(i, individuos.get(k3));
+	    	newIndividuos.add(i, crear(individuos.get(k3)));
 	}
 
 	private <T> void mayorFit(int i, List<Individuo<T>> individuos, List<Individuo<T>> newIndividuos, int k1, int k2, int k3) {
-		if (individuos.get(k1).getFitness() >= individuos.get(k2).getFitness() && individuos.get(k1).getFitness() >= individuos.get(k3).getFitness())
+		if (individuos.get(k1).compareTo(individuos.get(k2)) == 1 && individuos.get(k1).compareTo(individuos.get(k3)) == 1 )
 			newIndividuos.add(i, crear(individuos.get(k1)));
-	    else if (individuos.get(k2).getFitness() >= individuos.get(k1).getFitness() && individuos.get(k2).getFitness() >= individuos.get(k3).getFitness())
-	    	newIndividuos.add(i, crear(individuos.get(k2)));
+	    else if (individuos.get(k2).compareTo(individuos.get(k1)) == 1  && individuos.get(k2).compareTo(individuos.get(k3)) == 1 )
+	    	newIndividuos.add(i, individuos.get(k2));
 	    else
 	    	newIndividuos.add(i, crear(individuos.get(k3)));
 	}

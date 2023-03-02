@@ -30,7 +30,7 @@ public class Truncamiento extends AlgoritmoSeleccion{
 		probSeleccion[0] = 0;
 		for(int i = 1; i<=fitness.length; i++) {
 			probSeleccion[i] = fitness[i-1]/fitnessTotal + probSeleccion[i-1];
-			mapSeleccion.put(probSeleccion[i], crear(individuos.get(i)));
+			mapSeleccion.put(probSeleccion[i], crear(individuos.get(i-1)));
 		}
 		int i  = 0;
 		for(Entry<Double, Individuo<T>> obj : mapSeleccion.entrySet()) {

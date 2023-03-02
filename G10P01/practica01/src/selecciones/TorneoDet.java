@@ -24,9 +24,9 @@ public class TorneoDet extends AlgoritmoSeleccion{
 			int k2 = rand.nextInt(0,individuos.size());
 			int k3 = rand.nextInt(0,individuos.size());
 			
-			if (individuos.get(k1).getFitness() >= individuos.get(k2).getFitness() && individuos.get(k1).getFitness() >= individuos.get(k3).getFitness())
+			if (individuos.get(k1).compareTo(individuos.get(k2)) == 1 && individuos.get(k1).compareTo(individuos.get(k3)) == 1 )
 				newIndividuos.add(i, crear(individuos.get(k1)));
-		    else if (individuos.get(k2).getFitness() >= individuos.get(k1).getFitness() && individuos.get(k2).getFitness() >= individuos.get(k3).getFitness())
+		    else if (individuos.get(k2).compareTo(individuos.get(k1)) == 1  && individuos.get(k2).compareTo(individuos.get(k3)) == 1 )
 		    	newIndividuos.add(i, individuos.get(k2));
 		    else
 		    	newIndividuos.add(i, crear(individuos.get(k3)));
