@@ -8,8 +8,8 @@ public class BLXalfa<T> extends AlgoritmosCruce<Double>{
 	
 	private Random rand = new Random();
 	
-	public BLXalfa(double p) {
-		super(p);
+	public BLXalfa(String funcion,double p) {
+		super(funcion,p);
 	}
 
 	@Override

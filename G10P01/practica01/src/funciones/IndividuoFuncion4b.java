@@ -15,8 +15,8 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 		m =10;
 	}
 	
-	public IndividuoFuncion4b(int d, String valorError){
-		super(new int[d],valorError,rellena(d,0),rellena(d,Math.PI));
+	public IndividuoFuncion4b(boolean marca, int d, String valorError){
+		super(marca, rellena2(d,1),valorError,rellena(d,0),rellena(d,Math.PI),d);
 		this.d = d;
 		m = 10;
 	}
@@ -38,18 +38,25 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 		return sol;
 	}
 	
+	private static int[] rellena2(int d, int valor) {
+		int[] sol = new int[d];
+		
+		for (int i = 0; i<d;i++) {
+			sol[i] = valor;
+		}
+		
+		return sol;
+	}
+	
 	@Override
 	public double getValor() {
-		double[] x = new double[d];
-		
-		for (int i= 0; i<d; ++i) {
-			x[i] = this.getFenotipo(i);
-		}
 		
 		double sum = 0;
 		
-		for(int i = 0; i < d; ++i)
-			sum+=Math.sin(x[i])*Math.pow(Math.sin((i+1)*Math.pow(x[i],2) /Math.PI),2*m);
+		for(int i = 0; i < d; ++i) {
+			double sin = Math.sin((i+1)*Math.pow(getCromosoma().get(i),2)/Math.PI);
+			sum+=Math.sin(getCromosoma().get(i))*(Math.pow(sin, 2*m));
+		}
 		
 		return -sum;
 	}	

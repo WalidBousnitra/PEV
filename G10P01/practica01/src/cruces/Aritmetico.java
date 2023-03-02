@@ -8,8 +8,8 @@ public class Aritmetico<T> extends AlgoritmosCruce<Double>{
 	
 	private Random rand = new Random();
 	
-	public Aritmetico(double p) {
-		super(p);
+	public Aritmetico(String funcion,double p) {
+		super(funcion,p);
 	}
 
 	@Override

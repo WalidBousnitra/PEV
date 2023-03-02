@@ -39,12 +39,12 @@ class AlgoritmoGenetico<T> {
 						 String metodoSeleccion, String metodoCruce, double probElitismo, boolean[] marcados, String funcion, int d) {
 		
 		//Inicializacion de parametros
+		this.funcion = funcion;
 		this.tamPoblacion =  tamPoblacion;
 		this.maxGeneraciones = maxGeneraciones;
 		this.cruce = iniciarCruce(metodoCruce, probCruce);
 		this.mutacion = new Mutacion(probMutacion);
 		this.precision = precision;
-		this.funcion = funcion;
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
 		this.marcados= marcados;
 		this.probElitismo = new Elitismo<T>(funcion,marcados[5],probElitismo,tamPoblacion);
@@ -68,7 +68,7 @@ class AlgoritmoGenetico<T> {
 			probElitismo.extraer(poblacion);
 			poblacion = seleccion.seleccionar(poblacion,fitness);
 			if(marcados[3]) {
-				cruce.cruzar(poblacion);
+				poblacion = cruce.cruzar(poblacion);
 			}
 			if(marcados[4]) {
 				mutacion.mutar(poblacion);
@@ -116,7 +116,7 @@ class AlgoritmoGenetico<T> {
 		case "Función4a(Michalewicz)":
 			return new IndividuoFuncion4a(d,precision);
 		case "Función4b(Michalewicz)":
-			return new IndividuoFuncion4b(d,precision);
+			return new IndividuoFuncion4b(false,d,precision);
 		}
 		return null;
 	}	
@@ -145,13 +145,13 @@ class AlgoritmoGenetico<T> {
 
 		switch(metodoCruce) {
 		case "Aritmético":
-			return new Aritmetico(probCruce);
+			return new Aritmetico(funcion,probCruce);
 		case "BLX-alfa":
-			return new BLXalfa(probCruce);
+			return new BLXalfa(funcion,probCruce);
 		case "Monopunto":
-			return new Monopunto<T>(probCruce);
+			return new Monopunto<T>(funcion,probCruce);
 		case "Uniforme":
-			return new Uniforme<T>(probCruce);
+			return new Uniforme<T>(funcion,probCruce);
 		}
 		
 		return null;

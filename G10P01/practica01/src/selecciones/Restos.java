@@ -47,7 +47,7 @@ public class Restos extends AlgoritmoSeleccion{
 			}
 		}
 		
-		switch(rand.nextInt(0,4)) {
+		switch(rand.nextInt(0, 5)) {
 			case 0:
 				EstocasticoUni metodo = new EstocasticoUni(getFuncion());
 				restos = metodo.seleccionar(restos, restosFitness);

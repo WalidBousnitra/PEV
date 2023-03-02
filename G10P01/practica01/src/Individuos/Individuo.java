@@ -55,6 +55,21 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 		this.cromosoma = iniCromosoma(getRand());
 		this.d = d;
 	}
+	
+	public Individuo(boolean marca, int[] tamGenes, String precision, double[] min, double[] max, int d) {
+		
+		//Inicializacion de atributos;
+		this.rand = new Random();
+		this.setMin(min);
+		this.setMax(max);
+		this.setTamGenes(tamGenes);
+		this.precision = precision;
+		this.formato = new DecimalFormat(precision);
+		this.valorError = Double.parseDouble(precision);
+		this.setTamTotal(d);
+		this.cromosoma = iniCromosoma(getRand());
+		this.d = d;
+	}
 
 	public Individuo(Individuo<T> obj) {
 		this.rand = new Random();

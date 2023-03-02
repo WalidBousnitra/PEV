@@ -8,8 +8,8 @@ public class Uniforme<T> extends AlgoritmosCruce<T>{
 	
 	private Random rand = new Random();
 	
-	public Uniforme(double p) {
-		super(p);
+	public Uniforme(String funcion, double p) {
+		super(funcion,p);
 	}
 
 	@Override

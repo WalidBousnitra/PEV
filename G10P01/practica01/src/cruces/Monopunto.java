@@ -8,8 +8,8 @@ public class Monopunto<T> extends AlgoritmosCruce<T>{
 	
 	private Random rand = new Random();
 
-	public Monopunto(double p) {
-		super(p);
+	public Monopunto(String funcion,double p) {
+		super(funcion,p);
 	}
 	
 	@Override

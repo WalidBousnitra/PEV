@@ -1,10 +1,9 @@
 package selecciones;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
-import java.util.TreeMap;
 
 import Individuos.Individuo;
 
@@ -19,32 +18,18 @@ public class Truncamiento extends AlgoritmoSeleccion{
 	@Override
 	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 		
-		double fitnessTotal = 0;
-		double[] probSeleccion = new double[fitness.length+1];
-		TreeMap<Double, Individuo<T>> mapSeleccion = new TreeMap<Double, Individuo<T>>();
+		Collections.sort(individuos);
+		Collections.reverse(individuos);
+		double r = rand.nextDouble(0.1,0.5);
 		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
-		double r = rand.nextDouble();
-		for(int i = 0; i<fitness.length; i++) {
-			fitnessTotal += fitness[i];
-		}
-		probSeleccion[0] = 0;
-		for(int i = 1; i<=fitness.length; i++) {
-			probSeleccion[i] = fitness[i-1]/fitnessTotal + probSeleccion[i-1];
-			mapSeleccion.put(probSeleccion[i], crear(individuos.get(i-1)));
-		}
-		int i  = 0;
-		for(Entry<Double, Individuo<T>> obj : mapSeleccion.entrySet()) {
-			if(i>=r*individuos.size())
-				break;
-			newIndividuos.add(i, crear(obj.getValue()));
-			i++;
+		
+		for(int i = 0; i<(int)(r*individuos.size());i++) {
+			newIndividuos.add(crear(individuos.get(i)));
 		}
 		
-		for( int j = i; j< individuos.size(); j++) {
-			newIndividuos.add(j, crear(newIndividuos.get(j-1)));
+		for(int i = (int) (r*individuos.size()); i<individuos.size();i++) {
+			newIndividuos.add(crear(individuos.get(i-(int) (r*individuos.size()))));
 		}
-
 		return newIndividuos;
 	}
-
 }
