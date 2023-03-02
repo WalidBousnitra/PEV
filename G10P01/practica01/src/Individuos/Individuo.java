@@ -34,6 +34,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 			sum+=tamGenes[i];
 		}
 		this.setTamTotal(sum);
+		this.d = 0;
 		this.cromosoma = iniCromosoma(getRand());
 	}
 	public Individuo(int[] tamGenes, String precision, double[] min, double[] max, int d) {
@@ -53,7 +54,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 		}
 		this.setTamTotal(sum);
 		this.cromosoma = iniCromosoma(getRand());
-		this.d = d;
+		this.setD(d);
 	}
 	
 	public Individuo(boolean marca, int[] tamGenes, String precision, double[] min, double[] max, int d) {
@@ -68,7 +69,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 		this.valorError = Double.parseDouble(precision);
 		this.setTamTotal(d);
 		this.cromosoma = iniCromosoma(getRand());
-		this.d = d;
+		this.setD(d);
 	}
 
 	public Individuo(Individuo<T> obj) {
@@ -89,7 +90,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 		for(int i = 0 ; i < obj.cromosoma.size(); ++i){
 			this.cromosoma.add(obj.cromosoma.get(i));
 		}
-		this.d = obj.d;
+		this.setD(obj.getD());
 	}
 	
 	//Funciones de calculos de distintos valores
@@ -142,5 +143,11 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	public void setValorError(double valorError) {	this.valorError = valorError;}
 	public String getPrecision() {	return precision;}
 	public void setPrecision(String precision) {this.precision = precision;	}
+	public int getD() {
+		return d;
+	}
+	public void setD(int d) {
+		this.d = d;
+	}
 
 }

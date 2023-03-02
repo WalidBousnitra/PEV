@@ -8,7 +8,6 @@ import Individuos.Individuo;
 public class IndividuoFuncion4b<T> extends Individuo<Double>{
 	
 	private int m;
-	private int d;
 	
 	public IndividuoFuncion4b(Individuo<Double> obj){
 		super(obj);
@@ -17,7 +16,6 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 	
 	public IndividuoFuncion4b(boolean marca, int d, String valorError){
 		super(marca, rellena2(d,1),valorError,rellena(d,0),rellena(d,Math.PI),d);
-		this.d = d;
 		m = 10;
 	}
 	
@@ -53,7 +51,7 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 		
 		double sum = 0;
 		
-		for(int i = 0; i < d; ++i) {
+		for(int i = 0; i < getD(); ++i) {
 			double sin = Math.sin((i+1)*Math.pow(getCromosoma().get(i),2)/Math.PI);
 			sum+=Math.sin(getCromosoma().get(i))*(Math.pow(sin, 2*m));
 		}

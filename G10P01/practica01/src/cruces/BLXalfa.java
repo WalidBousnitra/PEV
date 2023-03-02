@@ -23,7 +23,7 @@ public class BLXalfa<T> extends AlgoritmosCruce<Double>{
 		for(int i = 0; i < padre1.size(); i++) {
 			double cMax = Math.max(padre1.get(i), padre2.get(i));
 			double cMin = Math.min(padre1.get(i), padre2.get(i));
-			double I = cMax-cMin;
+			double I = Math.abs(cMax-cMin);
 			double alfa = rand.nextDouble();
 			hijo1.add(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
 			hijo2.add(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));

@@ -8,7 +8,6 @@ import Individuos.Individuo;
 public class IndividuoFuncion4a<T> extends Individuo<Boolean>{
 	
 	private int m;
-	private int d;
 	
 	public IndividuoFuncion4a(Individuo<Boolean> obj){
 		super(obj);
@@ -16,8 +15,7 @@ public class IndividuoFuncion4a<T> extends Individuo<Boolean>{
 	}
 	
 	public IndividuoFuncion4a(int d, String valorError){
-		super(new int[d],valorError,rellena(d,0),rellena(d,Math.PI));
-		this.d = d;
+		super(new int[d],valorError,rellena(d,0),rellena(d,Math.PI),d);
 		m = 10;
 	}
 	
@@ -40,15 +38,15 @@ public class IndividuoFuncion4a<T> extends Individuo<Boolean>{
 	
 	@Override
 	public double getValor() {
-		double[] x = new double[d];
+		double[] x = new double[getD()];
 		
-		for (int i= 0; i<d; ++i) {
+		for (int i= 0; i<getD(); ++i) {
 			x[i] = this.getFenotipo(i);
 		}
 		
 		double sum = 0;
 		
-		for(int i = 0; i < d; ++i)
+		for(int i = 0; i < getD(); ++i)
 			sum+=Math.sin(x[i])*Math.pow(Math.sin((i+1)*Math.pow(x[i],2) /Math.PI),2*m);
 		
 		return -sum;
