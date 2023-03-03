@@ -56,7 +56,7 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 			sum+=Math.sin(getCromosoma().get(i))*(Math.pow(sin, 2*m));
 		}
 		
-		return -sum;
+		return formato(-sum);
 	}	
 	
 	public String getGenotipo(int var) {
@@ -64,7 +64,7 @@ public class IndividuoFuncion4b<T> extends Individuo<Double>{
 	}
 	
 	public double getFenotipo(int var) {
-		 return getCromosoma().get(var);
+		 return formato(getCromosoma().get(var));
 	}
 
 	@Override

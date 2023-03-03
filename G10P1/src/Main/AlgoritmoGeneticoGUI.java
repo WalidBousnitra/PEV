@@ -24,8 +24,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import Individuos.Individuo;
-
 public class AlgoritmoGeneticoGUI extends JFrame{
 
 	/**

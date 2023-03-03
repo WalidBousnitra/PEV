@@ -34,7 +34,7 @@ public class IndividuoFuncion3<T> extends Individuo<Boolean>{
 		for(int i = 0; i < d; ++i)
 			sum+=Math.pow(x[i],4)-16*Math.pow(x[i],2)+5*x[i];
 		
-		return sum;
+		return formato(0.5*sum);
 	}
 	
 	public String getGenotipo(int var) {

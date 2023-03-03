@@ -49,7 +49,7 @@ public class IndividuoFuncion4a<T> extends Individuo<Boolean>{
 		for(int i = 0; i < getD(); ++i)
 			sum+=Math.sin(x[i])*Math.pow(Math.sin((i+1)*Math.pow(x[i],2) /Math.PI),2*m);
 		
-		return -sum;
+		return formato(-sum);
 	}	
 	
 	public String getGenotipo(int var) {

@@ -33,7 +33,7 @@ public class IndividuoFuncion2<T> extends Individuo<Boolean>{
 			mult*=Math.cos(x[i])/Math.sqrt(i+1);
 		}
 		
-		return sum - mult + 1;
+		return formato(sum - mult+ 1);
 	}
 	
 	public String getGenotipo(int var) {
