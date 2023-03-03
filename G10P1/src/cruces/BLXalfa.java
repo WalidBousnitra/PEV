@@ -26,9 +26,11 @@ public class BLXalfa<T> extends AlgoritmosCruce<Double>{
 			double cMax = Math.max(padre1.getCromosoma().get(i), padre2.getCromosoma().get(i));
 			double cMin = Math.min(padre1.getCromosoma().get(i), padre2.getCromosoma().get(i));
 			double I = Math.abs(cMax-cMin);
-			double alfa = rand.nextDouble();
-			hijo1.getCromosoma().set(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
-			hijo2.getCromosoma().set(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
+			if(I!=0) {
+				double alfa = rand.nextDouble();
+				hijo1.getCromosoma().set(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
+				hijo2.getCromosoma().set(i,rand.nextDouble(cMin-I*alfa,cMax+I*alfa));
+			}
 		}
 		
 		hijos.add(hijo1);

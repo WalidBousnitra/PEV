@@ -24,6 +24,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import Individuos.Individuo;
+
 public class AlgoritmoGeneticoGUI extends JFrame{
 
 	/**
@@ -229,7 +231,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 							metodoSeleccion, metodoCruce, probElitismo, marcados, funcion, d);
 							instancia.run();
 							List<double[]> datos = instancia.datos();
-							grafico.actualizar(panelVacio,datos.get(0), datos.get(1), datos.get(2));
+							List<Double> mejor = instancia.obtenerMejor();
+							grafico.actualizar(mejor,panelVacio,datos.get(0), datos.get(1), datos.get(2));
 							panelVacio.revalidate();
 					break;
 
@@ -238,7 +241,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 							metodoSeleccion, metodoCruce, probElitismo, marcados, funcion, d);
 					instancia2.run();
 					List<double[]> datos2 = instancia2.datos();
-					grafico.actualizar(panelVacio,datos2.get(0), datos2.get(1), datos2.get(2));
+					List<Double> mejor2 = instancia2.obtenerMejor();
+					grafico.actualizar(mejor2, panelVacio,datos2.get(0), datos2.get(1), datos2.get(2));
 					panelVacio.revalidate();
 					break;
 				}

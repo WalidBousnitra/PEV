@@ -41,6 +41,18 @@ public abstract class AlgoritmoSeleccion {
 		}
 		return null;
 	}
+	
+	public double[]  ajustarFitness(double fitnessTotal, double[] fitness, double maxFitness) {
+		
+		fitnessTotal = 0;
+		double[] sol  = new double[fitness.length];
+		
+		for(int i = 0; i< fitness.length; i++) {
+			sol[i] = 1.05*maxFitness-fitness[i];
+			fitnessTotal += sol[i];
+		}
+		return sol;
+	}
 
 	public String getFuncion() {return funcion;}
 	public void setFuncion(String funcion) {this.funcion = funcion;	}

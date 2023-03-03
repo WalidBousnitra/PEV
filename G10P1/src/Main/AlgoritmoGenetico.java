@@ -217,4 +217,14 @@ class AlgoritmoGenetico<T> {
 		}
 		return null;
 	}
+
+	public List<Double> obtenerMejor() {
+		List<Double> sol = new ArrayList<Double>();
+		
+		for(int i = 0 ; i<elMejor.getMax().length; i++) {
+			sol.add(elMejor.getFenotipo(i));
+		}
+		
+		return sol;
+	}
 }
