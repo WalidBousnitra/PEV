@@ -1,25 +1,20 @@
 package cruces;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
 
 import Individuos.Individuo;
-import funciones.IndividuoFuncion1;
-import funciones.IndividuoFuncion2;
-import funciones.IndividuoFuncion3;
-import funciones.IndividuoFuncion4a;
-import funciones.IndividuoFuncion4b;
+import funciones.Viajero;
 
 public abstract class AlgoritmosCruce<T>{
 	
 	protected double p;
 	private Random rand = new Random();
-	private String funcion;
 	
-	public AlgoritmosCruce(String funcion, double p) {
+	public AlgoritmosCruce(double p) {
 		this.p =p;
-		this.funcion=funcion;
 	}
 	
 	public abstract  List<Individuo<T>>  pareja(Individuo<T> padre1, Individuo<T> padre2);
@@ -54,26 +49,9 @@ public abstract class AlgoritmosCruce<T>{
 		return newIndividuos;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked","rawtypes"})
 	public Individuo<T> crear(Individuo<T> obj){
-		
-		switch(funcion) {
-		case "Función1(calibracion y prueba)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo = new IndividuoFuncion1(obj);
-			return nuevo;
-		case "Función2(GrieWank)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo2 = new IndividuoFuncion2(obj);
-			return nuevo2;
-		case "Función3(Styblinski-tang)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo3 = new IndividuoFuncion3(obj);
-			return nuevo3;
-		case "Función4a(Michalewicz)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo4a = new IndividuoFuncion4a(obj);
-			return nuevo4a;
-		case "Función4b(Michalewicz)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo4b = new IndividuoFuncion4b(obj);
-			return nuevo4b;
-		}
-		return null;
+		Individuo<T> nuevo = new Viajero(obj);
+		return nuevo;
 	}
 }

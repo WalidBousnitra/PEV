@@ -6,8 +6,8 @@ import Individuos.Individuo;
 
 public class NuestroCruce<T> extends AlgoritmosCruce<T>{
 
-	public NuestroCruce(String funcion, double p) {
-		super(funcion, p);
+	public NuestroCruce(double p) {
+		super(p);
 		// TODO Auto-generated constructor stub
 	}
 

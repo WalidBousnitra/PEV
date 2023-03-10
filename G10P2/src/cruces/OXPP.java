@@ -6,8 +6,8 @@ import Individuos.Individuo;
 
 public class OXPP<T> extends AlgoritmosCruce<T>{
 
-	public OXPP(String funcion, double p) {
-		super(funcion, p);
+	public OXPP(double p) {
+		super(p);
 		// TODO Auto-generated constructor stub
 	}
 

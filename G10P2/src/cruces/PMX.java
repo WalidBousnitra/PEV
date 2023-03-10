@@ -6,8 +6,8 @@ import Individuos.Individuo;
 
 public class PMX<T> extends AlgoritmosCruce<T>{
 
-	public PMX(String funcion, double p) {
-		super(funcion, p);
+	public PMX(double p) {
+		super(p);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Random;
 import Individuos.Individuo;
 
-public class IndividuoFuncion4b<T> extends Individuo<Double>{
+public class Viajero<T> extends Individuo<Double>{
 	
 	private int m;
 	
-	public IndividuoFuncion4b(Individuo<Double> obj){
+	public Viajero(Individuo<Double> obj){
 		super(obj);
 		m =10;
 	}
 	
-	public IndividuoFuncion4b(boolean marca, int d, String valorError){
+	public Viajero(boolean marca, int d, String valorError){
 		super(marca, rellena2(d,1),valorError,rellena(d,0),rellena(d,Math.PI),d);
 		m = 10;
 	}

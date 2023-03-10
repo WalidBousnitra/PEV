@@ -6,8 +6,8 @@ import Individuos.Individuo;
 
 public class ERX<T> extends AlgoritmosCruce<T>{
 
-	public ERX(String funcion, double p) {
-		super(funcion, p);
+	public ERX(double p) {
+		super(p);
 		// TODO Auto-generated constructor stub
 	}
 

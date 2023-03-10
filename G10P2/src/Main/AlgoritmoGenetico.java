@@ -6,7 +6,7 @@ import Individuos.Individuo;
 import cruces.*;
 import elitismo.Elitismo;
 import funciones.*;
-import mutaciones.Mutacion;
+import mutaciones.*;
 import selecciones.*;
 
 class AlgoritmoGenetico<T> {
@@ -36,18 +36,17 @@ class AlgoritmoGenetico<T> {
 	
 	
 	public AlgoritmoGenetico(int tamPoblacion, int maxGeneraciones, double probCruce, double probMutacion, String precision, 
-						 String metodoSeleccion, String metodoCruce, double probElitismo, boolean[] marcados, String funcion, int d) {
+						 String metodoSeleccion, String metodoCruce, double probElitismo, boolean[] marcados, String metodoMutacion, int d) {
 		
 		//Inicializacion de parametros
-		this.funcion = funcion;
 		this.tamPoblacion =  tamPoblacion;
 		this.maxGeneraciones = maxGeneraciones;
 		this.cruce = iniciarCruce(metodoCruce, probCruce);
-		this.mutacion = new Mutacion(probMutacion);
+		this.mutacion = iniciarMutacion(metodoMutacion,probMutacion);
 		this.precision = precision;
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
 		this.marcados= marcados;
-		this.probElitismo = new Elitismo<T>(funcion,marcados[5],probElitismo,tamPoblacion);
+		this.probElitismo = new Elitismo<T>(marcados[5],probElitismo,tamPoblacion);
 		this.d = d;
 
 		//
@@ -71,7 +70,7 @@ class AlgoritmoGenetico<T> {
 				poblacion = cruce.cruzar(poblacion);
 			}
 			if(marcados[4]) {
-				mutacion.mutar(poblacion);
+				///mutacion.mutar(poblacion);
 			}
 			probElitismo.incorporar(poblacion);
 			calculos();
@@ -106,19 +105,7 @@ class AlgoritmoGenetico<T> {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Individuo<T> crearIndividuo() {
-		switch(funcion) {
-		case "Función1(calibracion y prueba)":
-			return new IndividuoFuncion1(precision);
-		case "Función2(GrieWank)":
-			return new IndividuoFuncion2(precision);
-		case "Función3(Styblinski-tang)":
-			return new IndividuoFuncion3(precision);
-		case "Función4a(Michalewicz)":
-			return new IndividuoFuncion4a(d,precision);
-		case "Función4b(Michalewicz)":
-			return new IndividuoFuncion4b(false,d,precision);
-		}
-		return null;
+		return new Viajero(false,d,precision);
 	}	
 	
 	private AlgoritmoSeleccion iniciarSeleccion(String metodoSeleccion) {
@@ -141,9 +128,27 @@ class AlgoritmoGenetico<T> {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Mutacion<T> iniciarMutacion(String metodoMutacion, double probMutacion) {
+
+		switch(metodoMutacion) {
+		case "Heurística":
+			return new Heuristica(probMutacion);
+		case "Inserción":
+			return new Insercion(probMutacion);
+		case "Intercambio":
+			return new Intercambio(probMutacion);
+		case "Inversión":
+			return new Inversion(probMutacion);
+		case "Nuestra Mutación":
+			return new NuestraMutacion(probMutacion);
+		}
+		return null;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private AlgoritmosCruce<T> iniciarCruce(String metodoCruce, double probCruce) {
 
-		switch(metodoCruce) {
+		/*switch(metodoCruce) {
 		case "Aritmético":
 			return new Aritmetico(funcion,probCruce);
 		case "BLX-alfa":
@@ -153,7 +158,7 @@ class AlgoritmoGenetico<T> {
 		case "Uniforme":
 			return new Uniforme<T>(funcion,probCruce);
 		}
-		
+		*/
 		return null;
 	}
 	
@@ -195,27 +200,10 @@ class AlgoritmoGenetico<T> {
 		return sol;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked","rawtypes"})
 	public Individuo<T> crear(Individuo<T> obj){
-		
-		switch(funcion) {
-		case "Función1(calibracion y prueba)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo = new IndividuoFuncion1(obj);
-			return nuevo;
-		case "Función2(GrieWank)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo2 = new IndividuoFuncion2(obj);
-			return nuevo2;
-		case "Función3(Styblinski-tang)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo3 = new IndividuoFuncion3(obj);
-			return nuevo3;
-		case "Función4a(Michalewicz)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo4a = new IndividuoFuncion4a(obj);
-			return nuevo4a;
-		case "Función4b(Michalewicz)":
-			@SuppressWarnings("rawtypes") Individuo<T> nuevo4b = new IndividuoFuncion4b(obj);
-			return nuevo4b;
-		}
-		return null;
+		Individuo<T> nuevo = new Viajero(obj);
+		return nuevo;
 	}
 
 	public List<Double> obtenerMejor() {
