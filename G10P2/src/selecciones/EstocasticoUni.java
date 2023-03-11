@@ -11,10 +11,6 @@ public class EstocasticoUni extends AlgoritmoSeleccion{
 	
 	private Random rand = new Random();
 
-	public EstocasticoUni(String funcion) {
-		super(funcion);
-	}
-
 	@Override
 	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
 

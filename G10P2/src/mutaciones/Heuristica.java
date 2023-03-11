@@ -5,7 +5,7 @@ import java.util.List;
 
 import Individuos.Individuo;
 
-public class Heuristica<T> extends Mutacion<T>{
+public class Heuristica<T> extends AlgoritmosMutacion<T>{
 
 	public Heuristica(double probMutacion) {
 		super(probMutacion);

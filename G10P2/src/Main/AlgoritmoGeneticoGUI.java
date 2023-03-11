@@ -32,7 +32,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	private String[] texto = {"nada","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
-			"Probabiliad de Mutación:","Probabilidad de elitismo:","Dimensión variables:","Precisión:","Método de Selección","Método de Cruce","Función"};
+			"Probabiliad de Mutación:","Probabilidad de elitismo:","Dimensión variables:","Precisión:","Método de Selección:","Método de Cruce:","Método de Mutación:"};
 	private JSpinner[] spinners;
 	private List<JComboBox<String>> comboBox;
 	private JTextField spinner5;
@@ -92,7 +92,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         spinners[3] = new JSpinner(new SpinnerNumberModel(60,0,100,1));
         spinners[4] = new JSpinner(new SpinnerNumberModel(5,0,100,1));
         spinners[5] = new JSpinner(new SpinnerNumberModel(2,0,100,1));
-        spinners[6] = new JSpinner(new SpinnerNumberModel(2,1,100,1));
         spinner5 = new JTextField("0.001");
         
         // Crear combo box para los parámetros
@@ -105,14 +104,13 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         comboBox.add(5,new JComboBox<>(opciones));
         comboBox.add(6,new JComboBox<>(opciones));
         comboBox.add(7,new JComboBox<>(opciones));
-        comboBox.add(8,new JComboBox<>(opciones));
-        String[] opciones2 = {"Monopunto", "Uniforme", "Aritmético","BLX-alfa"};
-        comboBox.add(9,new JComboBox<>(opciones2));
-        String[] opciones3 = {"Función1(calibracion y prueba)","Función2(GrieWank)","Función3(Styblinski-tang)",
-       		 "Función4a(Michalewicz)","Función4b(Michalewicz)"};
-        comboBox.add(10,new JComboBox<>(opciones3));
+        String[] opciones2 = {"CO","CX","ERX",
+          		 "Nuestro Cruce","OX","OXPP","PMX"};
+        comboBox.add(8,new JComboBox<>(opciones2));
+        String[] opciones3 = {"Heurística","Inserción","Intercambio","Inversión","Nuestra Mutación"};
+        comboBox.add(9,new JComboBox<>(opciones3));
         
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 1; i <= 5; i++) {
             JLabel labelFila = new JLabel(texto[i]);
 
             gbcTexto.gridy = i;
@@ -142,7 +140,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
             gbcTexto.weightx = 0.2;
         }
         
-        for (int i = 8; i <= 10; i++) {
+        for (int i = 7; i <= 9; i++) {
             JLabel labelFila = new JLabel(texto[i]);
             JComboBox<String> comboFila = comboBox.get(i);
 
@@ -186,7 +184,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		        spinners[3].setValue(60);
 		        spinners[4].setValue(5);
 		        spinners[5].setValue(2);
-		        spinners[6].setValue(2);
 		        spinner5.setText("0.001");
 		        for(int i = 1; i < 5; i++) {
 		        	marcar.get(i).setSelected(true);
@@ -213,7 +210,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				double probCruce = (Double.valueOf((Integer)spinners[3].getValue()))/100;
 				double probMutacion = (Double.valueOf((Integer)spinners[4].getValue()))/100;
 				String precision = spinner5.getText();
-				String funcion = (String)comboBox.get(10).getSelectedItem();
+				String metodoMutacion = (String)comboBox.get(10).getSelectedItem();
 				String metodoSeleccion = (String)comboBox.get(8).getSelectedItem();
 				String metodoCruce = (String)comboBox.get(9).getSelectedItem();
 				double probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
@@ -222,28 +219,19 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				for(int i = 1; i< marcar.size() ;i ++) {
 					marcados[i] =  marcar.get(i).isSelected();
 				}
-				int d = (Integer)spinners[6].getValue();
-				switch(funcion) {
-				case "Funcion4b(Michalewicz)":
-					AlgoritmoGenetico<Double> instancia =  new AlgoritmoGenetico<Double>(tamPoblacion, maxGeneraciones, probCruce, probMutacion, precision, 
-							metodoSeleccion, metodoCruce, probElitismo, marcados, funcion, d);
-							instancia.run();
-							List<double[]> datos = instancia.datos();
-							List<Double> mejor = instancia.obtenerMejor();
-							grafico.actualizar(mejor,panelVacio,datos.get(0), datos.get(1), datos.get(2));
-							panelVacio.revalidate();
-					break;
-
-				default:					
-					AlgoritmoGenetico<Boolean> instancia2 =  new AlgoritmoGenetico<Boolean>(tamPoblacion, maxGeneraciones, probCruce, probMutacion, precision, 
-							metodoSeleccion, metodoCruce, probElitismo, marcados, funcion, d);
-					instancia2.run();
-					List<double[]> datos2 = instancia2.datos();
-					List<Double> mejor2 = instancia2.obtenerMejor();
-					grafico.actualizar(mejor2, panelVacio,datos2.get(0), datos2.get(1), datos2.get(2));
-					panelVacio.revalidate();
-					break;
-				}
+				AlgoritmoGenetico<Double> instancia = 
+						new AlgoritmoGenetico<Double>(tamPoblacion, maxGeneraciones,
+								marcados, 
+								probElitismo,
+								precision, 
+								metodoCruce, probCruce, 
+								metodoSeleccion,
+								metodoMutacion, probMutacion);
+						instancia.run();
+						List<double[]> datos = instancia.datos();
+						List<Double> mejor = instancia.obtenerMejor();
+						grafico.actualizar(mejor,panelVacio,datos.get(0), datos.get(1), datos.get(2));
+						panelVacio.revalidate();
 			}
          });
         

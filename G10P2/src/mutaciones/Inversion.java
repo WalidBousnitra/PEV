@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import Individuos.Individuo;
 
-public class Inversion<T> extends Mutacion<T>{
+public class Inversion<T> extends AlgoritmosMutacion<T>{
 
 	public Inversion(double probMutacion) {
 		super(probMutacion);

@@ -2,12 +2,9 @@ package Main;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.util.List;
-
 import javax.swing.*;
 import org.math.plot.*;
-import org.math.plot.plotObjects.BaseLabel;
 
 public class GraphicPanel extends JPanel{
 	

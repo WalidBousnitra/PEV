@@ -3,8 +3,6 @@ package mutaciones;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-
 
 public class Main {
 
@@ -19,8 +17,6 @@ public class Main {
 	}
 	
 	public static <T> void cromosoma(List<Integer> individuo) {
-		
-		Random rand = new Random();
 		
 		//Elegimos los 2 genes a intercambiar
 		int pos1 = 3;

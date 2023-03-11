@@ -14,8 +14,8 @@ public class Viajero<T> extends Individuo<Double>{
 		m =10;
 	}
 	
-	public Viajero(boolean marca, int d, String valorError){
-		super(marca, rellena2(d,1),valorError,rellena(d,0),rellena(d,Math.PI),d);
+	public Viajero(boolean marca, String valorError){
+		super(marca, rellena2(2,1),valorError,rellena(2,0),rellena(2,Math.PI),2);
 		m = 10;
 	}
 	

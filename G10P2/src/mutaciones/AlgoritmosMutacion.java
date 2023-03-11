@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Random;
 import Individuos.Individuo;
 
-public abstract class Mutacion<T>{
+public abstract class AlgoritmosMutacion<T>{
 	
 	private double p;
 	private Random rand;
 	
-	public Mutacion(double probMutacion) {
+	public AlgoritmosMutacion(double probMutacion) {
 		p = probMutacion;
 		rand = new Random();
 	}

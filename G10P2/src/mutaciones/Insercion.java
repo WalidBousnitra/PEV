@@ -2,7 +2,7 @@ package mutaciones;
 
 import Individuos.Individuo;
 
-public class Insercion<T> extends Mutacion<T>{
+public class Insercion<T> extends AlgoritmosMutacion<T>{
 
 	public Insercion(double probMutacion) {
 		super(probMutacion);

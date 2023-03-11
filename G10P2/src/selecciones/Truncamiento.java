@@ -8,10 +8,6 @@ import java.util.Random;
 import Individuos.Individuo;
 
 public class Truncamiento extends AlgoritmoSeleccion{
-	
-	public Truncamiento(String funcion) {
-		super(funcion);
-	}
 
 	private Random rand = new Random();
 

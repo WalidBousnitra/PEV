@@ -7,10 +7,6 @@ import java.util.Random;
 import Individuos.Individuo;
 
 public class TorneoDet extends AlgoritmoSeleccion{
-	
-	public TorneoDet(String funcion) {
-		super(funcion);
-	}
 
 	private Random rand = new Random();
 

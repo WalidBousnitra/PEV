@@ -11,8 +11,7 @@ public abstract class AlgoritmoSeleccion {
 	private String funcion;
 	private double fitnessTotal;
 	
-	public AlgoritmoSeleccion(String funcion) {
-		this.setFuncion(funcion);
+	public AlgoritmoSeleccion() {
 		this.setFitnessTotal(0);
 	}
 	

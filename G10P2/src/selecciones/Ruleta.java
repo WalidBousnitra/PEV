@@ -7,10 +7,6 @@ import java.util.Random;
 import Individuos.Individuo;
 
 public class Ruleta extends AlgoritmoSeleccion{
-	
-	public Ruleta(String funcion) {
-		super(funcion);
-	}
 
 	private Random rand = new Random();
 

@@ -9,10 +9,6 @@ public class Restos extends AlgoritmoSeleccion{
 	
 	private int k;
 	private Random rand = new Random();
-	
-	public Restos(String funcion) {
-		super(funcion);
-	}
 
 	@Override
 	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> individuos, double[] fitness) {
@@ -59,23 +55,23 @@ public class Restos extends AlgoritmoSeleccion{
 		setFitnessTotal(0);
 		switch(rand.nextInt(0, 5)) {
 			case 0:
-				EstocasticoUni metodo = new EstocasticoUni(getFuncion());
+				EstocasticoUni metodo = new EstocasticoUni();
 				restos = metodo.seleccionar(restos, restosFitness);
 				break;
 			case 1:
-				Ruleta metodo2 = new Ruleta(getFuncion());
+				Ruleta metodo2 = new Ruleta();
 				restos = metodo2.seleccionar(restos, restosFitness);
 				break;
 			case 2:
-				TorneoDet metodo3= new TorneoDet(getFuncion());
+				TorneoDet metodo3= new TorneoDet();
 				restos = metodo3.seleccionar(restos, restosFitness);
 				break;
 			case 3:
-				TorneoProb metodo4 = new TorneoProb(getFuncion());
+				TorneoProb metodo4 = new TorneoProb();
 				restos = metodo4.seleccionar(restos, restosFitness);
 				break;
 			case 4:
-				Truncamiento metodo5 = new Truncamiento(getFuncion());
+				Truncamiento metodo5 = new Truncamiento();
 				restos = metodo5.seleccionar(restos, restosFitness);
 				break;
 		}
