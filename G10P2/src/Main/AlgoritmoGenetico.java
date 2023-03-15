@@ -219,7 +219,7 @@ class AlgoritmoGenetico<T> {
 	public List<Double> obtenerMejor() {
 		List<Double> sol = new ArrayList<Double>();
 		
-		for(int i = 0 ; i<elMejor.getMax().length; i++) {
+		for(int i = 0 ; i<elMejor.getCromosoma().size(); i++) {
 			sol.add(elMejor.getFenotipo(i));
 		}
 		

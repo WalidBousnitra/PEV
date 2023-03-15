@@ -33,7 +33,9 @@ public abstract class AlgoritmosMutacion<T>{
 	public void mutar(List<Individuo<T>> poblacion) {
 		
 		for(int i = 0 ; i < poblacion.size(); i++) {
-			cromosoma(poblacion.get(i));
+			if(rand.nextDouble()<p){
+				cromosoma(poblacion.get(i));
+			}
 		}
 	}
 	
