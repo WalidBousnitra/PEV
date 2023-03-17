@@ -31,10 +31,6 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 		return this.getValor();
 	}
 	
-	public double getFenotipo(int var) {
-		 return (double) getCromosoma().get(var);
-	}
-	
 	//Abstracts que requieren todas las funciones
 	public abstract double getValor();
 	public abstract List<T> iniCromosoma(Random rand);

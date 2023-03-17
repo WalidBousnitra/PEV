@@ -96,6 +96,7 @@ class AlgoritmoGenetico<T> {
 		poblacion = new ArrayList<Individuo<T>>(tamPoblacion);
 		Individuo<T> max = new Viajero();
 		poblacion.add(max);
+		fitness[0] = poblacion.get(0).getFitness();
 		for(int i = 1; i < tamPoblacion; i++) {
 			Individuo<T> nuevo = new Viajero();
 			poblacion.add(nuevo);
@@ -219,7 +220,7 @@ class AlgoritmoGenetico<T> {
 		List<Double> sol = new ArrayList<Double>();
 		
 		for(int i = 0 ; i<elMejor.getCromosoma().size(); i++) {
-			sol.add(elMejor.getFenotipo(i));
+			sol.add(elMejor.getCromosoma());
 		}
 		
 		return sol;
