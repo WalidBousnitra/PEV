@@ -16,7 +16,6 @@ class AlgoritmoGenetico<T> {
 	private int maxGeneraciones;
 	private boolean[] marcados; //boton de activar GUI
 	private Elitismo<T> probElitismo;
-	private String precision;
 	private AlgoritmosCruce<T> cruce;
 	private AlgoritmoSeleccion seleccion;
 	private AlgoritmosMutacion<T> mutacion;
@@ -36,7 +35,6 @@ class AlgoritmoGenetico<T> {
 	public AlgoritmoGenetico(int tamPoblacion, int maxGeneraciones,
 							boolean[] marcados, 
 							double probElitismo,
-							String precision, 
 							String metodoCruce, double probCruce, 
 							String metodoSeleccion,
 							String metodoMutacion, double probMutacion) {
@@ -46,7 +44,6 @@ class AlgoritmoGenetico<T> {
 		this.maxGeneraciones = maxGeneraciones;
 		this.marcados= marcados;
 		this.probElitismo = new Elitismo<T>(marcados[5],probElitismo,tamPoblacion);
-		this.precision = precision;
 		this.cruce = iniciarCruce(metodoCruce, probCruce);
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
 		this.mutacion = iniciarMutacion(metodoMutacion,probMutacion);
@@ -97,10 +94,10 @@ class AlgoritmoGenetico<T> {
 		double sumFitness = 0;
 		
 		poblacion = new ArrayList<Individuo<T>>(tamPoblacion);
-		Individuo<T> max = new Viajero(false,precision);
+		Individuo<T> max = new Viajero();
 		poblacion.add(max);
 		for(int i = 1; i < tamPoblacion; i++) {
-			Individuo<T> nuevo = new Viajero(false,precision);
+			Individuo<T> nuevo = new Viajero();
 			poblacion.add(nuevo);
 			fitness[i] = poblacion.get(i).getFitness();
 			sumFitness+=fitness[i];
@@ -133,6 +130,8 @@ class AlgoritmoGenetico<T> {
 			return new OX(probCruce);
 		case "OXPP":
 			return new OXPP(probCruce);
+		case "OXOP":
+			return new OXOP(probCruce);
 		case "PMX":
 			return new PMX(probCruce);
 		}

@@ -7,6 +7,7 @@ import Individuos.Individuo;
 
 public class Viajero<T> extends Individuo<Integer>{
 	
+	private static int ciudades = 27;
 	private final static int[][] _DIST = {
 			{},
 			{171},
@@ -42,8 +43,8 @@ public class Viajero<T> extends Individuo<Integer>{
 		super(obj);
 	}
 	
-	public Viajero(boolean marca, String valorError){
-		super(valorError,27);
+	public Viajero(){
+		super(ciudades);
 	}
 	
 	@Override
@@ -66,14 +67,22 @@ public class Viajero<T> extends Individuo<Integer>{
 		//Se empieza desde Madrid
 		int origen = 25;
 		
-		for(int i = 1; i <= getCromosoma().size(); ++i) {
+		for(int i = 0; i < getCromosoma().size(); ++i) {
 			//Sumas la distancia desde la ciudad actual a la ciudad siguiente
-			sum+=_DIST[origen][i];
+			if(origen > getCromosoma().get(i)) {
+				sum+=_DIST[origen][getCromosoma().get(i)];
+			}
+			else
+				sum+=_DIST[getCromosoma().get(i)][origen];
 			//Actualizas la ciudad actual
-			origen = i;
+			origen = getCromosoma().get(i);
 		}
 		//Añadirmos la distancia finalpara volver a madrid
-		sum+=_DIST[origen][25];
+		if(origen > 25) {
+			sum+=_DIST[origen][25];
+		}
+		else
+			sum+=_DIST[25][origen];
 		
 		return sum;
 	}

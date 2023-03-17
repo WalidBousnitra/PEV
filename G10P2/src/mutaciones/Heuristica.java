@@ -43,16 +43,16 @@ public class Heuristica<T> extends AlgoritmosMutacion<T>{
 		for(int j= 0 ; j<6;j++) {
 			for(int i= 0; i<individuo.getCromosoma().size();i++) {
 				if(i==posiciones[0]) {
-					aux.getCromosoma().set(i,valores[j][0]);
+					//aux.getCromosoma().set(i,valores[j][0]);
 				}
 				else if(i==posiciones[1]) {
-					aux.getCromosoma().set(i,valores[j][1]);
+					//aux.getCromosoma().set(i,valores[j][1]);
 				}
 				else if(i==posiciones[2]) {
-					aux.getCromosoma().set(i,valores[j][2]);
+					//aux.getCromosoma().set(i,valores[j][2]);
 				}
 				else {
-					aux.getCromosoma().set(i,individuo.getCromosoma().get(i));
+					//aux.getCromosoma().set(i,individuo.getCromosoma().get(i));
 				}
 				
 			}

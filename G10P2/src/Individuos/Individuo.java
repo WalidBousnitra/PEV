@@ -1,5 +1,4 @@
 package Individuos;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,28 +7,19 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	
 	//Atributos
 	private Random rand;
-	private DecimalFormat formato;
-	private double valorError;
-	private String precision;
 	private List<T> cromosoma;
 	private int tamTotal;
 	
-	public Individuo(String precision, int tamTotal) {
+	public Individuo(int tamTotal) {
 		
 		//Inicializacion de atributos;
 		this.rand = new Random();
-		this.precision = precision;
-		this.formato = new DecimalFormat(precision);
-		this.valorError = Double.parseDouble(precision);
 		this.cromosoma = iniCromosoma(getRand());
 		this.tamTotal= tamTotal;
 	}
 	
 	public Individuo(Individuo<T> obj) {
 		this.rand = new Random();
-		this.precision = obj.precision;
-		this.formato = new DecimalFormat(obj.precision);
-		this.valorError = obj.valorError;
 		this.cromosoma = new ArrayList<T>(obj.cromosoma.size());
 		for(int i = 0 ; i < obj.cromosoma.size(); ++i){
 			this.cromosoma.add(obj.cromosoma.get(i));
@@ -54,12 +44,6 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	public void setCromosoma(List<T> cromosoma) {this.cromosoma = cromosoma;}
 	public Random getRand() {return rand;}
 	public void setRand(Random rand) {this.rand = rand;}
-	public DecimalFormat getFormato() {	return formato;	}
-	public void setFormato(DecimalFormat formato) {	this.formato = formato;	}
-	public double getValorError() {	return valorError;}
-	public void setValorError(double valorError) {	this.valorError = valorError;}
-	public String getPrecision() {	return precision;}
-	public void setPrecision(String precision) {this.precision = precision;	}
 	public int getTamTotal() {	return tamTotal;}
 
 	public void setTamTotal(int tamTotal) {	this.tamTotal = tamTotal;}
