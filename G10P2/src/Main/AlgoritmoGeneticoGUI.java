@@ -57,7 +57,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         panelTitulo = new JPanel();
 		spinners = new JSpinner[7];
 		comboBox = new ArrayList<JComboBox<String>>(11);
-		marcar.add(new JCheckBox("DUUMY"));
     	initGUI();
     }
     
@@ -120,13 +119,14 @@ public class AlgoritmoGeneticoGUI extends JFrame{
                 panelElitismo.setLayout(new GridLayout(0, 2, 0, 0));
                 panelElitismo.add(spinners[i]);
                 marcar.add(new JCheckBox("ACTIVAR"));
-                if(i<5) 
-                	marcar.get(i).setSelected(true);
-                panelElitismo.add(marcar.get(i));
+                marcar.get(marcar.size()-1).setSelected(true);
+                if(i==5) {
+                	marcar.get(marcar.size()-1).setSelected(false);	
+                }
+                panelElitismo.add(marcar.get(marcar.size()-1));
                 paramsPanel.add(panelElitismo, gbcTexto);
             }
             else {
-            	marcar.add(new JCheckBox("DUMMY"));
             	paramsPanel.add(spinners[i], gbcTexto);
             }
 
@@ -178,10 +178,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		        spinners[3].setValue(60);
 		        spinners[4].setValue(5);
 		        spinners[5].setValue(2);
-		        for(int i = 1; i < 5; i++) {
-		        	marcar.get(i).setSelected(true);
-		        }
-		        marcar.get(5).setSelected(false);
+		        marcar.get(0).setSelected(true);
+		        marcar.get(1).setSelected(true);
+		        marcar.get(2).setSelected(false);
 			}
         	
         });
@@ -203,12 +202,12 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				double probCruce = (Double.valueOf((Integer)spinners[3].getValue()))/100;
 				double probMutacion = (Double.valueOf((Integer)spinners[4].getValue()))/100;
 				String metodoMutacion = (String)comboBox.get(9).getSelectedItem();
-				String metodoSeleccion = (String)comboBox.get(8).getSelectedItem();
-				String metodoCruce = (String)comboBox.get(9).getSelectedItem();
+				String metodoSeleccion = (String)comboBox.get(7).getSelectedItem();
+				String metodoCruce = (String)comboBox.get(8).getSelectedItem();
 				double probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
-				boolean[] marcados= new boolean[marcar.size()];
+				boolean[] marcados= new boolean[3];
 				marcados[0] = false;
-				for(int i = 1; i< marcar.size() ;i ++) {
+				for(int i = 0; i<3 ;i ++) {
 					marcados[i] =  marcar.get(i).isSelected();
 				}
 				AlgoritmoGenetico<Double> instancia = 

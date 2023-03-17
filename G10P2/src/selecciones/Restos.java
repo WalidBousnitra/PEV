@@ -24,13 +24,7 @@ public class Restos extends AlgoritmoSeleccion{
 			setFitnessTotal(getFitnessTotal() + fitness[i]);
 			maxFitness = Math.max(maxFitness, fitness[i]);
 		}
-		switch(getFuncion()) {
-		case "Función1(calibracion y prueba)":
-			break;
-		default:
-			fitness = ajustarFitness(fitness, maxFitness);
-			break;
-		}
+		fitness = ajustarFitness(fitness, maxFitness);
 		probSeleccion[0] = 0;
 		for(int i = 1; i<fitness.length; i++) {
 			probSeleccion[i] = fitness[i-1]/getFitnessTotal()*k;

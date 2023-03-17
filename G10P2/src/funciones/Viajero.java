@@ -7,7 +7,7 @@ import Individuos.Individuo;
 
 public class Viajero<T> extends Individuo<Integer>{
 	
-	private static int ciudades = 27;
+	private static int ciudades = 26;
 	private final static int[][] _DIST = {
 			{},
 			{171},
@@ -50,9 +50,9 @@ public class Viajero<T> extends Individuo<Integer>{
 	@Override
 	public List<Integer> iniCromosoma(Random rand) {
 		List<Integer> cromosoma = new ArrayList<Integer>(getTamTotal());
-		while(cromosoma.size()<27) {
+		while(cromosoma.size()<26) {
 			int r = rand.nextInt(1,28);
-			if(!cromosoma.contains(r)) {
+			if(r!=25 && !cromosoma.contains(r)) {
 				cromosoma.add(r);
 			}
 		}

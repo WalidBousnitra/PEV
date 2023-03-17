@@ -8,7 +8,6 @@ import funciones.Viajero;
 
 public abstract class AlgoritmoSeleccion {
 	
-	private String funcion;
 	private double fitnessTotal;
 	
 	public AlgoritmoSeleccion() {
@@ -40,7 +39,4 @@ public abstract class AlgoritmoSeleccion {
 		}
 		return sol;
 	}
-
-	public String getFuncion() {return funcion;}
-	public void setFuncion(String funcion) {this.funcion = funcion;	}
 }

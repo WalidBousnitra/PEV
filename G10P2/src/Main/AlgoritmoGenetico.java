@@ -43,7 +43,7 @@ class AlgoritmoGenetico<T> {
 		this.tamPoblacion =  tamPoblacion;
 		this.maxGeneraciones = maxGeneraciones;
 		this.marcados= marcados;
-		this.probElitismo = new Elitismo<T>(marcados[5],probElitismo,tamPoblacion);
+		this.probElitismo = new Elitismo<T>(marcados[2],probElitismo,tamPoblacion);
 		this.cruce = iniciarCruce(metodoCruce, probCruce);
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
 		this.mutacion = iniciarMutacion(metodoMutacion,probMutacion);
@@ -72,11 +72,11 @@ class AlgoritmoGenetico<T> {
 			poblacion = seleccion.seleccionar(poblacion,fitness);
 			
 			//cruce
-			if(marcados[3])
+			if(marcados[0])
 				poblacion = cruce.cruzar(poblacion);
 			
 			//mutacion
-			if(marcados[4])
+			if(marcados[1])
 				mutacion.mutar(poblacion);
 			
 			//insercion elite
@@ -216,11 +216,11 @@ class AlgoritmoGenetico<T> {
 		return sol;
 	}
 
-	public List<Double> obtenerMejor() {
-		List<Double> sol = new ArrayList<Double>();
+	public List<T> obtenerMejor() {
+		List<T> sol = new ArrayList<T>();
 		
 		for(int i = 0 ; i<elMejor.getCromosoma().size(); i++) {
-			sol.add(elMejor.getCromosoma());
+			sol.add(elMejor.getCromosoma().get(i));
 		}
 		
 		return sol;
