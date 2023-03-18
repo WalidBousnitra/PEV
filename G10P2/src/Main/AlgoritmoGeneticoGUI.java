@@ -187,7 +187,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         
         // Crear segundo panel vacío para la gráfica
  		JPanel panelVacio = new JPanel();
- 		GraphicPanel grafico = new GraphicPanel();
+ 		GraphicPanel<Integer> grafico = new GraphicPanel<Integer>();
  		panelVacio.setBorder(BorderFactory.createLineBorder(Color.BLACK));
  		panelVacio.setPreferredSize(new Dimension(700, 600));
  		panelVacio.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
@@ -210,8 +210,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				for(int i = 0; i<3 ;i ++) {
 					marcados[i] =  marcar.get(i).isSelected();
 				}
-				AlgoritmoGenetico<Double> instancia = 
-						new AlgoritmoGenetico<Double>(tamPoblacion, maxGeneraciones,
+				AlgoritmoGenetico<Integer> instancia = 
+						new AlgoritmoGenetico<Integer>(tamPoblacion, maxGeneraciones,
 								marcados, 
 								probElitismo,
 								metodoCruce, probCruce, 
@@ -219,7 +219,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 								metodoMutacion, probMutacion);
 						instancia.run();
 						List<double[]> datos = instancia.datos();
-						List<Double> mejor = instancia.obtenerMejor();
+						List<Integer> mejor = instancia.obtenerMejor();
 						grafico.actualizar(mejor,panelVacio,datos.get(0), datos.get(1), datos.get(2));
 						panelVacio.revalidate();
 			}

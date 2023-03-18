@@ -14,7 +14,7 @@ class AlgoritmoGenetico<T> {
 	//Parametros	
 	private int tamPoblacion;
 	private int maxGeneraciones;
-	private boolean[] marcados; //boton de activar GUI
+	private boolean[] marcados; //boton de activar GUIs
 	private Elitismo<T> probElitismo;
 	private AlgoritmosCruce<T> cruce;
 	private AlgoritmoSeleccion seleccion;
@@ -44,6 +44,7 @@ class AlgoritmoGenetico<T> {
 		this.maxGeneraciones = maxGeneraciones;
 		this.marcados= marcados;
 		this.probElitismo = new Elitismo<T>(marcados[2],probElitismo,tamPoblacion);
+		//Inicializacion de los distintos metodos cruce/seleccion/mutacion
 		this.cruce = iniciarCruce(metodoCruce, probCruce);
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
 		this.mutacion = iniciarMutacion(metodoMutacion,probMutacion);
@@ -71,11 +72,11 @@ class AlgoritmoGenetico<T> {
 			//seleccion de poblacion
 			poblacion = seleccion.seleccionar(poblacion,fitness);
 			
-			//cruce
+			//cruce si esta activado
 			if(marcados[0])
 				poblacion = cruce.cruzar(poblacion);
 			
-			//mutacion
+			//mutacion si esta activado
 			if(marcados[1])
 				mutacion.mutar(poblacion);
 			
@@ -91,8 +92,10 @@ class AlgoritmoGenetico<T> {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	private void iniciarPoblacion() {
 		
+		//Sumatorio de fitness para la media
 		double sumFitness = 0;
 		
+		//Inicializacion de la poblacion / identificacion mejor individuo
 		poblacion = new ArrayList<Individuo<T>>(tamPoblacion);
 		Individuo<T> max = new Viajero();
 		poblacion.add(max);
@@ -115,63 +118,47 @@ class AlgoritmoGenetico<T> {
 		posDatos++;
 	}
 	
+	//Funcion de seleccion de cruce
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private AlgoritmosCruce<T> iniciarCruce(String metodoCruce, double probCruce) {
 
 		switch(metodoCruce) {
-		case "CO":
-			return new CO(probCruce);
-		case "CX":
-			return new CX(probCruce);
-		case "ERX":
-			return new ERX(probCruce);
-		case "Nuestro Cruce":
-			return new NuestroCruce(probCruce);
-		case "OX":
-			return new OX(probCruce);
-		case "OXPP":
-			return new OXPP(probCruce);
-		case "OXOP":
-			return new OXOP(probCruce);
-		case "PMX":
-			return new PMX(probCruce);
+		case "CO": return new CO(probCruce);
+		case "CX": return new CX(probCruce);
+		case "ERX": return new ERX(probCruce);
+		case "Nuestro Cruce": return new NuestroCruce(probCruce);
+		case "OX": return new OX(probCruce);
+		case "OXPP": return new OXPP(probCruce);
+		case "OXOP": return new OXOP(probCruce);
+		case "PMX": return new PMX(probCruce);
 		}
 		return null;
 	}
 	
+	//Funcion de seleccion de seleccion
 	private AlgoritmoSeleccion iniciarSeleccion(String metodoSeleccion) {
 
 		switch(metodoSeleccion) {
-		case "Estocástico Universal":
-			return new EstocasticoUni();
-		case "Restos":
-			return new Restos();
-		case "Ruleta":
-			return new Ruleta();
-		case "Torneo Determinista":
-			return new TorneoDet();
-		case "Torneo Probabilístico":
-			return new TorneoProb();
-		case "Truncamiento":
-			return new Truncamiento();
+		case "Estocástico Universal": return new EstocasticoUni();
+		case "Restos": return new Restos();
+		case "Ruleta": return new Ruleta();
+		case "Torneo Determinista": return new TorneoDet();
+		case "Torneo Probabilístico": return new TorneoProb();
+		case "Truncamiento": return new Truncamiento();
 		}
 		return null;
 	}
 	
+	//Funcion de seleccion de mutacion
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private AlgoritmosMutacion<T> iniciarMutacion(String metodoMutacion, double probMutacion) {
 
 		switch(metodoMutacion) {
-		case "Heurística":
-			return new Heuristica(probMutacion);
-		case "Inserción":
-			return new Insercion(probMutacion);
-		case "Intercambio":
-			return new Intercambio(probMutacion);
-		case "Inversión":
-			return new Inversion(probMutacion);
-		case "Nuestra Mutación":
-			return new NuestraMutacion(probMutacion);
+		case "Heurística": return new Heuristica(probMutacion);
+		case "Inserción": return new Insercion(probMutacion);
+		case "Intercambio": return new Intercambio(probMutacion);
+		case "Inversión": return new Inversion(probMutacion);
+		case "Nuestra Mutación": return new NuestraMutacion(probMutacion);
 		}
 		return null;
 	}
@@ -179,6 +166,7 @@ class AlgoritmoGenetico<T> {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public void calculos() {
 		
+		//Reevaluacion de individuos / identificacion del mejor de la generacion
 		if(posDatos<maxGeneraciones) {
 			fitness[0] = poblacion.get(0).getFitness();
 			double sumFitness = fitness[0];
@@ -190,25 +178,22 @@ class AlgoritmoGenetico<T> {
 					max = new Viajero(poblacion.get(j));
 				}
 			}
+			
+			//Añadir datos de la generacion a los datos de la grafica
 			media[posDatos] = sumFitness/tamPoblacion;
 			mejores[posDatos] = max.getFitness();
-			mejor(max);
+			if(max.compareTo(elMejor) == 1) {
+				elMejor = new Viajero(max);
+			}
 			absolutos[posDatos] = elMejor.getFitness();
 			posDatos++;
 		}
 	}
-	
-	@SuppressWarnings({"unchecked","rawtypes"})
-	public void mejor(Individuo<T> obj) {
-		if(obj.compareTo(elMejor) == 1) {
-			elMejor = new Viajero(obj);
-		}
-	}
 
+	//Funcion para obtener los datos finales para la grafica
 	public List<double[]> datos() {
 		
 		List<double[]> sol = new ArrayList<double[]>(3);
-		
 		sol.add(mejores);
 		sol.add(absolutos);
 		sol.add(media);
@@ -216,6 +201,7 @@ class AlgoritmoGenetico<T> {
 		return sol;
 	}
 
+	//Funcion para obtener las ciudades del mejor individuo desde la grafica
 	public List<T> obtenerMejor() {
 		List<T> sol = new ArrayList<T>();
 		

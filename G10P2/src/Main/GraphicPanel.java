@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.*;
 import org.math.plot.*;
 
-public class GraphicPanel extends JPanel{
+public class GraphicPanel<T> extends JPanel{
 	
 	/**
 	 * 
@@ -16,9 +16,13 @@ public class GraphicPanel extends JPanel{
 	private double[] absolutos;
 	private double[] media;
 	Plot2DPanel plot = new Plot2DPanel();
-	private List<Double> mejor;
+	private List<T> mejor;
+	//Una lista para la salida final
+	private String[] ciudades = {"Dummy","Alicante","Almería", "Avila", "Badajoz","Barcelona", "Bilbao", "Burgos","Cáceres","Cádiz","Castellón","Ciudad Real",
+									"Córdoba","A Coruña","Cuenca","Gerona","Granada","Guadalajara","Huelva","Huesca","Jaén","León","Lérida","Logroño",
+									"Lugo","Madrid","Málaga","Murcia"};
 	
-	public void actualizar(List<Double> mejor, JPanel panel, double[] mejores, double[] absolutos, double[] media) {
+	public void actualizar(List<T> mejor, JPanel panel, double[] mejores, double[] absolutos, double[] media) {
 		this.mejores = mejores;
 		this.mejor = mejor;
 		this.absolutos = absolutos;
@@ -52,13 +56,15 @@ public class GraphicPanel extends JPanel{
 			i--;
 		}
 		
-		String variables = "";
+		String variables = "Madrid -> ";
 		
-		for(int j = 1; j<= mejor.size();j++) {
-			variables += "x" + j + "= " +mejor.get(j-1)+ " ";
+		for(int j = 0; j< mejor.size();j++) {
+			variables += ciudades[(int) mejor.get(j)]+ "  ";
 		}
 		
-		sol  = "Mejor Individuo:   gen: " + x + "     f(x*): "+ absolutos[i]+ "      " + variables;
+		variables += "Madrid";
+		
+		sol  = "Mejor Individuo:   gen: " + x + "     Recorrido: "+ absolutos[i]+ "      " + variables;
 		return sol;
 	}
 }
