@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Main {
+public class Prueba {
 
 	public static void main(String[] args) {
 		List<Integer> individuo = new ArrayList<Integer>();

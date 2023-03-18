@@ -12,12 +12,13 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	
 	public Individuo(int tamTotal) {
 		
-		//Inicializacion de atributos;
+		//Inicializacion de atributos
 		this.rand = new Random();
 		this.cromosoma = iniCromosoma(getRand());
 		this.tamTotal= tamTotal;
 	}
 	
+	// Constructor de copia
 	public Individuo(Individuo<T> obj) {
 		this.rand = new Random();
 		this.cromosoma = new ArrayList<T>(obj.cromosoma.size());

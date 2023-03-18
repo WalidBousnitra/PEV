@@ -29,16 +29,24 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private String[] texto = {"nada","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
-			"Probabiliad de Mutación:","Probabilidad de elitismo:","Dimensión variables:","Método de Selección:","Método de Cruce:","Método de Mutación:"};
+	
+	// Paneles de la ventana principar
+	private JPanel panelPrincipal;
+    private JPanel panelTitulo;
+    private JPanel paramsPanel;
+	private JPanel panelVacio;
+	
+	// Para la estructura de los paneles
+	private GridBagConstraints gbcTexto;
+	
+	// Componentes para los parametros
+	private String[] texto = {"dummy","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
+			"Probabiliad de Mutación:","Probabilidad de elitismo:","","Método de Selección:","Método de Cruce:","Método de Mutación:"};
 	private JSpinner[] spinners;
 	private List<JComboBox<String>> comboBox;
+    private List<JCheckBox> marcar = new ArrayList<JCheckBox>(3);
     private JButton ejecutarButton;
     private JButton reset;
-    private JPanel panelPrincipal;
-    private JPanel panelTitulo;
-    private List<JCheckBox> marcar = new ArrayList<JCheckBox>(5);
     
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
@@ -49,14 +57,13 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     	
         setTitle("Ventana Principal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         // Panel principal
         panelPrincipal = new JPanel(new BorderLayout());
         panelPrincipal.setPreferredSize(new Dimension(1200, 600));
-        // Panel Titulo
-        panelTitulo = new JPanel();
-		spinners = new JSpinner[7];
-		comboBox = new ArrayList<JComboBox<String>>(11);
+        // Inicio constrains
+        gbcTexto = new GridBagConstraints();
+        
     	initGUI();
     }
     
@@ -64,51 +71,68 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     	
     	titulo();
     	
-    	// Crear panel para los parámetros
-    	JPanel paramsPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbcTexto = new GridBagConstraints();
-        gbcTexto.gridx = 0;
+    	parametros();
+    	
+    	reset();
+        
+        ejecutar();
+        
+    	// Se agrega el panel de título, el de parametros y la grafica en el panel principal
+        panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
+        panelPrincipal.add(paramsPanel, BorderLayout.WEST);
+        panelPrincipal.add(panelVacio, BorderLayout.CENTER);
+        
+        // Se agrega el panel principal a la ventana
+        add(panelPrincipal);
+        pack();
+        setVisible(true);
+		this.setLocationRelativeTo(null);
+    }
+    
+    public void titulo() {
+        // Panel Titulo
+        panelTitulo = new JPanel();
+    	JLabel titleLabel  = new JLabel("Algoritmo Genético");
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 50));
+        panelTitulo.add(titleLabel);
+    }
+    
+    public void parametros() {
+    	
+		spinners = new JSpinner[6];
+		comboBox = new ArrayList<JComboBox<String>>(3);    	
+    	paramsPanel = new JPanel(new GridBagLayout());
+    	
+    	gbcTexto.gridx = 0;
         gbcTexto.gridy = 0;
         gbcTexto.gridwidth = 1;
         gbcTexto.gridheight = 1;
         gbcTexto.weightx = 0.5;
         gbcTexto.fill = GridBagConstraints.HORIZONTAL;
         gbcTexto.insets = new Insets(5, 5, 5, 5);
-
         JLabel labelTexto = new JLabel("Parámetros:");
-
+        
         paramsPanel.add(labelTexto, gbcTexto);
         
         gbcTexto.gridx = 1;
         gbcTexto.weightx = 0.5;
 
         // Crear spinners para los parámetros
-
         spinners[1] = new JSpinner(new SpinnerNumberModel(100,2,10000,10));   
         spinners[2] = new JSpinner(new SpinnerNumberModel(100,1,10000,10));
         spinners[3] = new JSpinner(new SpinnerNumberModel(60,0,100,1));
         spinners[4] = new JSpinner(new SpinnerNumberModel(5,0,100,1));
         spinners[5] = new JSpinner(new SpinnerNumberModel(2,0,100,1));
-        
         // Crear combo box para los parámetros
         String[] opciones = {"Estocástico Universal","Restos","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
-        comboBox.add(0,new JComboBox<>(opciones));
-        comboBox.add(1,new JComboBox<>(opciones));
-        comboBox.add(2,new JComboBox<>(opciones));
-        comboBox.add(3,new JComboBox<>(opciones));
-        comboBox.add(4,new JComboBox<>(opciones));
-        comboBox.add(5,new JComboBox<>(opciones));
-        comboBox.add(6,new JComboBox<>(opciones));
-        comboBox.add(7,new JComboBox<>(opciones));
-        String[] opciones2 = {"CO","CX","ERX",
-          		 "Nuestro Cruce","OX","OXPP","OXOP","PMX"};
-        comboBox.add(8,new JComboBox<>(opciones2));
+        comboBox.add(new JComboBox<>(opciones));
+        String[] opciones2 = {"CO","CX","ERX", "Nuestro Cruce","OX","OXPP","OXOP","PMX"};
+        comboBox.add(new JComboBox<>(opciones2));
         String[] opciones3 = {"Heurística","Inserción","Intercambio","Inversión","Nuestra Mutación"};
-        comboBox.add(9,new JComboBox<>(opciones3));
+        comboBox.add(new JComboBox<>(opciones3));
         
         for (int i = 1; i <= 5; i++) {
             JLabel labelFila = new JLabel(texto[i]);
-
             gbcTexto.gridy = i;
             paramsPanel.add(labelFila, gbcTexto);
 
@@ -133,10 +157,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
             gbcTexto.gridx = 1;
             gbcTexto.weightx = 0.2;
         }
-        
         for (int i = 7; i <= 9; i++) {
             JLabel labelFila = new JLabel(texto[i]);
-            JComboBox<String> comboFila = comboBox.get(i);
+            JComboBox<String> comboFila = comboBox.get(i-7);
 
             gbcTexto.gridy = i;
             paramsPanel.add(labelFila, gbcTexto);
@@ -155,7 +178,10 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         gbcTexto.gridwidth = 3;
         gbcTexto.weightx = 0.0;
         gbcTexto.fill = GridBagConstraints.NONE;
-        ejecutarButton = new JButton("EJECUTAR");
+    }
+    
+    public void reset() {
+    	ejecutarButton = new JButton("EJECUTAR");
         ejecutarButton.setPreferredSize(new Dimension(200, 40));
         paramsPanel.add(ejecutarButton, gbcTexto);
         
@@ -164,16 +190,15 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         gbcTexto.gridwidth = 3;
         gbcTexto.weightx = 0.0;
         gbcTexto.fill = GridBagConstraints.NONE;
+        
+        //Boton para establecer valores predeterminados
         reset = new JButton("<html><center>Valores</center><center>Predeterminados</center></html>");
         reset.setPreferredSize(new Dimension(150, 40));
         paramsPanel.add(reset, gbcTexto);
-        
         reset.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				spinners[1].setValue(100);
-		        spinners[1].setValue(100);
 		        spinners[2].setValue(100);
 		        spinners[3].setValue(60);
 		        spinners[4].setValue(5);
@@ -182,12 +207,13 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		        marcar.get(1).setSelected(true);
 		        marcar.get(2).setSelected(false);
 			}
-        	
         });
-        
-        // Crear segundo panel vacío para la gráfica
- 		JPanel panelVacio = new JPanel();
- 		GraphicPanel<Integer> grafico = new GraphicPanel<Integer>();
+    }
+    
+    public void ejecutar() {
+    	
+		panelVacio = new JPanel();
+    	GraphicPanel<Integer> grafico = new GraphicPanel<Integer>();
  		panelVacio.setBorder(BorderFactory.createLineBorder(Color.BLACK));
  		panelVacio.setPreferredSize(new Dimension(700, 600));
  		panelVacio.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
@@ -201,47 +227,32 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				int maxGeneraciones = (Integer) spinners[2].getValue();
 				double probCruce = (Double.valueOf((Integer)spinners[3].getValue()))/100;
 				double probMutacion = (Double.valueOf((Integer)spinners[4].getValue()))/100;
-				String metodoMutacion = (String)comboBox.get(9).getSelectedItem();
-				String metodoSeleccion = (String)comboBox.get(7).getSelectedItem();
-				String metodoCruce = (String)comboBox.get(8).getSelectedItem();
+				String metodoMutacion = (String)comboBox.get(2).getSelectedItem();
+				String metodoSeleccion = (String)comboBox.get(0).getSelectedItem();
+				String metodoCruce = (String)comboBox.get(1).getSelectedItem();
 				double probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
 				boolean[] marcados= new boolean[3];
 				marcados[0] = false;
-				for(int i = 0; i<3 ;i ++) {
-					marcados[i] =  marcar.get(i).isSelected();
-				}
+				for(int i = 0; i<3 ;i ++) marcados[i] =  marcar.get(i).isSelected();
+				
+				//Instancia del algoritmo
 				AlgoritmoGenetico<Integer> instancia = 
-						new AlgoritmoGenetico<Integer>(tamPoblacion, maxGeneraciones,
-								marcados, 
-								probElitismo,
-								metodoCruce, probCruce, 
-								metodoSeleccion,
-								metodoMutacion, probMutacion);
-						instancia.run();
-						List<double[]> datos = instancia.datos();
-						List<Integer> mejor = instancia.obtenerMejor();
-						grafico.actualizar(mejor,panelVacio,datos.get(0), datos.get(1), datos.get(2));
-						panelVacio.revalidate();
+						new AlgoritmoGenetico<Integer>(	tamPoblacion,
+														maxGeneraciones,
+														marcados, 
+														probElitismo,
+														metodoCruce, probCruce, 
+														metodoSeleccion,
+														metodoMutacion, probMutacion);
+				//Ejecucion del algoritmo
+				instancia.run();
+				//Datos para y actualizacion de grafica
+				List<double[]> datos = instancia.datos();
+				List<Integer> mejor = instancia.obtenerMejor();
+				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2));
+				panelVacio.revalidate();
 			}
          });
-        
-        panelPrincipal.add(paramsPanel, BorderLayout.WEST);
-        panelPrincipal.add(panelVacio, BorderLayout.CENTER);
-
-        // Se agrega el panel de título al panel principal
-        panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
-
-        // Se agrega el panel principal a la ventana
-        add(panelPrincipal);
-        pack();
-        setVisible(true);
-		this.setLocationRelativeTo(null);
-    }
-    
-    public void titulo() {
-    	JLabel titleLabel  = new JLabel("Algoritmo Genético");
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 50));
-        panelTitulo.add(titleLabel);
     }
 
 }

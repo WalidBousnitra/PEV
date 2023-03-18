@@ -9,26 +9,26 @@ import funciones.Viajero;
 
 public class Elitismo<T> {
 
-	private double p;
-	private boolean activado;
+	// Atributos
+	private boolean activado; //Con/sin elitismo
 	private List<Individuo<T>> elite;
 	private int numElite;
 	
-	public Elitismo(boolean activado, double probElitismo,int tamPoblacion) {
-		p = probElitismo;
+	public Elitismo(boolean activado, double tamElite,int tamPoblacion) {
 		this.activado = activado;
-		numElite = (int)(tamPoblacion*p);
+		numElite = (int)(tamElite);
 		elite = new ArrayList<Individuo<T>>(numElite);
 	}
 	
+	// Funcion de extracion de elite por copia
 	public void extraer(List<Individuo<T>> poblacion) {
 		
 		if(activado) {
+			// Gracias a Comparable se puede ordenar e invertir para coger los mejores
 	        Collections.sort(poblacion);
 	        Collections.reverse(poblacion);
-	        for(int i = 0; i<numElite; i++) {
+	        for(int i = 0; i<numElite; i++)
 	        	elite.add(crear(poblacion.get(i)));
-	        }
 		}
 	}
 	
@@ -38,9 +38,11 @@ public class Elitismo<T> {
 		return nuevo;
 	}
 	
+	// Funcion de incorporacion de elite
 	public void incorporar(List<Individuo<T>> poblacion) {
 
 		if(activado) {
+			// Gracias a Comparable se puede ordenar e invertir para sustituir los peor
 	        Collections.sort(poblacion);
 	        Collections.reverse(poblacion);
 	        for (int i = 0; i < elite.size(); i++) {
@@ -48,6 +50,7 @@ public class Elitismo<T> {
 	            int peorIndice = poblacion.size() - 1 - i;
 	            poblacion.set(peorIndice, nuevoIndividuo);
 	        }
+	        //liberacion de la elite para la siguiente generacion
 			elite.clear();
 		}
 	}

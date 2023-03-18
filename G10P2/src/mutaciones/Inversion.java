@@ -17,10 +17,9 @@ public class Inversion<T> extends AlgoritmosMutacion<T>{
 		int pos1 = getRand().nextInt(0,individuo.getCromosoma().size()/2);
 		int pos2 = getRand().nextInt(individuo.getCromosoma().size()/2,individuo.getCromosoma().size());
 		
-		//Swapeamos los elemntos de fuera hacia dentro del segmento selecionado
-		for(int i = 0; i< (pos2-pos1+1)/2; i++) {
+		//Swapeamos los elementos de fuera hacia dentro del segmento selecionado
+		for(int i = 0; i< (pos2-pos1+1)/2; i++)
 			Collections.swap(individuo.getCromosoma(), pos1+i, pos2-i);
-		}
 	}
 
 }

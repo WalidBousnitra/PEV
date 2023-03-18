@@ -43,7 +43,7 @@ class AlgoritmoGenetico<T> {
 		this.tamPoblacion =  tamPoblacion;
 		this.maxGeneraciones = maxGeneraciones;
 		this.marcados= marcados;
-		this.probElitismo = new Elitismo<T>(marcados[2],probElitismo,tamPoblacion);
+		this.probElitismo = new Elitismo<T>(marcados[2],probElitismo*tamPoblacion,tamPoblacion);
 		//Inicializacion de los distintos metodos cruce/seleccion/mutacion
 		this.cruce = iniciarCruce(metodoCruce, probCruce);
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
