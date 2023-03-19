@@ -20,6 +20,7 @@ public class Elitismo<T> {
 		elite = new ArrayList<Individuo<T>>(numElite);
 	}
 	
+	@SuppressWarnings({"unchecked","rawtypes"})
 	// Funcion de extracion de elite por copia
 	public void extraer(List<Individuo<T>> poblacion) {
 		
@@ -28,14 +29,8 @@ public class Elitismo<T> {
 	        Collections.sort(poblacion);
 	        Collections.reverse(poblacion);
 	        for(int i = 0; i<numElite; i++)
-	        	elite.add(crear(poblacion.get(i)));
+	        	elite.add(new Viajero(poblacion.get(i)));
 		}
-	}
-	
-	@SuppressWarnings({"unchecked","rawtypes"})
-	public Individuo<T> crear(Individuo<T> obj){
-		Individuo<T> nuevo = new Viajero(obj);
-		return nuevo;
 	}
 	
 	// Funcion de incorporacion de elite

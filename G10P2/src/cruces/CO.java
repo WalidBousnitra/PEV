@@ -17,7 +17,8 @@ public class CO<T> extends AlgoritmosCruce<Integer>{
 
 	@Override
 	public List<Individuo<Integer>> pareja(Individuo<Integer> padre1, Individuo<Integer> padre2) {
-
+		
+		//listas dinamicas para codificar ambos padres a la vez
 		List<Integer> listaDin = rellenarLista(padre1.getCromosoma().size());
 		List<Integer> listaDin2 = rellenarLista(padre2.getCromosoma().size());
 		List<Individuo<Integer>> hijos = new ArrayList<Individuo<Integer>>(2);
@@ -48,8 +49,8 @@ public class CO<T> extends AlgoritmosCruce<Integer>{
 			listaDin2.remove(pos2);
 		}
 		
-		hijos.add(crear(padre1));
-		hijos.add(crear(padre2));
+		hijos.add(padre1);
+		hijos.add(padre2);
 				
 		return hijos;
 	}

@@ -124,7 +124,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         spinners[4] = new JSpinner(new SpinnerNumberModel(5,0,100,1));
         spinners[5] = new JSpinner(new SpinnerNumberModel(2,0,100,1));
         // Crear combo box para los parámetros
-        String[] opciones = {"Estocástico Universal","Restos","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
+        String[] opciones = {"Estocástico Universal","Restos","Ranking","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
         comboBox.add(new JComboBox<>(opciones));
         String[] opciones2 = {"CO","CX","ERX", "Nuestro Cruce","OX","OXPP","OXOP","PMX"};
         comboBox.add(new JComboBox<>(opciones2));

@@ -27,7 +27,6 @@ public class Ruleta extends AlgoritmoSeleccion{
 			probSeleccion[i] = fitness[i-1]/getFitnessTotal() + probSeleccion[i-1];
 		}
 		
-		
 		for(int i = 0; i<individuos.size(); i++) {
 			double number = rand.nextDouble();
 			for(int j = 1; j < probSeleccion.length; j++) {

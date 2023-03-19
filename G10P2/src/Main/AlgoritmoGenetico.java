@@ -141,6 +141,7 @@ class AlgoritmoGenetico<T> {
 		switch(metodoSeleccion) {
 		case "Estocástico Universal": return new EstocasticoUni();
 		case "Restos": return new Restos();
+		case "Ranking": return new Ranking();
 		case "Ruleta": return new Ruleta();
 		case "Torneo Determinista": return new TorneoDet();
 		case "Torneo Probabilístico": return new TorneoProb();
