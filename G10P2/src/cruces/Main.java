@@ -1,6 +1,7 @@
 package cruces;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -34,71 +35,131 @@ public class Main {
 	}
 	
 	public static List<List<Integer>> pareja(List<Integer> padre1, List<Integer> padre2) {
-
-		List<Integer> listaDin = rellenarLista(padre1.size());
-		List<Integer> listaDin2 = rellenarLista(padre1.size());
+		//Elegimos los 2 genes a intercambiar forzando que la pos1 sea menos que pos2
+		int pos1 = 2;
+		int pos2 = 4;
 		List<List<Integer>> hijos = new ArrayList<List<Integer>>(2);
-		List<Integer> hijo1 = new ArrayList<Integer>(padre1);
-		List<Integer> hijo2 = new ArrayList<Integer>(padre2);
-
-		for(int i = 0; i< padre1.size();i++){
-			int pos = listaDin.indexOf(padre1.get(i));
-			int pos2 = listaDin2.indexOf(padre2.get(i));
-			padre1.set(i, pos);
-			listaDin.remove(pos);
-			padre2.set(i, pos2);
-			listaDin2.remove(pos2);
-		}
+		List<Integer> hijo1 = padre2;
+		Collections.fill(hijo1,null);  
+		List<Integer> hijo2 = padre1;
+		Collections.fill(hijo2,null); 
 		
-		List<List<Integer>> tmp = pareja2(padre1, padre2);
-		
-		padre1 = tmp.get(0);
-		padre2 = tmp.get(1);
-		
-		listaDin = rellenarLista(padre1.size());
-		listaDin2 = rellenarLista(padre1.size());
-		
-		for(int i = 0; i< padre1.size();i++){
-			int pos = padre1.get(i);
-			int pos2 = padre2.get(i);
-			hijo1.set(i, listaDin.get(pos));
-			listaDin.remove(pos);
-			hijo2.set(i, listaDin2.get(pos2));
-			listaDin2.remove(pos2);
-		}
-		
-		hijos.add(hijo1);
-		hijos.add(hijo2);
-				
-		return hijos;
-	}
-	
-	public static List<Integer> rellenarLista(int size){
-		List<Integer> sol = new ArrayList<Integer>(size);
-		for(int i = 1; i<size+1; i++) {
-			sol.add(i);
-		}
-		return sol;
-	}
-	
-	public static List<List<Integer>> pareja2(List<Integer> padre1, List<Integer> padre2) {
-		
-
-		List<List<Integer>> hijos = new ArrayList<List<Integer>>(2);
-		List<Integer> hijo1 = new ArrayList<Integer>(padre1);
-		List<Integer> hijo2 = new ArrayList<Integer>(padre2);
-		
-		int puntoCorte = 3;
-		
-		for(int i = puntoCorte; i < padre1.size();++i) {
+		//copiamos el segmento invertido
+		for(int i = pos1; i<=pos2;i++) {
 			hijo1.set(i, padre2.get(i));
 			hijo2.set(i, padre1.get(i));
 		}
 		
+		//colocar el resto de genes
+		for(int i = 0 ; i< padre1.size();i++) {
+			if(i<pos1 || i>pos2) {
+				hijo1.set(i, seleccion(i,padre1,padre2,hijo1));
+				hijo2.set(i, seleccion(i,padre2,padre1,hijo2));
+			}
+		}
+		
 		hijos.add(hijo1);
 		hijos.add(hijo2);
-				
 		return hijos;
 	}
+	
+	//funcion que devuelve el homologo en caso de que tenga conflito
+	public static Integer seleccion(int i,List<Integer> padre1, List<Integer> padre2,List<Integer> hijo) {
+		
+		Integer elem = padre1.get(i);
+		
+		while(hijo.contains(elem)){
+			elem = padre1.get(padre2.indexOf(elem));
+		}
+		
+		return elem;
+	}
+			/*
 
+		crearMatriz(padre1,padre2);
+		saca();
+		List<List<Integer>> hijos = new ArrayList<List<Integer>>(2);
+		List<Integer> hijo1 = padre2;
+		List<Integer> hijo2 = padre1;
+		
+		for(int i = 1; i<padre1.size();i++) {
+			int cosica =selecionar(padre2.get(i-1));
+			hijo1.set(i, cosica);
+		}
+		reset();
+		crearMatriz(padre1,padre2);
+		for(int i = 1; i<padre2.size();i++) {
+			int cosica2 =selecionar(padre1.get(i-1));
+			hijo2.set(i, cosica2);
+		}		
+		
+		
+		hijos.add(hijo1);
+		hijos.add(hijo2);
+		reset();
+		return hijos;
+	}
+	
+	private static void reset() {
+		mAdy.clear();
+		for(int i = 0; i<=9;i++) {
+				mAdy.put(i, new ArrayList<Integer>());
+		}
+	}
+	
+	public static void saca() {
+		for(Integer key : mAdy.keySet()) {
+			System.out.println(key + ":    " + mAdy.get(key));
+		}
+	}
+	
+	//fucion que devulve el elemento a sustituir en el gen
+	public static Integer selecionar(Integer elem) {
+		int newElem = mAdy.get(elem).get(0);
+		int min = mAdy.get(mAdy.get(elem).get(0)).size();
+		for(int i = 1; i<mAdy.get(elem).size();i++) {
+			if(mAdy.get(mAdy.get(elem).get(i)).size()<min) {
+				newElem = mAdy.get(elem).get(i);
+				min = mAdy.get(mAdy.get(elem).get(i)).size();
+			}
+		}
+		
+		mAdy.remove(elem);
+		for(List<Integer> obj : mAdy.values()) {
+			for(int i = 0 ; i<obj.size();i++) {
+				if(obj.get(i)==elem) {
+					obj.remove(i);
+					i--;
+				}
+			}
+		}
+		
+		return newElem; 
+	}
+	
+	
+	//Funcion para crear la matriz de adyacencia en para cada par de padres
+	public static void crearMatriz(List<Integer> padre1, List<Integer> padre2){
+		
+		//Añadimos la adyacencia de los primeros elementos porque no tiene elemento anterior
+		mAdy.get(padre1.get(0)).add(padre1.get(1));
+		mAdy.get(padre1.get(0)).add(padre1.get(padre1.size()-1));
+		
+		if(!mAdy.get(padre2.get(0)).contains(padre2.get(1)))
+			mAdy.get(padre2.get(0)).add(padre2.get(1));
+		if(!mAdy.get(padre2.get(0)).contains(padre2.get(padre2.size()-1)))
+			mAdy.get(padre2.get(0)).add(padre2.get(padre2.size()-1));
+		
+		for(int i  = 1;i <padre1.size();i++) {
+			//Para cada elemento añadimos el elemento anterior y posterior
+			if(!mAdy.get(padre1.get(i)).contains(padre1.get(i-1)))
+				mAdy.get(padre1.get(i)).add(padre1.get(i-1));
+			if(!mAdy.get(padre1.get(i)).contains(padre1.get((i+1)%padre1.size())))
+				mAdy.get(padre1.get(i)).add(padre1.get((i+1)%padre1.size()));
+			if(!mAdy.get(padre2.get(i)).contains(padre2.get(i-1)))
+				mAdy.get(padre2.get(i)).add(padre2.get(i-1));
+			if(!mAdy.get(padre2.get(i)).contains(padre2.get((i+1)%padre1.size())))
+				mAdy.get(padre2.get(i)).add(padre2.get((i+1)%padre1.size()));
+		}		
+	}*/
 }

@@ -7,74 +7,103 @@ import java.util.Map;
 
 import Individuos.Individuo;
 
-public class ERX<T> extends AlgoritmosCruce<T>{
+public class ERX<T> extends AlgoritmosCruce<Integer>{
 	
-	private Map<T,List<T>>mAdy;
+	private Map<Integer,List<Integer>>mAdy;
 	
 	public ERX(double p) {
 		super(p);
-		mAdy = new HashMap<T,List<T>>(26);
+		mAdy = new HashMap<Integer,List<Integer>>(26);
+		for(int i = 0 ; i<=27;i++) {
+			if(i!=25) {
+				mAdy.put(i, new ArrayList<Integer>());
+			}
+		}
 	}
 
 	@Override
-	public List<Individuo<T>> pareja(Individuo<T> padre1, Individuo<T> padre2) {
+	public List<Individuo<Integer>> pareja(Individuo<Integer> padre1, Individuo<Integer> padre2) {
 
-		crearMatriz(padre1,padre2);
-		List<Individuo<T>> hijos = new ArrayList<Individuo<T>>(2);
+		crearMatriz(padre1.getCromosoma(),padre2.getCromosoma());
+		List<Individuo<Integer>> hijos = new ArrayList<Individuo<Integer>>(2);
+		Individuo<Integer> hijo1 = crear(padre2);
+		Individuo<Integer> hijo2 = crear(padre1);
 		
-		for(int i = 0; i< padre1.getCromosoma().size();i++) {
-			
-			padre1.getCromosoma().set(i, selecionar(padre1.getCromosoma().get(i)));
-			padre2.getCromosoma().set(i, selecionar(padre2.getCromosoma().get(i)));
+		for(int i = 1; i<padre2.getCromosoma().size();i++) {
+			int cosica =selecionar(padre2.getCromosoma().get(i-1));
+			hijo1.getCromosoma().set(i, cosica);
+		}
+		reset();
+		crearMatriz(padre1.getCromosoma(),padre2.getCromosoma());
+		for(int i = 1; i<padre1.getCromosoma().size();i++) {
+			int cosica2 =selecionar(padre1.getCromosoma().get(i-1));
+			hijo2.getCromosoma().set(i, cosica2);
 		}
 		
-		hijos.add(padre1);
-		hijos.add(padre2);
-		mAdy.clear();
+		hijos.add(hijo1);
+		hijos.add(hijo2);
+		reset();
 		return hijos;
 	}
 	
-	//fucion que devulve el elemento a sustituir en el gen
-	public T selecionar(T elem) {
-		int indc = 0;
-		int min= mAdy.get(mAdy.get((int) elem).get(0)).size();
-		for(int i = 1; i< mAdy.get((int) elem).size();i++) {
-			if(mAdy.get(mAdy.get((int) elem).get(i)).size()<min) {
-				indc = (int) mAdy.get((int) elem).get(i);
-				min = mAdy.get(mAdy.get((int) elem).get(i)).size();
+	private void reset() {
+		mAdy.clear();
+		for(int i = 0 ; i<=27;i++) {
+			if(i!=25) {
+				mAdy.put(i, new ArrayList<Integer>());
 			}
 		}
-		int i = 0;
-		for (T key : mAdy.keySet()) {
-			if(i==indc)
-				return key;
-		     i++;
+	}
+	
+	//fucion que devulve el elemento a sustituir en el gen
+	public Integer selecionar(Integer elem) {
+		
+		int newElem = mAdy.get(elem).get(0);
+		int min = mAdy.get(mAdy.get(elem).get(0)).size();
+		for(int i = 1; i<mAdy.get(elem).size();i++) {
+			if(mAdy.get(mAdy.get(elem).get(i)).size()<min) {
+				newElem = mAdy.get(elem).get(i);
+				min = mAdy.get(mAdy.get(elem).get(i)).size();
+			}
 		}
-		return null; 
+		
+		mAdy.remove(elem);
+		for(List<Integer> obj : mAdy.values()) {
+			for(int i = 0 ; i<obj.size();i++) {
+				if(obj.get(i)==elem) {
+					obj.remove(i);
+					continue;
+				}
+			}
+		}
+		return newElem;
+		 
 	}
 	
 	
 	//Funcion para crear la matriz de adyacencia en para cada par de padres
-	public void crearMatriz(Individuo<T> padre1, Individuo<T> padre2){
+	public void crearMatriz(List<Integer> padre1, List<Integer> padre2){
 		
-		//Añadimos la adyacencia de los primeros elementos porque no tiene elemento anterior		
-		mAdy.get((int) padre1.getCromosoma().get(0)).add(padre1.getCromosoma().get(1));
-		mAdy.get((int) padre2.getCromosoma().get(0)).add(padre2.getCromosoma().get(1));
+		//Añadimos la adyacencia de los primeros elementos porque no tiene elemento anterior
+		mAdy.get(padre1.get(0)).add(padre1.get(1));
+		mAdy.get(padre1.get(0)).add(padre1.get(padre1.size()-1));
 		
-		for(int i  = 1;i <padre1.getCromosoma().size()-1;i++) {
+		if(!mAdy.get(padre2.get(0)).contains(padre2.get(1)))
+			mAdy.get(padre2.get(0)).add(padre2.get(1));
+		if(!mAdy.get(padre2.get(0)).contains(padre2.get(padre2.size()-1)))
+			mAdy.get(padre2.get(0)).add(padre2.get(padre2.size()-1));
+		
+		for(int i  = 1;i <padre1.size();i++) {
 			//Para cada elemento añadimos el elemento anterior y posterior
-			mAdy.get((int) padre1.getCromosoma().get(i)).add(padre1.getCromosoma().get(i-1));
-			mAdy.get((int) padre1.getCromosoma().get(i)).add(padre1.getCromosoma().get(i+1));
-			mAdy.get((int) padre2.getCromosoma().get(i)).add(padre2.getCromosoma().get(i-1));
-			mAdy.get((int) padre2.getCromosoma().get(i)).add(padre2.getCromosoma().get(i+1));
-		}
-		
-		int ultimo = padre1.getCromosoma().size()-1;
-		
-		//Añadimos la adyacencia de los ultimos elementos porque no tiene elemento posterior	
-		mAdy.get((int) padre1.getCromosoma().get(ultimo)).add(padre1.getCromosoma().get(ultimo-1));
-		mAdy.get((int) padre2.getCromosoma().get(ultimo)).add(padre2.getCromosoma().get(ultimo-1));
-		
+			if(!mAdy.get(padre1.get(i)).contains(padre1.get(i-1)))
+				mAdy.get(padre1.get(i)).add(padre1.get(i-1));
+			if(!mAdy.get(padre1.get(i)).contains(padre1.get((i+1)%padre1.size())))
+				mAdy.get(padre1.get(i)).add(padre1.get((i+1)%padre1.size()));
+			if(!mAdy.get(padre2.get(i)).contains(padre2.get(i-1)))
+				mAdy.get(padre2.get(i)).add(padre2.get(i-1));
+			if(!mAdy.get(padre2.get(i)).contains(padre2.get((i+1)%padre1.size())))
+				mAdy.get(padre2.get(i)).add(padre2.get((i+1)%padre1.size()));
+		}		
 	}
 
 }
