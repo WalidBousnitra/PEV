@@ -1,6 +1,7 @@
 package selecciones;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -20,8 +21,7 @@ public class Ranking extends AlgoritmoSeleccion{
 		//Primero ordenamos de mayor a menor la poblacion para crear la ordenacion por ranking
 		Collections.sort(individuos);
 		Collections.reverse(individuos);
-		for(int i = 0; i<individuos.size();i++)
-			fitness[0] = individuos.get(i).getFitness();
+		Arrays.sort(fitness);
 		
 		//Ajustamos el fitness para calcular lapresion selectiva
 		double maxFitness = Double.MIN_VALUE;
@@ -31,11 +31,11 @@ public class Ranking extends AlgoritmoSeleccion{
 		}
 		fitness = ajustarFitness(fitness, maxFitness);
 		
-		double beta = 2;
+		int beta = 2;
 		
 		probSeleccion[0] = 0;
 		for(int i = 1; i<=fitness.length; i++) {
-			probSeleccion[i] = (1/individuos.size())*(beta-2*(beta-1)*((i-1)/(individuos.size()-1)));
+			probSeleccion[i] = (1/individuos.size())*(beta-(2*(beta-1))*((i-1)/(individuos.size()-1))) + probSeleccion[i-1];
 		}
 		
 		//Seleccion de individuos por probabilidad
