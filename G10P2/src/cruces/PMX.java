@@ -9,7 +9,7 @@ import Individuos.Individuo;
 
 public class PMX<T> extends AlgoritmosCruce<T>{
 
-private Random rand;
+	private Random rand;
 	
 	public PMX(double p) {
 		super(p);
