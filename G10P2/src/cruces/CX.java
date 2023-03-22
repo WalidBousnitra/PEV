@@ -33,8 +33,8 @@ public class CX<T> extends AlgoritmosCruce<T>{
 			}
 		}
 		
-		hijos.add(padre1);
-		hijos.add(padre2);
+		hijos.add(crear(padre1));
+		hijos.add(crear(padre2));
 		vaciar();
 		return hijos;
 	}

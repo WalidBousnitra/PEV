@@ -31,11 +31,16 @@ public class Ranking extends AlgoritmoSeleccion{
 		}
 		fitness = ajustarFitness(fitness, maxFitness);
 		
-		int beta = 2;
+		double beta = presSel(fitness);
 		
 		probSeleccion[0] = 0;
+		int n = individuos.size();
 		for(int i = 1; i<=fitness.length; i++) {
-			probSeleccion[i] = (1/individuos.size())*(beta-(2*(beta-1))*((i-1)/(individuos.size()-1))) + probSeleccion[i-1];
+			
+			double uno = 1.0/n;
+			double dos = 2.0*(beta-1.0);
+			double tres = (i-1.0)/(n-1.0);
+			probSeleccion[i] = (uno*(beta-dos*tres)) + probSeleccion[i-1];
 		}
 		
 		//Seleccion de individuos por probabilidad
@@ -50,6 +55,18 @@ public class Ranking extends AlgoritmoSeleccion{
 		}
 		setFitnessTotal(0);
 		return newIndividuos;
+	}
+	
+	public double presSel(double[] fitness) {
+		double sum= 0.0;
+		
+		for(int i = 0; i<fitness.length;i++) {
+			sum+=fitness[i];
+		}
+		
+		double sol = fitness[0]/(sum/fitness.length);
+		
+		return sol;
 	}
 
 }

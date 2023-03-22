@@ -49,8 +49,8 @@ public class CO<T> extends AlgoritmosCruce<Integer>{
 			listaDin2.remove(pos2);
 		}
 		
-		hijos.add(padre1);
-		hijos.add(padre2);
+		hijos.add(crear(padre1));
+		hijos.add(crear(padre2));
 				
 		return hijos;
 	}
