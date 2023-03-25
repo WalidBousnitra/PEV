@@ -47,7 +47,7 @@ public class PMX<T> extends AlgoritmosCruce<T>{
 	}
 	
 	//funcion que devuelve el homologo en caso de que tenga conflito
-	public T seleccion(int i,Individuo<T> padre1, Individuo<T> padre2,Individuo<T> hijo) {
+	public T seleccion(int i, Individuo<T> padre1, Individuo<T> padre2,Individuo<T> hijo) {
 		
 		T elem = padre1.getCromosoma().get(i);
 		

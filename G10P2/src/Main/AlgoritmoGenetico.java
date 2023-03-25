@@ -9,7 +9,7 @@ import funciones.*;
 import mutaciones.*;
 import selecciones.*;
 
-class AlgoritmoGenetico<T> {
+public class AlgoritmoGenetico<T> {
 	
 	//Parametros	
 	private int tamPoblacion;
@@ -18,6 +18,7 @@ class AlgoritmoGenetico<T> {
 	private Elitismo<T> probElitismo;
 	private AlgoritmosCruce<T> cruce;
 	private AlgoritmoSeleccion seleccion;
+
 	private AlgoritmosMutacion<T> mutacion;
 	
 	//Datos del Algoritmo
@@ -202,6 +203,8 @@ class AlgoritmoGenetico<T> {
 		return sol;
 	}
 
+	public Individuo<T> getElMejor() {	return elMejor;	}
+	
 	//Funcion para obtener las ciudades del mejor individuo desde la grafica
 	public List<T> obtenerMejor() {
 		List<T> sol = new ArrayList<T>();

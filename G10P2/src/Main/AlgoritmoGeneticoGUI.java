@@ -23,13 +23,16 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import analisis.Parametros;
+import analisis.VentanaAnalisis;
+
 public class AlgoritmoGeneticoGUI extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	// Paneles de la ventana principar
 	private JPanel panelPrincipal;
     private JPanel panelTitulo;
@@ -47,6 +50,14 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     private List<JCheckBox> marcar = new ArrayList<JCheckBox>(3);
     private JButton ejecutarButton;
     private JButton reset;
+    private JButton analisis;
+    
+    
+    // para conseguir los praametros en el analisis
+    private int tamPoblacion,maxGeneraciones;
+	private double probCruce,probMutacion,probElitismo;
+	private String metodoMutacion,metodoSeleccion,metodoCruce;
+	private boolean[] marcados;
     
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
@@ -74,6 +85,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     	parametros();
     	
     	reset();
+    	
+    	analisis();
         
         ejecutar();
         
@@ -210,6 +223,33 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         });
     }
     
+    public void analisis() {
+        
+        gbcTexto.gridy = 13;
+        gbcTexto.gridx = 0;
+        gbcTexto.gridwidth = 3;
+        gbcTexto.weightx = 0.0;
+        gbcTexto.fill = GridBagConstraints.NONE;
+        
+        //Boton para analizar rango de parametros
+        analisis = new JButton("<html><center>Análisis de</center><center>Parámetros</center></html>");
+        analisis.setPreferredSize(new Dimension(150, 40));
+        paramsPanel.add(analisis, gbcTexto);
+        analisis.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Parametros datos = new Parametros(getTamPoblacion(),
+						getMaxGeneraciones(),
+						getMarcados(), 
+						getProbElitismo(),
+						getMetodoCruce(), getProbCruce(), 
+						getMetodoSeleccion(),
+						getMetodoMutacion(), getProbMutacion());
+				new VentanaAnalisis(datos);
+			}
+        });
+    }
+    
     public void ejecutar() {
     	
 		panelVacio = new JPanel();
@@ -223,15 +263,15 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				int tamPoblacion = (Integer)spinners[1].getValue();
-				int maxGeneraciones = (Integer) spinners[2].getValue();
-				double probCruce = (Double.valueOf((Integer)spinners[3].getValue()))/100;
-				double probMutacion = (Double.valueOf((Integer)spinners[4].getValue()))/100;
-				String metodoMutacion = (String)comboBox.get(2).getSelectedItem();
-				String metodoSeleccion = (String)comboBox.get(0).getSelectedItem();
-				String metodoCruce = (String)comboBox.get(1).getSelectedItem();
-				double probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
-				boolean[] marcados= new boolean[3];
+				tamPoblacion = (Integer)spinners[1].getValue();
+				maxGeneraciones = (Integer) spinners[2].getValue();
+				probCruce = (Double.valueOf((Integer)spinners[3].getValue()))/100;
+				probMutacion = (Double.valueOf((Integer)spinners[4].getValue()))/100;
+				metodoMutacion = (String)comboBox.get(2).getSelectedItem();
+				metodoSeleccion = (String)comboBox.get(0).getSelectedItem();
+				metodoCruce = (String)comboBox.get(1).getSelectedItem();
+				probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
+				marcados= new boolean[3];
 				marcados[0] = false;
 				for(int i = 0; i<3 ;i ++) marcados[i] =  marcar.get(i).isSelected();
 				
@@ -254,5 +294,20 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 			}
          });
     }
+
+	public int getTamPoblacion() {return (Integer)spinners[1].getValue();}
+	public int getMaxGeneraciones() {return (Integer) spinners[2].getValue();}
+	public double getProbCruce() {return (Double.valueOf((Integer)spinners[3].getValue()))/100;	}
+	public double getProbMutacion() {return (Double.valueOf((Integer)spinners[4].getValue()))/100;}
+	public double getProbElitismo() {return (Double.valueOf((Integer)spinners[5].getValue()))/100;}
+	public String getMetodoMutacion() {	return (String)comboBox.get(2).getSelectedItem();}
+	public String getMetodoSeleccion() {return (String)comboBox.get(0).getSelectedItem();}
+	public String getMetodoCruce() {return (String)comboBox.get(1).getSelectedItem();	}
+	public boolean[] getMarcados() {
+		marcados= new boolean[3];
+		marcados[0] = false;
+		for(int i = 0; i<3 ;i ++) marcados[i] =  marcar.get(i).isSelected();
+		return marcados;
+	}
 
 }
