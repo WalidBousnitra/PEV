@@ -69,7 +69,7 @@ public class VentanaAnalisis extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new Rango(10,10000,50,"poblacion",datos);
+				new Rango(10,1000,50,"poblacion",datos);
 			}
         });
     }

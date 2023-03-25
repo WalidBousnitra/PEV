@@ -15,6 +15,7 @@ public class Rango extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//Atributos necesarios
 	private int max,min,intervalo;
 	private String caso;
 	private Parametros datos;
@@ -41,6 +42,7 @@ public class Rango extends JFrame{
         
         boton();        
         
+        //ajustes ventana
         setSize(300, 200);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -105,7 +107,6 @@ public class Rango extends JFrame{
 						ejex[pos] = i;
 						pos++;
 					}
-					new Grafica(ejex,mejores);
 					break;
 				case"mutacion":
 					tam = (int) ((max-min+0.1)/0.1)+1;
@@ -125,7 +126,6 @@ public class Rango extends JFrame{
 						ejex[pos] = i;
 						pos++;
 					}
-					new Grafica(ejex,mejores);
 					break;
 				case"poblacion":
 					for(int i = (int) min ; i <= max; i=i+intervalo ) {
@@ -142,9 +142,9 @@ public class Rango extends JFrame{
 						ejex[pos] = i;
 						pos++;
 					}
-					new Grafica(ejex,mejores);
 					break;
 				}
+				new Grafica(ejex,mejores);
 			}
         });
         boton.add(okButton);

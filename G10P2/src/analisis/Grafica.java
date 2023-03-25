@@ -1,7 +1,6 @@
 package analisis;
 
 import java.awt.Color;
-
 import javax.swing.*;
 import org.math.plot.*;
 
@@ -23,6 +22,7 @@ public class Grafica extends JFrame{
 		// add a line plot to the PlotPanel
 		plot.addLinePlot("Aptitudes por valor", ejex, valores);
 		
+		//Obtener la mejor aptitud y su respectivo valor de parametro
 		int pos = 0;
 		double min = valores[pos];
 		
