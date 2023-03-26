@@ -78,8 +78,11 @@ public class AlgoritmoGenetico<T> {
 				poblacion = cruce.cruzar(poblacion);
 			
 			//mutacion si esta activado
-			if(marcados[1])
+			if(marcados[1]) {
 				mutacion.mutar(poblacion);
+				//actualizar numero de generacines para las mutaciones no estacionarias
+				mutacion.actGen();
+			}
 			
 			//insercion elite
 			probElitismo.incorporar(poblacion);

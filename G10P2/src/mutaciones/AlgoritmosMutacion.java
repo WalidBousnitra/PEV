@@ -8,14 +8,21 @@ public abstract class AlgoritmosMutacion<T>{
 	
 	private double p;
 	private Random rand;
+	private int generaciones;
 	
 	public AlgoritmosMutacion(double probMutacion) {
 		p = probMutacion;
 		rand = new Random();
+		generaciones = 1;
 	}
 	
 	//funcion que recorre la poblacion y muta los individuos elegidos
 	public void mutar(List<Individuo<T>> poblacion) {
+		
+		//mutacion estacionaria
+		if(generaciones%5==0) {
+			generaciones*=0.95;
+		}
 		
 		for(int i = 0 ; i < poblacion.size(); i++)
 			if(rand.nextDouble()<=p)
@@ -30,4 +37,8 @@ public abstract class AlgoritmosMutacion<T>{
 	public void setP(double p) {this.p = p;}
 	public Random getRand() {return rand;}
 	public void setRand(Random rand) {this.rand = rand;	}
+
+	public void actGen() {
+		generaciones++;
+	}
 }

@@ -56,7 +56,7 @@ public class Heuristica<T> extends AlgoritmosMutacion<T>{
 		for(int i = 0; i<numperm; i++)
 			if(combinaciones.get(i).compareTo(individuo) == 1)
 				individuo.setCromosoma(combinaciones.get(i).getCromosoma());
-		
+		combinaciones.clear();		
 	}
 	
 	//algoritmo para permutar

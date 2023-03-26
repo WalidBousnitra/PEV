@@ -62,7 +62,8 @@ public class ERX<T> extends AlgoritmosCruce<Integer>{
 	//fucion que devulve el elemento a sustituir en el gen
 	public Integer selecionar(Integer elem) {
 		
-		
+		//para los casos en los que la matriz de adyacencia llega a un punto de bloqueo
+		//se elige un valor al azar de los que ya existen
 		if(!mAdy.containsKey(elem) || mAdy.get(elem).isEmpty()) {
 			mAdy.remove(elem);
 			List<Integer> keysAsArray = new ArrayList<Integer>(mAdy.keySet());
@@ -71,16 +72,19 @@ public class ERX<T> extends AlgoritmosCruce<Integer>{
 		int newElem = mAdy.get(elem).get(0);
 		int min = mAdy.get(mAdy.get(elem).get(0)).size();
 		for(int i = 1; i<mAdy.get(elem).size();i++) {
-			if(mAdy.get(mAdy.get(elem).get(i)).size()==min) {
+			//se coge el elemento con menor tamaño de lista de adyacencia
+			if(mAdy.get(mAdy.get(elem).get(i)).size()<min) {
+				newElem = mAdy.get(elem).get(i);
+				min = mAdy.get(mAdy.get(elem).get(i)).size();
+			}
+			// en los casos de mismo tamaño actualizamos aleatoriamente
+			else if(mAdy.get(mAdy.get(elem).get(i)).size()==min) {
 				if(rand.nextDouble()>0.5) {
 					newElem = mAdy.get(elem).get(i);
 				}
 			}
-			else if(mAdy.get(mAdy.get(elem).get(i)).size()<min) {
-				newElem = mAdy.get(elem).get(i);
-				min = mAdy.get(mAdy.get(elem).get(i)).size();
-			}
 		}
+		//se eliminan los elemntos de la matriz de adyacencia
 		mAdy.remove(elem);
 		for(List<Integer> obj : mAdy.values()) {
 			for(int i = 0 ; i<obj.size();i++) {
@@ -95,28 +99,28 @@ public class ERX<T> extends AlgoritmosCruce<Integer>{
 	}	
 	
 	//Funcion para crear la matriz de adyacencia en para cada par de padres
-		public void crearMatriz(List<Integer> padre1, List<Integer> padre2){
-			
-			//Añadimos la adyacencia de los primeros elementos porque no tiene elemento anterior
-			mAdy.get(padre1.get(0)).add(padre1.get(1));
-			mAdy.get(padre1.get(0)).add(padre1.get(padre1.size()-1));
-			
-			if(!mAdy.get(padre2.get(0)).contains(padre2.get(1)))
-				mAdy.get(padre2.get(0)).add(padre2.get(1));
-			if(!mAdy.get(padre2.get(0)).contains(padre2.get(padre2.size()-1)))
-				mAdy.get(padre2.get(0)).add(padre2.get(padre2.size()-1));
-			
-			for(int i  = 1;i <padre1.size();i++) {
-				//Para cada elemento añadimos el elemento anterior y posterior
-				if(!mAdy.get(padre1.get(i)).contains(padre1.get(i-1)))
-					mAdy.get(padre1.get(i)).add(padre1.get(i-1));
-				if(!mAdy.get(padre1.get(i)).contains(padre1.get((i+1)%padre1.size())))
-					mAdy.get(padre1.get(i)).add(padre1.get((i+1)%padre1.size()));
-				if(!mAdy.get(padre2.get(i)).contains(padre2.get(i-1)))
-					mAdy.get(padre2.get(i)).add(padre2.get(i-1));
-				if(!mAdy.get(padre2.get(i)).contains(padre2.get((i+1)%padre1.size())))
-					mAdy.get(padre2.get(i)).add(padre2.get((i+1)%padre1.size()));
-			}		
-		}
+	public void crearMatriz(List<Integer> padre1, List<Integer> padre2){
+		
+		//Añadimos la adyacencia de los primeros elementos porque no tiene elemento anterior
+		mAdy.get(padre1.get(0)).add(padre1.get(1));
+		mAdy.get(padre1.get(0)).add(padre1.get(padre1.size()-1));
+		
+		if(!mAdy.get(padre2.get(0)).contains(padre2.get(1)))
+			mAdy.get(padre2.get(0)).add(padre2.get(1));
+		if(!mAdy.get(padre2.get(0)).contains(padre2.get(padre2.size()-1)))
+			mAdy.get(padre2.get(0)).add(padre2.get(padre2.size()-1));
+		
+		for(int i  = 1;i <padre1.size();i++) {
+			//Para cada elemento añadimos el elemento anterior y posterior
+			if(!mAdy.get(padre1.get(i)).contains(padre1.get(i-1)))
+				mAdy.get(padre1.get(i)).add(padre1.get(i-1));
+			if(!mAdy.get(padre1.get(i)).contains(padre1.get((i+1)%padre1.size())))
+				mAdy.get(padre1.get(i)).add(padre1.get((i+1)%padre1.size()));
+			if(!mAdy.get(padre2.get(i)).contains(padre2.get(i-1)))
+				mAdy.get(padre2.get(i)).add(padre2.get(i-1));
+			if(!mAdy.get(padre2.get(i)).contains(padre2.get((i+1)%padre1.size())))
+				mAdy.get(padre2.get(i)).add(padre2.get((i+1)%padre1.size()));
+		}		
+	}
 
 }

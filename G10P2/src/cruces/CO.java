@@ -23,6 +23,7 @@ public class CO<T> extends AlgoritmosCruce<Integer>{
 		List<Integer> listaDin2 = rellenarLista(padre2.getCromosoma().size());
 		List<Individuo<Integer>> hijos = new ArrayList<Individuo<Integer>>(2);
 
+		//Etapa de codificacion
 		for(int i = 0; i< padre1.getCromosoma().size();i++){
 			int pos = listaDin.indexOf(padre1.getCromosoma().get(i));
 			int pos2 = listaDin2.indexOf(padre2.getCromosoma().get(i));
@@ -32,14 +33,14 @@ public class CO<T> extends AlgoritmosCruce<Integer>{
 			listaDin2.remove(pos2);
 		}
 		
+		//Cruce monopunto
 		List<Individuo<Integer>> tmp = cruce.pareja(padre1, padre2);
-		
 		padre1.setCromosoma(tmp.get(0).getCromosoma());
 		padre2.setCromosoma(tmp.get(1).getCromosoma());
 		
+		//Etapa de descodificacion
 		listaDin = rellenarLista(padre1.getCromosoma().size());
 		listaDin2 = rellenarLista(padre1.getCromosoma().size());
-		
 		for(int i = 0; i< padre1.getCromosoma().size();i++){
 			int pos = padre1.getCromosoma().get(i);
 			int pos2 = padre2.getCromosoma().get(i);
@@ -55,11 +56,13 @@ public class CO<T> extends AlgoritmosCruce<Integer>{
 		return hijos;
 	}
 	
+	//funcion que crea la lista dinamica
 	public List<Integer> rellenarLista(int size){
 		List<Integer> sol = new ArrayList<Integer>(size);
 		for(int i = 1; i<size+2; i++) {
 			sol.add(i);
 		}
+		//eliminamos madrid
 		sol.remove(24);
 		return sol;
 	}
