@@ -1,6 +1,7 @@
 package analisis;
 
 import java.awt.Color;
+
 import javax.swing.*;
 import org.math.plot.*;
 
