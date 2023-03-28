@@ -274,7 +274,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				marcados= new boolean[3];
 				marcados[0] = false;
 				for(int i = 0; i<3 ;i ++) marcados[i] =  marcar.get(i).isSelected();
-				
 				//Instancia del algoritmo
 				AlgoritmoGenetico<Integer> instancia = 
 						new AlgoritmoGenetico<Integer>(	tamPoblacion,
@@ -284,6 +283,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 														metodoCruce, probCruce, 
 														metodoSeleccion,
 														metodoMutacion, probMutacion);
+			
 				//Ejecucion del algoritmo
 				instancia.run();
 				//Datos para y actualizacion de grafica
