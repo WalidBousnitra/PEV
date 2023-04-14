@@ -24,6 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
+import Individuos.Individuo;
 import analisis.Parametros;
 import analisis.VentanaAnalisis;
 
@@ -300,9 +301,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				instancia.run();
 				//Datos para y actualizacion de grafica
 				List<double[]> datos = instancia.datos();
-				List<Integer> mejor = instancia.obtenerMejor();
+				Individuo<Integer> mejor = instancia.getElMejor();
 				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2));
-				grafico2.actualizar(panelVacio2, new double[101], "prueba");
+				grafico2.actualizar(panelVacio2, mejor.gx(), mejor.formula());
 				panelVacio.revalidate();
 				panelVacio2.revalidate();
 			}

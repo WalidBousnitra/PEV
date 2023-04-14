@@ -205,17 +205,7 @@ public class AlgoritmoGenetico<T> {
 		
 		return sol;
 	}
-
-	public Individuo<T> getElMejor() {	return elMejor;	}
 	
-	//Funcion para obtener las ciudades del mejor individuo desde la grafica
-	public List<T> obtenerMejor() {
-		List<T> sol = new ArrayList<T>();
-		
-		for(int i = 0 ; i<elMejor.getCromosoma().getN(); i++) {
-			//sol.add(elMejor.getCromosoma().get(i));
-		}
-		
-		return sol;
-	}
+	//Getter para el mejor individuo
+	public Individuo<T> getElMejor() {	return elMejor;	}
 }
