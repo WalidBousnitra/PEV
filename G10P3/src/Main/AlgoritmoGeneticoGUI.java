@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
 import analisis.Parametros;
@@ -38,6 +39,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     private JPanel panelTitulo;
     private JPanel paramsPanel;
 	private JPanel panelVacio;
+	private JPanel panelVacio2;
+	private JTabbedPane tabbedPane;
 	
 	// Para la estructura de los paneles
 	private GridBagConstraints gbcTexto;
@@ -93,7 +96,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     	// Se agrega el panel de título, el de parametros y la grafica en el panel principal
         panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
         panelPrincipal.add(paramsPanel, BorderLayout.WEST);
-        panelPrincipal.add(panelVacio, BorderLayout.CENTER);
+        panelPrincipal.add(tabbedPane, BorderLayout.CENTER);
         
         // Se agrega el panel principal a la ventana
         add(panelPrincipal);
@@ -252,11 +255,20 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     
     public void ejecutar() {
     	
+    	tabbedPane = new JTabbedPane();
+    	
 		panelVacio = new JPanel();
+		panelVacio2= new JPanel();
+		tabbedPane.addTab("Generaciones", panelVacio);
+		tabbedPane.addTab("Comparación", panelVacio2);
     	GraphicPanel<Integer> grafico = new GraphicPanel<Integer>();
+    	Comparacion<Integer> grafico2 = new Comparacion<Integer>();
  		panelVacio.setBorder(BorderFactory.createLineBorder(Color.BLACK));
  		panelVacio.setPreferredSize(new Dimension(700, 600));
  		panelVacio.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
+ 		panelVacio2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+ 		panelVacio2.setPreferredSize(new Dimension(700, 600));
+ 		panelVacio2.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
         
         ejecutarButton.addActionListener(new ActionListener() {
 
@@ -290,7 +302,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				List<double[]> datos = instancia.datos();
 				List<Integer> mejor = instancia.obtenerMejor();
 				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2));
+				grafico2.actualizar(panelVacio2, new double[101], "prueba");
 				panelVacio.revalidate();
+				panelVacio2.revalidate();
 			}
          });
     }

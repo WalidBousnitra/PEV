@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Individuos.Individuo;
-import funciones.Viajero;
+import funciones.Formula;
 
 public class Heuristica<T> extends AlgoritmosMutacion<T>{
 
@@ -42,7 +42,7 @@ public class Heuristica<T> extends AlgoritmosMutacion<T>{
 		combinaciones = new ArrayList<Individuo<T>>(numperm);
 		pos = 0;
 		for(int i = 0; i<numperm;i++)
-			combinaciones.add(new Viajero(individuo));
+			combinaciones.add(new Formula(individuo));
 	
 		//elementos a combinar
 		List<T> array = new ArrayList<T>(numciudades);

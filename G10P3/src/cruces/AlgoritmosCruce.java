@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import Individuos.Individuo;
-import funciones.Viajero;
+import funciones.Formula;
 
 public abstract class AlgoritmosCruce<T>{
 	
@@ -51,7 +51,7 @@ public abstract class AlgoritmosCruce<T>{
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public Individuo<T> crear(Individuo<T> obj){
-		Individuo<T> nuevo = new Viajero(obj);
+		Individuo<T> nuevo = new Formula(obj);
 		return nuevo;
 	}
 }

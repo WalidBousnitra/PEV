@@ -101,16 +101,16 @@ public class AlgoritmoGenetico<T> {
 		
 		//Inicializacion de la poblacion / identificacion mejor individuo
 		poblacion = new ArrayList<Individuo<T>>(tamPoblacion);
-		Individuo<T> max = new Viajero();
+		Individuo<T> max = new Formula();
 		poblacion.add(max);
 		fitness[0] = poblacion.get(0).getFitness();
 		for(int i = 1; i < tamPoblacion; i++) {
-			Individuo<T> nuevo = new Viajero();
+			Individuo<T> nuevo = new Formula();
 			poblacion.add(nuevo);
 			fitness[i] = poblacion.get(i).getFitness();
 			sumFitness+=fitness[i];
 			if(max.compareTo(nuevo) == -1) {
-				max = new Viajero(nuevo);
+				max = new Formula(nuevo);
 			}
 		}
 
@@ -180,7 +180,7 @@ public class AlgoritmoGenetico<T> {
 				fitness[j] = poblacion.get(j).getFitness();
 				sumFitness += fitness[j];
 				if(max.compareTo(poblacion.get(j)) == -1) {
-					max = new Viajero(poblacion.get(j));
+					max = new Formula(poblacion.get(j));
 				}
 			}
 			
@@ -188,7 +188,7 @@ public class AlgoritmoGenetico<T> {
 			media[posDatos] = sumFitness/tamPoblacion;
 			mejores[posDatos] = max.getFitness();
 			if(max.compareTo(elMejor) == 1) {
-				elMejor = new Viajero(max);
+				elMejor = new Formula(max);
 			}
 			absolutos[posDatos] = elMejor.getFitness();
 			posDatos++;
@@ -212,8 +212,8 @@ public class AlgoritmoGenetico<T> {
 	public List<T> obtenerMejor() {
 		List<T> sol = new ArrayList<T>();
 		
-		for(int i = 0 ; i<elMejor.getCromosoma().size(); i++) {
-			sol.add(elMejor.getCromosoma().get(i));
+		for(int i = 0 ; i<elMejor.getCromosoma().getN(); i++) {
+			//sol.add(elMejor.getCromosoma().get(i));
 		}
 		
 		return sol;

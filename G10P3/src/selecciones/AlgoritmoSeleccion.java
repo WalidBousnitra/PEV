@@ -3,7 +3,7 @@ package selecciones;
 import java.util.List;
 
 import Individuos.Individuo;
-import funciones.Viajero;
+import funciones.Formula;
 
 
 public abstract class AlgoritmoSeleccion {
@@ -22,7 +22,7 @@ public abstract class AlgoritmoSeleccion {
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public <T> Individuo<T> crear(Individuo<T> obj){
-		Individuo<T> nuevo = new Viajero(obj);
+		Individuo<T> nuevo = new Formula(obj);
 		return nuevo;
 	}
 	

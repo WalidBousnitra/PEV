@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import Individuos.Individuo;
-import funciones.Viajero;
+import funciones.Formula;
 
 public class Elitismo<T> {
 
@@ -29,7 +29,7 @@ public class Elitismo<T> {
 	        Collections.sort(poblacion);
 	        Collections.reverse(poblacion);
 	        for(int i = 0; i<numElite; i++)
-	        	elite.add(new Viajero(poblacion.get(i)));
+	        	elite.add(new Formula(poblacion.get(i)));
 		}
 	}
 	

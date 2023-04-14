@@ -3,28 +3,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import TAD.Arbol;
+
 public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	
 	//Atributos
-	private Random rand;
-	private List<T> cromosoma;
-	private int tamTotal;
+	private Arbol cromosoma;
 	
-	public Individuo(int tamTotal) {
-		
+	public Individuo() {
 		//Inicializacion de atributos
-		this.rand = new Random();
-		this.cromosoma = iniCromosoma(getRand());
-		this.tamTotal= tamTotal;
+		this.cromosoma = new Arbol();
 	}
 	
 	// Constructor de copia
 	public Individuo(Individuo<T> obj) {
-		this.rand = new Random();
-		this.cromosoma = new ArrayList<T>(obj.cromosoma.size());
-		for(int i = 0 ; i < obj.cromosoma.size(); ++i){
-			this.cromosoma.add(obj.cromosoma.get(i));
-		}
+		this.cromosoma = obj.cromosoma;
 	}
 	
 	//Funciones de calculos de distintos valores
@@ -34,16 +27,9 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	
 	//Abstracts que requieren todas las funciones
 	public abstract double getValor();
-	public abstract List<T> iniCromosoma(Random rand);
 
 	//Getters y setters necesarios
-	public List<T> getCromosoma() {return cromosoma;}
-	public void setCromosoma(List<T> cromosoma) {this.cromosoma = cromosoma;}
-	public Random getRand() {return rand;}
-	public void setRand(Random rand) {this.rand = rand;}
-	public int getTamTotal() {	return tamTotal;}
-
-	public void setTamTotal(int tamTotal) {	this.tamTotal = tamTotal;}
-
+	public Arbol getCromosoma() {return cromosoma;}
+	public void setCromosoma(Arbol cromosoma) {this.cromosoma = cromosoma;}
 
 }
