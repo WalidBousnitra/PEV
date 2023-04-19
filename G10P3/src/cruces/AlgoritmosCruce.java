@@ -19,27 +19,27 @@ public abstract class AlgoritmosCruce<T>{
 	
 	public abstract  List<Individuo<T>>  pareja(Individuo<T> padre1, Individuo<T> padre2);
 	
-	public List<Individuo<T>> cruzar(List<Individuo<T>> individuos) {
+	public List<Individuo<T>> cruzar(List<Individuo<T>> poblacion) {
 		
 		List<Individuo<T>> parejas = new ArrayList<Individuo<T>>();
-		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(individuos.size());
+		List<Individuo<T>> newIndividuos = new ArrayList<Individuo<T>>(poblacion.size());
 		
-		boolean[] elegidos = new boolean[individuos.size()];
+		boolean[] elegidos = new boolean[poblacion.size()];
 		
-		for(int i = 0; i<individuos.size(); i++)
+		for(int i = 0; i<poblacion.size(); i++)
 			if(rand.nextDouble()<p) {
 				elegidos[i] = true;
-				parejas.add(crear(individuos.get(i)));
+				parejas.add(crear(poblacion.get(i)));
 			}
 		for(int i = 0; parejas.size()%2!=0; i++)
-			if(rand.nextDouble()<p && !elegidos[i%individuos.size()]) {
-				elegidos[i%individuos.size()] = true;
-				parejas.add(crear(individuos.get(i%individuos.size())));
+			if(rand.nextDouble()<p && !elegidos[i%poblacion.size()]) {
+				elegidos[i%poblacion.size()] = true;
+				parejas.add(crear(poblacion.get(i%poblacion.size())));
 			}
 		
-		for(int i = 0; i<individuos.size(); i++)
+		for(int i = 0; i<poblacion.size(); i++)
 			if(!elegidos[i])
-				newIndividuos.add(crear(individuos.get(i)));
+				newIndividuos.add(crear(poblacion.get(i)));
 		
 		for (int i = 0; i <parejas.size()-1; i=i+2) {
 			List<Individuo<T>>  hijos = pareja(parejas.get(i), parejas.get(i+1));

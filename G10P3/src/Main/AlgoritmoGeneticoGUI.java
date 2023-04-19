@@ -48,7 +48,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	
 	// Componentes para los parametros
 	private String[] texto = {"dummy","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
-			"Probabiliad de Mutación:","Probabilidad de elitismo:","","Método de Selección:","Método de Cruce:","Método de Mutación:"};
+			"Probabiliad de Mutación:","Probabilidad de elitismo:","","Método de Selección:","Método de Inicialización:","Método de Mutación:"};
 	private JSpinner[] spinners;
 	private List<JComboBox<String>> comboBox;
     private List<JCheckBox> marcar = new ArrayList<JCheckBox>(3);
@@ -143,9 +143,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         // Crear combo box para los parámetros
         String[] opciones = {"Estocástico Universal","Restos","Ranking","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
         comboBox.add(new JComboBox<>(opciones));
-        String[] opciones2 = {"CO","CX","ERX", "Nuestro Cruce","OX","OXPP","OXOP","PMX"};
+        String[] opciones2 = {"Completa","Creciente","Ramped and Half"};
         comboBox.add(new JComboBox<>(opciones2));
-        String[] opciones3 = {"Heurística","Inserción","Intercambio","Inversión","Nuestra Mutación"};
+        String[] opciones3 = {"Terminal","Funcional","Permutación","Contracción"};
         comboBox.add(new JComboBox<>(opciones3));
         
         for (int i = 1; i <= 5; i++) {

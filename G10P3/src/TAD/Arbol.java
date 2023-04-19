@@ -1,33 +1,92 @@
 package TAD;
 
+import java.util.Random;
+
 public class Arbol {
 	
 	private Arbol izquierda;
 	private Arbol derecha;
 	private Nodo nodo;
 	private int altura;
+	private int min;
+	private int max;
 	private int n;
+	private Random rand;
 	
-	public Arbol(String valor) {
-		izquierda = null;
-		derecha  = null;
-		nodo = new Nodo(valor);
-	}
-	
-	public Arbol(int profundidad, int min, int max){
-		altura = 0;
-		while(altura < min && altura < max) {
-			izquierda = new Arbol();
-			derecha = new Arbol();			
-			altura = Math.max(izquierda.altura, derecha.altura);
+	//Constructor
+	public Arbol(int min, int max, int tipo){
+		this.min = min;
+		this.max = max;
+		rand = new Random();
+		switch(tipo) {
+		case 0:
+			Arbol obj = inicializacionCompleta(0);
+			this.nodo = obj.nodo;
+			this.izquierda = obj.izquierda;
+			this.derecha = obj.derecha;
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+			
 		}
 	}
 	
+	//Arbol solo con n
+	public Arbol(boolean b) {
+		izquierda = null;
+		derecha  = null;
+		nodo = new Nodo(b);
+	}
+	
+	//Completo
+	public Arbol inicializacionCompleta(int p) {
+		if(p<max) {
+			Arbol a = new Arbol(false);
+			a.izquierda = inicializacionCompleta(p+1);
+			a.derecha = inicializacionCompleta(p+1);
+			return a;
+		}
+		else {
+			return new Arbol(true);
+		}
+	}
+	
+	//Creciente
+	public Arbol inicializacionCreciente(int p) {
+		
+		if(p<min) {
+			Arbol a = new Arbol(false);
+			a.izquierda = inicializacionCreciente(p+1);
+			a.derecha = inicializacionCreciente(p+1);
+			return a;
+		}
+		else if(p<max) {
+			Arbol a = new Arbol(rand.nextBoolean());
+			if(!a.nodo.isTerminal()) {
+				a.izquierda = inicializacionCreciente(p+1);
+				a.derecha = inicializacionCreciente(p+1);
+			}
+			return a;
+		}
+		else {
+			return new Arbol(true);
+		}
+	}	
+	
 	//constructor de copia
 	public Arbol(Arbol org) {
-		Arbol dest = new Arbol();
-		if(izquierda == null || derecha == null) {
-			return new Arbol(nodo.getValor());
+		this.nodo = new Nodo(org.nodo);
+		if(org.izquierda == null && org.derecha == null) {
+			this.izquierda = null;
+			this.derecha  = null;			
+		}
+		else if(org.izquierda != null) {
+			this.izquierda = new Arbol(org.izquierda);
+		}
+		else if(org.derecha != null) {
+			this.derecha = new Arbol(org.derecha);
 		}
 	}
 	
@@ -38,8 +97,8 @@ public class Arbol {
 
 	//Funcion para extrar subArbol;
 	public Arbol extraer(int p) {
-		return derecha;
-		
+			return derecha;
+			
 	}
 	
 	//Calcular f(x)

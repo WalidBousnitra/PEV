@@ -11,9 +11,9 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	private Arbol cromosoma;
 	private DecimalFormat f = new DecimalFormat("0.0000");
 	
-	public Individuo() {
+	public Individuo(int min ,int max, int tipo) {
 		//Inicializacion de atributos
-		this.cromosoma = new Arbol();
+		this.cromosoma = new Arbol(min, max, tipo);
 		f.setRoundingMode(RoundingMode.DOWN);
 	}
 	

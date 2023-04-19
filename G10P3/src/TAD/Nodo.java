@@ -13,18 +13,19 @@ public class Nodo {
 	
 	private String valor;
 	
-	public Nodo() {
-		if(rand.nextBoolean()) {
-			valor = funciones[rand.nextInt(0,3)];
+	public Nodo(boolean b) {
+		
+		if(b) {
+			valor = terminales.get(rand.nextInt(0,6));
 		}
 		else {
-			valor = terminales.get(rand.nextInt(0,6));
+			valor = funciones[rand.nextInt(0,3)];
 		}
 	}
 	
 	//constructor de copia
-	public Nodo(String valor) {
-		this.valor= valor;
+	public Nodo(Nodo valor) {
+		this.valor= valor.valor;
 	}
 	
 	//Getter valor del nodo

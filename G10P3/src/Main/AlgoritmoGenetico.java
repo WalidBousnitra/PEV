@@ -3,7 +3,7 @@ package Main;
 import java.util.ArrayList;
 import java.util.List;
 import Individuos.Individuo;
-import cruces.*;
+import cruces.Intercambio;
 import elitismo.Elitismo;
 import funciones.*;
 import mutaciones.*;
@@ -15,16 +15,16 @@ public class AlgoritmoGenetico<T> {
 	private int tamPoblacion;
 	private int maxGeneraciones;
 	private boolean[] marcados; //boton de activar GUIs
-	private Elitismo<T> probElitismo;
-	private AlgoritmosCruce<T> cruce;
+	private Elitismo<Integer> probElitismo;
+	private Intercambio<Integer> cruce;
 	private AlgoritmoSeleccion seleccion;
 
-	private AlgoritmosMutacion<T> mutacion;
+	private AlgoritmosMutacion<Integer> mutacion;
 	
 	//Datos del Algoritmo
-	private List<Individuo<T>> poblacion;
+	private List<Individuo<Integer>> poblacion;
 	private double[] fitness;
-	private Individuo<T> elMejor;
+	private Individuo<Integer> elMejor;
 
 	//Datos de la Grafica
 	private double[] mejores;
@@ -44,14 +44,14 @@ public class AlgoritmoGenetico<T> {
 		this.tamPoblacion =  tamPoblacion;
 		this.maxGeneraciones = maxGeneraciones;
 		this.marcados= marcados;
-		this.probElitismo = new Elitismo<T>(marcados[2],probElitismo*tamPoblacion,tamPoblacion);
+		this.probElitismo = new Elitismo<Integer>(marcados[2],probElitismo*tamPoblacion,tamPoblacion);
 		//Inicializacion de los distintos metodos cruce/seleccion/mutacion
-		this.cruce = iniciarCruce(metodoCruce, probCruce);
+		this.cruce = new Intercambio<Integer>(probCruce);
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
 		this.mutacion = iniciarMutacion(metodoMutacion,probMutacion);
 
 		//Inicializacion de datos del algoritmo y grafica
-		this.poblacion = new ArrayList<Individuo<T>>();
+		this.poblacion = new ArrayList<Individuo<Integer>>();
 		this.fitness = new double[tamPoblacion];
 		this.mejores = new double[maxGeneraciones];
 		this.absolutos = new double[maxGeneraciones];
@@ -62,7 +62,7 @@ public class AlgoritmoGenetico<T> {
 	public void run() {
 		
 		//Poblacion inicial
-		iniciarPoblacion();
+		iniciarPoblacion(0,0,"TETA");
 		
 		//n-generaciones
 		for(int i = 1; i < maxGeneraciones; i++) {
@@ -94,18 +94,19 @@ public class AlgoritmoGenetico<T> {
 	}
 
 	@SuppressWarnings({"unchecked","rawtypes"})
-	private void iniciarPoblacion() {
-		
+	private void iniciarPoblacion(int minP, int maxP, String tipo) {
+		//TODO 
+		//RAMPED COÑITO
 		//Sumatorio de fitness para la media
 		double sumFitness = 0;
 		
 		//Inicializacion de la poblacion / identificacion mejor individuo
-		poblacion = new ArrayList<Individuo<T>>(tamPoblacion);
-		Individuo<T> max = new Formula();
+		poblacion = new ArrayList<Individuo<Integer>>(tamPoblacion);
+		Individuo<Integer> max = new Formula(0,0,0);
 		poblacion.add(max);
 		fitness[0] = poblacion.get(0).getFitness();
 		for(int i = 1; i < tamPoblacion; i++) {
-			Individuo<T> nuevo = new Formula();
+			Individuo<Integer> nuevo = new Formula(0,0,0);
 			poblacion.add(nuevo);
 			fitness[i] = poblacion.get(i).getFitness();
 			sumFitness+=fitness[i];
@@ -120,23 +121,6 @@ public class AlgoritmoGenetico<T> {
 		absolutos[0] = elMejor.getFitness();
 		media[0] = sumFitness/tamPoblacion;
 		posDatos++;
-	}
-	
-	//Funcion de seleccion de cruce
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private AlgoritmosCruce<T> iniciarCruce(String metodoCruce, double probCruce) {
-
-		switch(metodoCruce) {
-		case "CO": return new CO(probCruce);
-		case "CX": return new CX(probCruce);
-		case "ERX": return new ERX(probCruce);
-		case "Nuestro Cruce": return new NuestroCruce(probCruce);
-		case "OX": return new OX(probCruce);
-		case "OXPP": return new OXPP(probCruce);
-		case "OXOP": return new OXOP(probCruce);
-		case "PMX": return new PMX(probCruce);
-		}
-		return null;
 	}
 	
 	//Funcion de seleccion de seleccion
@@ -156,14 +140,11 @@ public class AlgoritmoGenetico<T> {
 	
 	//Funcion de seleccion de mutacion
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private AlgoritmosMutacion<T> iniciarMutacion(String metodoMutacion, double probMutacion) {
+	private AlgoritmosMutacion<Integer> iniciarMutacion(String metodoMutacion, double probMutacion) {
 
 		switch(metodoMutacion) {
 		case "Heurística": return new Heuristica(probMutacion);
 		case "Inserción": return new Insercion(probMutacion);
-		case "Intercambio": return new Intercambio(probMutacion);
-		case "Inversión": return new Inversion(probMutacion);
-		case "Nuestra Mutación": return new NuestraMutacion(probMutacion);
 		}
 		return null;
 	}
@@ -175,7 +156,7 @@ public class AlgoritmoGenetico<T> {
 		if(posDatos<maxGeneraciones) {
 			fitness[0] = poblacion.get(0).getFitness();
 			double sumFitness = fitness[0];
-			Individuo<T> max = poblacion.get(0);
+			Individuo<Integer> max = poblacion.get(0);
 			for(int j = 1; j < tamPoblacion; j++) {
 				fitness[j] = poblacion.get(j).getFitness();
 				sumFitness += fitness[j];
@@ -207,5 +188,5 @@ public class AlgoritmoGenetico<T> {
 	}
 	
 	//Getter para el mejor individuo
-	public Individuo<T> getElMejor() {	return elMejor;	}
+	public Individuo<Integer> getElMejor() {	return elMejor;	}
 }

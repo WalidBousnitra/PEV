@@ -18,8 +18,8 @@ public class Formula<T> extends Individuo<Integer>{
 											5.0000 };
 	private double[] gx;
 	
-	public Formula() {
-		super();
+	public Formula(int min, int max, int tipo) {
+		super(min, max, tipo);
 		gx = new double[101];
 	}
 	
