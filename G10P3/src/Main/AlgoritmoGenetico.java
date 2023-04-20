@@ -13,6 +13,8 @@ public class AlgoritmoGenetico<T> {
 	
 	//Parametros	
 	private int tamPoblacion;
+	private int min,max;
+	private String metodoInicializacion;
 	private int maxGeneraciones;
 	private boolean[] marcados; //boton de activar GUIs
 	private Elitismo<Integer> probElitismo;
@@ -33,15 +35,20 @@ public class AlgoritmoGenetico<T> {
 	private int posDatos;
 	
 	
-	public AlgoritmoGenetico(int tamPoblacion, int maxGeneraciones,
+	public AlgoritmoGenetico(int tamPoblacion,
+							int min, int max,
+							int maxGeneraciones,
 							boolean[] marcados, 
 							double probElitismo,
-							String metodoCruce, double probCruce, 
+							String metodoInicializacion, double probCruce, 
 							String metodoSeleccion,
 							String metodoMutacion, double probMutacion) {
 		
 		//Inicializacion de parametros
 		this.tamPoblacion =  tamPoblacion;
+		this.min = min;
+		this.max = max;
+		this.metodoInicializacion = metodoInicializacion;
 		this.maxGeneraciones = maxGeneraciones;
 		this.marcados= marcados;
 		this.probElitismo = new Elitismo<Integer>(marcados[2],probElitismo*tamPoblacion,tamPoblacion);
@@ -62,7 +69,7 @@ public class AlgoritmoGenetico<T> {
 	public void run() {
 		
 		//Poblacion inicial
-		iniciarPoblacion(0,0,"TETA");
+		iniciarPoblacion(min,max,metodoInicializacion);
 		
 		//n-generaciones
 		for(int i = 1; i < maxGeneraciones; i++) {
@@ -102,11 +109,11 @@ public class AlgoritmoGenetico<T> {
 		
 		//Inicializacion de la poblacion / identificacion mejor individuo
 		poblacion = new ArrayList<Individuo<Integer>>(tamPoblacion);
-		Individuo<Integer> max = new Formula(0,0,0);
+		Individuo<Integer> max = new Formula(0,0,tipo);
 		poblacion.add(max);
 		fitness[0] = poblacion.get(0).getFitness();
 		for(int i = 1; i < tamPoblacion; i++) {
-			Individuo<Integer> nuevo = new Formula(0,0,0);
+			Individuo<Integer> nuevo = new Formula(0,0,tipo);
 			poblacion.add(nuevo);
 			fitness[i] = poblacion.get(i).getFitness();
 			sumFitness+=fitness[i];
@@ -143,8 +150,10 @@ public class AlgoritmoGenetico<T> {
 	private AlgoritmosMutacion<Integer> iniciarMutacion(String metodoMutacion, double probMutacion) {
 
 		switch(metodoMutacion) {
-		case "Heurística": return new Heuristica(probMutacion);
-		case "Inserción": return new Insercion(probMutacion);
+		case "Terminal": return new Terminal(probMutacion);
+		case "Funcional": return new Funcional(probMutacion);
+		case "Permutación": return new Permutacion(probMutacion);
+		case "Contracción": return new Contraccion(probMutacion);
 		}
 		return null;
 	}

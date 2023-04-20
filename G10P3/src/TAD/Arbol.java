@@ -8,28 +8,36 @@ public class Arbol {
 	private Arbol derecha;
 	private Nodo nodo;
 	private int altura;
+	private int numTerminales;
 	private int min;
 	private int max;
 	private int n;
 	private Random rand;
 	
 	//Constructor
-	public Arbol(int min, int max, int tipo){
+	public Arbol(int min, int max, String tipo){
 		this.min = min;
 		this.max = max;
+		altura = 0;
+		setNumTerminales(0);
 		rand = new Random();
 		switch(tipo) {
-		case 0:
+		case "Completa":
 			Arbol obj = inicializacionCompleta(0);
 			this.nodo = obj.nodo;
 			this.izquierda = obj.izquierda;
 			this.derecha = obj.derecha;
+			this.altura = max;
+			this.setNumTerminales((int) Math.pow(2,altura));
 			break;
-		case 1:
-			break;
-		case 2:
-			break;
-			
+		case "Creciente":
+			Arbol obj2 = inicializacionCreciente(0);
+			this.nodo = obj2.nodo;
+			this.izquierda = obj2.izquierda;
+			this.derecha = obj2.derecha;
+			this.altura = obj2.altura;
+			this.setNumTerminales(obj2.getNumTerminales());
+			break;			
 		}
 	}
 	
@@ -38,6 +46,9 @@ public class Arbol {
 		izquierda = null;
 		derecha  = null;
 		nodo = new Nodo(b);
+		if(b)
+			setNumTerminales(getNumTerminales() + 1);
+		altura = 1;
 	}
 	
 	//Completo
@@ -60,6 +71,8 @@ public class Arbol {
 			Arbol a = new Arbol(false);
 			a.izquierda = inicializacionCreciente(p+1);
 			a.derecha = inicializacionCreciente(p+1);
+			a.setNumTerminales(a.izquierda.getNumTerminales() + a.izquierda.getNumTerminales());
+			a.altura = Math.max(a.izquierda.altura, a.izquierda.altura) + 1;
 			return a;
 		}
 		else if(p<max) {
@@ -137,15 +150,33 @@ public class Arbol {
 	public String inOrden() {
 		
 		String sol = "";
-		
-		sol+= "(" + izquierda.inOrden() + ")";
-		sol+=nodo;
-		sol+= "(" + derecha.inOrden()+ ")";
+		if(nodo.isTerminal()) {
+			sol+=nodo.getValor();
+		}	
+		else{
+			sol+= "(" + izquierda.inOrden() + ")";
+			sol+=nodo.getValor();
+			sol+= "(" + derecha.inOrden()+ ")";			
+		}
 		
 		return sol;
 	}
 	
-
+	//Getters y Setters necesarios
 	public int getN() {	return n;}
 	public void setN(int n) {this.n = n;}
+	public int getNumTerminales() {	return numTerminales;}
+	public void setNumTerminales(int numTerminales) {this.numTerminales = numTerminales;}
+
+	public void cambioTerminal(int nextInt) {
+		//TODO
+	}
+
+	public void permutarNodo(int nextInt) {
+		//TODO		
+	}
+
+	public void hacerTerminal(int nextInt) {
+		// TODO
+	}
 }

@@ -48,7 +48,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	
 	// Componentes para los parametros
 	private String[] texto = {"dummy","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
-			"Probabiliad de Mutación:","Probabilidad de elitismo:","","Método de Selección:","Método de Inicialización:","Método de Mutación:"};
+			"Probabiliad de Mutación:","Probabilidad de elitismo:","Profundidad Cromosoma","Método de Selección:","Método de Inicialización:","Método de Mutación:"};
 	private JSpinner[] spinners;
 	private List<JComboBox<String>> comboBox;
     private List<JCheckBox> marcar = new ArrayList<JCheckBox>(3);
@@ -58,9 +58,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     
     
     // para conseguir los praametros en el analisis
-    private int tamPoblacion,maxGeneraciones;
+    private int tamPoblacion,min,max,maxGeneraciones;
 	private double probCruce,probMutacion,probElitismo;
-	private String metodoMutacion,metodoSeleccion,metodoCruce;
+	private String metodoMutacion,metodoSeleccion,metodoInicializacion;
 	private boolean[] marcados;
     
 	public static void main(String[] args) {
@@ -116,7 +116,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     
     public void parametros() {
     	
-		spinners = new JSpinner[6];
+		spinners = new JSpinner[8];
 		comboBox = new ArrayList<JComboBox<String>>(3);    	
     	paramsPanel = new JPanel(new GridBagLayout());
     	
@@ -140,6 +140,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         spinners[3] = new JSpinner(new SpinnerNumberModel(60,0,100,1));
         spinners[4] = new JSpinner(new SpinnerNumberModel(5,0,100,1));
         spinners[5] = new JSpinner(new SpinnerNumberModel(2,0,100,1));
+        spinners[6] = new JSpinner(new SpinnerNumberModel(2,2,100,1));
+        spinners[7] = new JSpinner(new SpinnerNumberModel(5,2,100,1));
         // Crear combo box para los parámetros
         String[] opciones = {"Estocástico Universal","Restos","Ranking","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
         comboBox.add(new JComboBox<>(opciones));
@@ -148,7 +150,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         String[] opciones3 = {"Terminal","Funcional","Permutación","Contracción"};
         comboBox.add(new JComboBox<>(opciones3));
         
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 6; i++) {
             JLabel labelFila = new JLabel(texto[i]);
             gbcTexto.gridy = i;
             paramsPanel.add(labelFila, gbcTexto);
@@ -167,6 +169,14 @@ public class AlgoritmoGeneticoGUI extends JFrame{
                 panelElitismo.add(marcar.get(marcar.size()-1));
                 paramsPanel.add(panelElitismo, gbcTexto);
             }
+            else if(i==6) {
+                JPanel panelElitismo = new JPanel();
+                panelElitismo.setLayout(new GridLayout(0, 2, 0, 0));
+                panelElitismo.add(spinners[i], gbcTexto);
+                panelElitismo.add(spinners[i+1], gbcTexto);
+                paramsPanel.add(panelElitismo, gbcTexto);
+            
+            }
             else {
             	paramsPanel.add(spinners[i], gbcTexto);
             }
@@ -174,9 +184,9 @@ public class AlgoritmoGeneticoGUI extends JFrame{
             gbcTexto.gridx = 1;
             gbcTexto.weightx = 0.2;
         }
-        for (int i = 7; i <= 9; i++) {
-            JLabel labelFila = new JLabel(texto[i]);
-            JComboBox<String> comboFila = comboBox.get(i-7);
+        for (int i = 8; i <= 10; i++) {
+            JLabel labelFila = new JLabel(texto[i-1]);
+            JComboBox<String> comboFila = comboBox.get(i-8);
 
             gbcTexto.gridy = i;
             paramsPanel.add(labelFila, gbcTexto);
@@ -190,7 +200,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
             gbcTexto.weightx = 0.5;
         }
         
-        gbcTexto.gridy = 11;
+        gbcTexto.gridy = 12;
         gbcTexto.gridx = 0;
         gbcTexto.gridwidth = 3;
         gbcTexto.weightx = 0.0;
@@ -202,7 +212,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         ejecutarButton.setPreferredSize(new Dimension(200, 40));
         paramsPanel.add(ejecutarButton, gbcTexto);
         
-        gbcTexto.gridy = 12;
+        gbcTexto.gridy = 13;
         gbcTexto.gridx = 0;
         gbcTexto.gridwidth = 3;
         gbcTexto.weightx = 0.0;
@@ -220,6 +230,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		        spinners[3].setValue(60);
 		        spinners[4].setValue(5);
 		        spinners[5].setValue(2);
+		        spinners[6].setValue(2);
+		        spinners[7].setValue(5);
 		        marcar.get(0).setSelected(true);
 		        marcar.get(1).setSelected(true);
 		        marcar.get(2).setSelected(false);
@@ -229,7 +241,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     
     public void analisis() {
         
-        gbcTexto.gridy = 13;
+        gbcTexto.gridy = 14;
         gbcTexto.gridx = 0;
         gbcTexto.gridwidth = 3;
         gbcTexto.weightx = 0.0;
@@ -243,10 +255,11 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Parametros datos = new Parametros(getTamPoblacion(),
+						getMin(),getMax(),
 						getMaxGeneraciones(),
 						getMarcados(), 
 						getProbElitismo(),
-						getMetodoCruce(), getProbCruce(), 
+						getMetodoInicializacion(), getProbCruce(), 
 						getMetodoSeleccion(),
 						getMetodoMutacion(), getProbMutacion());
 				new VentanaAnalisis(datos);
@@ -282,18 +295,21 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				probMutacion = (Double.valueOf((Integer)spinners[4].getValue()))/100;
 				metodoMutacion = (String)comboBox.get(2).getSelectedItem();
 				metodoSeleccion = (String)comboBox.get(0).getSelectedItem();
-				metodoCruce = (String)comboBox.get(1).getSelectedItem();
+				metodoInicializacion = (String)comboBox.get(1).getSelectedItem();
 				probElitismo = (Double.valueOf((Integer)spinners[5].getValue()))/100;
+				min = (Integer)spinners[6].getValue();
+				max = (Integer)spinners[7].getValue();
 				marcados= new boolean[3];
 				marcados[0] = false;
 				for(int i = 0; i<3 ;i ++) marcados[i] =  marcar.get(i).isSelected();
 				//Instancia del algoritmo
 				AlgoritmoGenetico<Integer> instancia = 
 						new AlgoritmoGenetico<Integer>(	tamPoblacion,
+														min,max,
 														maxGeneraciones,
 														marcados, 
 														probElitismo,
-														metodoCruce, probCruce, 
+														metodoInicializacion, probCruce, 
 														metodoSeleccion,
 														metodoMutacion, probMutacion);
 			
@@ -311,13 +327,15 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     }
 
 	public int getTamPoblacion() {return (Integer)spinners[1].getValue();}
+	public int getMin() {return (Integer)spinners[6].getValue();}
+	public int getMax() {return (Integer)spinners[7].getValue();}
 	public int getMaxGeneraciones() {return (Integer) spinners[2].getValue();}
 	public double getProbCruce() {return (Double.valueOf((Integer)spinners[3].getValue()))/100;	}
 	public double getProbMutacion() {return (Double.valueOf((Integer)spinners[4].getValue()))/100;}
 	public double getProbElitismo() {return (Double.valueOf((Integer)spinners[5].getValue()))/100;}
 	public String getMetodoMutacion() {	return (String)comboBox.get(2).getSelectedItem();}
 	public String getMetodoSeleccion() {return (String)comboBox.get(0).getSelectedItem();}
-	public String getMetodoCruce() {return (String)comboBox.get(1).getSelectedItem();	}
+	public String getMetodoInicializacion() {return (String)comboBox.get(1).getSelectedItem();	}
 	public boolean[] getMarcados() {
 		marcados= new boolean[3];
 		marcados[0] = false;

@@ -96,10 +96,11 @@ public class Rango extends JFrame{
 					for(double i = min ; i <= max; i=i+Double.valueOf(intervalo)/100) {
 						AlgoritmoGenetico<Integer> instancia = 
 								new AlgoritmoGenetico<Integer>(	datos.getTamPoblacion(),
+										datos.getMin(),datos.getMax(),
 										datos.getMaxGeneraciones(),
 										datos.getMarcados(), 
 										datos.getProbElitismo(),
-										datos.getMetodoCruce(), i, 
+										datos.getMetodoInicializacion(), i, 
 										datos.getMetodoSeleccion(),
 										datos.getMetodoMutacion(), datos.getProbMutacion());
 						instancia.run();
@@ -115,10 +116,11 @@ public class Rango extends JFrame{
 					for(double i = min ; i <= max; i=i+ Double.valueOf(intervalo)/100) {
 						AlgoritmoGenetico<Integer> instancia = 
 								new AlgoritmoGenetico<Integer>(	datos.getTamPoblacion(),
+										datos.getMin(),datos.getMax(),
 										datos.getMaxGeneraciones(),
 										datos.getMarcados(), 
 										datos.getProbElitismo(),
-										datos.getMetodoCruce(), datos.getProbCruce(), 
+										datos.getMetodoInicializacion(), datos.getProbCruce(), 
 										datos.getMetodoSeleccion(),
 										datos.getMetodoMutacion(), i);
 						instancia.run();
@@ -131,10 +133,11 @@ public class Rango extends JFrame{
 					for(int i = (int) min ; i <= max; i=i+intervalo ) {
 						AlgoritmoGenetico<Integer> instancia = 
 								new AlgoritmoGenetico<Integer>(	i,
+										datos.getMin(),datos.getMax(),
 										datos.getMaxGeneraciones(),
 										datos.getMarcados(), 
 										datos.getProbElitismo(),
-										datos.getMetodoCruce(), datos.getProbCruce(), 
+										datos.getMetodoInicializacion(), datos.getProbCruce(), 
 										datos.getMetodoSeleccion(),
 										datos.getMetodoMutacion(), datos.getProbMutacion());
 						instancia.run();
