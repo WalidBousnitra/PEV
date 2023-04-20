@@ -13,6 +13,8 @@ public class Comparacion<T> extends JPanel{
 	private static final long serialVersionUID = 1L;
 	//Mejor individuo g(x)
 	private double[] gx;
+	//Mejor error
+	private double error;
 	//Formula gx;
 	private String formula;
 	//Valores f(x)
@@ -42,9 +44,10 @@ public class Comparacion<T> extends JPanel{
 							0.80, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98,
 							1.00 };
 	
-	public void actualizar(JPanel panel, double[] gx, String formula) {
+	public void actualizar(JPanel panel, double[] gx, String formula, double error) {
 		this.gx = gx;
 		this.formula = formula;
+		this.error = error;
 		plot.setPreferredSize(new Dimension(799,500));
 		plot.addLegend("SOUTH");
 		plot.setAxisLabels("x","y");
@@ -58,7 +61,7 @@ public class Comparacion<T> extends JPanel{
 		
 		plot.addLinePlot("f(x) = x^4 + x^3 + x^2 + x + 1", x, fx);
 		plot.addLinePlot("g(x) = " + formula, x, gx);
-		plot.addLinePlot("Error = ", Color.red, new double[] {});
+		plot.addLinePlot("Error = "+ error, Color.red, new double[] {0});
 		panel.add(plot);
 	}
 }

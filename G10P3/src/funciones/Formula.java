@@ -17,6 +17,7 @@ public class Formula<T> extends Individuo<Integer>{
 											3.3616, 3.4958, 3.6361, 3.7826, 3.9355, 4.0951, 4.2614, 4.4349, 4.6156, 4.8039, 
 											5.0000 };
 	private double[] gx;
+	private double error;
 	
 	public Formula(int min, int max, String tipo) {
 		super(min, max, tipo);
@@ -26,6 +27,7 @@ public class Formula<T> extends Individuo<Integer>{
 	// Constructor de copia
 	public Formula(Individuo<Integer> obj){
 		super(obj);
+		gx = new double[101];
 	}
 	
 	//Funcion que calcula la media de error
@@ -42,6 +44,7 @@ public class Formula<T> extends Individuo<Integer>{
 		}
 		
 		sum  = Math.sqrt(sum);
+		error = sum;
 		return sum;
 	}
 	
@@ -64,5 +67,10 @@ public class Formula<T> extends Individuo<Integer>{
 	@Override
 	public double[] gx() {
 		return gx;
+	}
+
+	@Override
+	public double getError() {
+		return error;
 	}
 }

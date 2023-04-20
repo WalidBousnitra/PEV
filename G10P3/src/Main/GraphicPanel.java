@@ -43,7 +43,7 @@ public class GraphicPanel<T> extends JPanel{
 		plot.addLinePlot("Media de la generación", Color.green, media);
 		//Dummy para la leyenda
 		plot.addLinePlot("Ecuacion del mejor individuo: g(x) = " + mejor.formula(), Color.pink, new double[] {0});
-		plot.addLinePlot("Error: " + mejor.getFitness(), Color.pink, new double[] {0});
+		plot.addLinePlot("Error: " + mejor.getError(), Color.pink, new double[] {0});
 		
 		panel.add(plot);
 	}

@@ -27,7 +27,8 @@ public class Arbol {
 			this.nodo = obj.nodo;
 			this.izquierda = obj.izquierda;
 			this.derecha = obj.derecha;
-			this.altura = max;
+			this.altura = obj.altura;
+			this.n = obj.n;
 			this.setNumTerminales((int) Math.pow(2,altura));
 			break;
 		case "Creciente":
@@ -39,6 +40,8 @@ public class Arbol {
 			this.setNumTerminales(obj2.getNumTerminales());
 			break;			
 		}
+		
+		System.out.println(n + " " + numTerminales + " " + altura);
 	}
 	
 	//Arbol solo con n
@@ -49,6 +52,7 @@ public class Arbol {
 		if(b)
 			setNumTerminales(getNumTerminales() + 1);
 		altura = 1;
+		n = 1;
 	}
 	
 	//Completo
@@ -57,6 +61,8 @@ public class Arbol {
 			Arbol a = new Arbol(false);
 			a.izquierda = inicializacionCompleta(p+1);
 			a.derecha = inicializacionCompleta(p+1);
+			a.altura = a.izquierda.altura+1;
+			a.n = a.izquierda.n+ a.derecha.n + 1;
 			return a;
 		}
 		else {
@@ -91,15 +97,17 @@ public class Arbol {
 	//constructor de copia
 	public Arbol(Arbol org) {
 		this.nodo = new Nodo(org.nodo);
-		if(org.izquierda == null && org.derecha == null) {
-			this.izquierda = null;
-			this.derecha  = null;			
-		}
-		else if(org.izquierda != null) {
+		if(org.izquierda != null) {
 			this.izquierda = new Arbol(org.izquierda);
 		}
-		else if(org.derecha != null) {
+		else {
+			this.izquierda = null;
+		}
+		if(org.derecha != null) {
 			this.derecha = new Arbol(org.derecha);
+		}
+		else {
+			this.derecha = null;
 		}
 	}
 	
@@ -110,8 +118,7 @@ public class Arbol {
 
 	//Funcion para extrar subArbol;
 	public Arbol extraer(int p) {
-			return derecha;
-			
+		return derecha;
 	}
 	
 	//Calcular f(x)
@@ -154,9 +161,13 @@ public class Arbol {
 			sol+=nodo.getValor();
 		}	
 		else{
-			sol+= "(" + izquierda.inOrden() + ")";
+			if(nodo.getValor()!="*")
+				sol+= "(";
+			sol+=izquierda.inOrden();
 			sol+=nodo.getValor();
-			sol+= "(" + derecha.inOrden()+ ")";			
+			sol+=derecha.inOrden();		
+			if(nodo.getValor()!="*")
+				sol+= ")";
 		}
 		
 		return sol;

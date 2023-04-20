@@ -109,11 +109,11 @@ public class AlgoritmoGenetico<T> {
 		
 		//Inicializacion de la poblacion / identificacion mejor individuo
 		poblacion = new ArrayList<Individuo<Integer>>(tamPoblacion);
-		Individuo<Integer> max = new Formula(0,0,tipo);
+		Individuo<Integer> max = new Formula(minP,maxP,tipo);
 		poblacion.add(max);
 		fitness[0] = poblacion.get(0).getFitness();
 		for(int i = 1; i < tamPoblacion; i++) {
-			Individuo<Integer> nuevo = new Formula(0,0,tipo);
+			Individuo<Integer> nuevo = new Formula(minP,maxP,tipo);
 			poblacion.add(nuevo);
 			fitness[i] = poblacion.get(i).getFitness();
 			sumFitness+=fitness[i];

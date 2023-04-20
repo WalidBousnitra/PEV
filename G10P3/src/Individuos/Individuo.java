@@ -31,6 +31,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	public abstract double getValor();
 	public abstract String formula();
 	public abstract double[] gx();
+	public abstract double getError();
 	
 	//Funcion para dar el formato necesario
 	public double formato(double num) {
