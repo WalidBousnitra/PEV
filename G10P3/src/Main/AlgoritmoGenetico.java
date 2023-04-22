@@ -69,7 +69,12 @@ public class AlgoritmoGenetico<T> {
 	public void run() {
 		
 		//Poblacion inicial
-		iniciarPoblacion(min,max,metodoInicializacion);
+		if(metodoInicializacion == "Ramped and Half") {
+			iniciarPoblacion2(min,max);
+		}
+		else {
+			iniciarPoblacion(min,max,metodoInicializacion);
+		}
 		
 		//n-generaciones
 		for(int i = 1; i < maxGeneraciones; i++) {
@@ -102,8 +107,6 @@ public class AlgoritmoGenetico<T> {
 
 	@SuppressWarnings({"unchecked","rawtypes"})
 	private void iniciarPoblacion(int minP, int maxP, String tipo) {
-		//TODO 
-		//RAMPED COÑITO
 		//Sumatorio de fitness para la media
 		double sumFitness = 0;
 		
@@ -119,6 +122,48 @@ public class AlgoritmoGenetico<T> {
 			sumFitness+=fitness[i];
 			if(max.compareTo(nuevo) == -1) {
 				max = new Formula(nuevo);
+			}
+		}
+
+		elMejor = max;
+		posDatos = 0;
+		mejores[0] = elMejor.getFitness();
+		absolutos[0] = elMejor.getFitness();
+		media[0] = sumFitness/tamPoblacion;
+		posDatos++;
+	}
+	
+
+	@SuppressWarnings({"unchecked","rawtypes"})
+	private void iniciarPoblacion2(int minP, int maxP) {
+		//Sumatorio de fitness para la media
+		double sumFitness = 0;
+		int D = maxP-1;
+		//Inicializacion de la poblacion / identificacion mejor individuo
+		poblacion = new ArrayList<Individuo<Integer>>(tamPoblacion);
+		Individuo<Integer> max = new Formula(minP,minP,"Completa");
+		poblacion.add(max);
+		fitness[0] = poblacion.get(0).getFitness();
+		
+		int tamGrupo = (tamPoblacion/D);
+		
+		for(int i = minP; i<=maxP; i++) {
+			for(int j = 0; j < tamGrupo; j++) {
+				if(!(j==0 && i==minP)) {
+					Individuo<Integer> nuevo = null;
+					if(j <= tamGrupo/2) {
+						nuevo = new Formula(minP,i,"Completa");
+					}
+					else{
+						nuevo = new Formula(minP,i,"Creciente");
+					}
+					poblacion.add(nuevo);
+					fitness[poblacion.size()-1] = poblacion.get(poblacion.size()-1).getFitness();
+					sumFitness+=fitness[poblacion.size()-1];
+					if(max.compareTo(nuevo) == -1) {
+						max = new Formula(nuevo);
+					}
+				}
 			}
 		}
 

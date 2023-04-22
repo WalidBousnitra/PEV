@@ -27,8 +27,6 @@ public class Arbol {
 		switch(tipo) {
 		case "Completa":
 			obj = inicializacionCompleta(0);
-
-			this.setNumTerminales((int) Math.pow(2,altura));
 			break;
 		case "Creciente":
 			obj= inicializacionCreciente(0);
@@ -39,7 +37,24 @@ public class Arbol {
 		this.izquierda = obj.izquierda;
 		this.derecha = obj.derecha;
 		this.altura = obj.altura;
+		this.numTerminales = obj.numTerminales;
 		this.n = obj.n;
+		System.out.println(this.dibuja());
+		System.out.println("\n\n\n");
+	}
+	
+	public String dibuja() {
+		String sol = "";
+		if(nodo.isTerminal()) {
+			sol+=nodo.getValor();
+		}	
+		else{
+			sol+=nodo.getValor()+"\n";
+			
+			sol+=izquierda.dibuja();
+			sol+=derecha.dibuja();
+		}
+		return sol;
 	}
 	
 	//Arbol solo con n
@@ -48,19 +63,19 @@ public class Arbol {
 		derecha  = null;
 		nodo = new Nodo(b);
 		if(b)
-			setNumTerminales(getNumTerminales() + 1);
-		altura = 1;
+			numTerminales = 1;
+		altura = 0;
 		n = 1;
 	}
 	
 	//Completo
 	public Arbol inicializacionCompleta(int p) {
-		if(p<max) {
+		if(p<max-1) {
 			Arbol a = new Arbol(false);
 			a.izquierda = inicializacionCompleta(p+1);
 			a.derecha = inicializacionCompleta(p+1);
 			a.altura = a.izquierda.altura+1;
-			a.n = a.izquierda.n+ a.derecha.n + 1;
+			a.n = a.izquierda.n + a.derecha.n + 1;
 			return a;
 		}
 		else {
@@ -96,6 +111,11 @@ public class Arbol {
 	//constructor de copia
 	public Arbol(Arbol org) {
 		this.nodo = new Nodo(org.nodo);
+		altura = org.altura;
+		numTerminales = org.numTerminales;
+		min = org.min;
+		max = org.max;
+		n = org.n;
 		if(org.izquierda != null) {
 			this.izquierda = new Arbol(org.izquierda);
 		}
@@ -112,19 +132,35 @@ public class Arbol {
 	
 	//Funcion para insertar arbol en un punto
 	public void insertar(int p, Arbol subA) {
-		
+		if(nodo.isTerminal() || p == izquierda.n+1) {
+			izquierda = new Arbol(subA.izquierda);
+			derecha = new Arbol(subA.derecha);
+			nodo = new Nodo(subA.nodo);
+			altura = subA.altura;
+			numTerminales = subA.numTerminales;
+			min = subA.min;
+			max = subA.max;
+			n = subA.n;
+		}
+		else if(p<=izquierda.n){
+			izquierda.insertar(p,subA);
+		}
+		else {
+			derecha.insertar(p-(izquierda.n+1),subA);
+		}
 	}
 
 	//Funcion para extrar subArbol;
 	public Arbol extraer(int p) {
-		
-		if() {
-			
+		if(nodo.isTerminal() || p== (this.izquierda.n+1)) {
+			return new Arbol(this);
 		}
-		
-		Arbol ret = new Arbol(true);
-		
-		return ret;
+		else if(p<=izquierda.n){
+			return izquierda.extraer(p);
+		}
+		else {
+			return derecha.extraer(p-(this.izquierda.n+1));
+		}
 	}
 	
 	//Calcular f(x)
