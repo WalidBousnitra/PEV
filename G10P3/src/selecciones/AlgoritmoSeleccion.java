@@ -26,8 +26,6 @@ public abstract class AlgoritmoSeleccion {
 		return nuevo;
 	}
 	
-	
-	
 	public double[]  ajustarFitness(double[] fitness, double maxFitness) {
 		
 		setFitnessTotal(0);

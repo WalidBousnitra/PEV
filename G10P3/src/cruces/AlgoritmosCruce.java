@@ -43,8 +43,8 @@ public abstract class AlgoritmosCruce<T>{
 		
 		for (int i = 0; i <parejas.size()-1; i=i+2) {
 			List<Individuo<T>>  hijos = pareja(parejas.get(i), parejas.get(i+1));
-			newIndividuos.add(crear(hijos.get(0)));
-			newIndividuos.add(crear(hijos.get(1)));
+			newIndividuos.add(hijos.get(0));
+			newIndividuos.add(hijos.get(1));
 		}
 		return newIndividuos;
 	}

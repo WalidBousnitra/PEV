@@ -1,5 +1,6 @@
 package TAD;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Arbol {
@@ -13,6 +14,7 @@ public class Arbol {
 	private int max;
 	private int n;
 	private Random rand;
+	private DecimalFormat f = new DecimalFormat("0");
 	
 	//Constructor
 	public Arbol(int min, int max, String tipo){
@@ -21,27 +23,23 @@ public class Arbol {
 		altura = 0;
 		setNumTerminales(0);
 		rand = new Random();
+		Arbol obj = null;
 		switch(tipo) {
 		case "Completa":
-			Arbol obj = inicializacionCompleta(0);
-			this.nodo = obj.nodo;
-			this.izquierda = obj.izquierda;
-			this.derecha = obj.derecha;
-			this.altura = obj.altura;
-			this.n = obj.n;
+			obj = inicializacionCompleta(0);
+
 			this.setNumTerminales((int) Math.pow(2,altura));
 			break;
 		case "Creciente":
-			Arbol obj2 = inicializacionCreciente(0);
-			this.nodo = obj2.nodo;
-			this.izquierda = obj2.izquierda;
-			this.derecha = obj2.derecha;
-			this.altura = obj2.altura;
-			this.setNumTerminales(obj2.getNumTerminales());
+			obj= inicializacionCreciente(0);
+			this.setNumTerminales(obj.getNumTerminales());
 			break;			
 		}
-		
-		System.out.println(n + " " + numTerminales + " " + altura);
+		this.nodo = obj.nodo;
+		this.izquierda = obj.izquierda;
+		this.derecha = obj.derecha;
+		this.altura = obj.altura;
+		this.n = obj.n;
 	}
 	
 	//Arbol solo con n
@@ -79,6 +77,7 @@ public class Arbol {
 			a.derecha = inicializacionCreciente(p+1);
 			a.setNumTerminales(a.izquierda.getNumTerminales() + a.izquierda.getNumTerminales());
 			a.altura = Math.max(a.izquierda.altura, a.izquierda.altura) + 1;
+			a.n = a.izquierda.n+ a.derecha.n + 1;
 			return a;
 		}
 		else if(p<max) {
@@ -118,7 +117,14 @@ public class Arbol {
 
 	//Funcion para extrar subArbol;
 	public Arbol extraer(int p) {
-		return derecha;
+		
+		if() {
+			
+		}
+		
+		Arbol ret = new Arbol(true);
+		
+		return ret;
 	}
 	
 	//Calcular f(x)
@@ -153,7 +159,7 @@ public class Arbol {
 		return sol;
 	}
 	
-	//recorrido en orden para construir formula
+	//recorrido en orden para construir formula de forma compacta
 	public String inOrden() {
 		
 		String sol = "";
@@ -161,6 +167,22 @@ public class Arbol {
 			sol+=nodo.getValor();
 		}	
 		else{
+			if(izquierda.nodo.isTerminal() && !izquierda.nodo.isX() && derecha.nodo.isTerminal() && !derecha.nodo.isX()) {
+				double izq = Double.parseDouble(izquierda.nodo.getValor());
+				double der = Double.parseDouble(derecha.nodo.getValor());
+				switch(nodo.getValor()) {
+				case"+":
+					sol=String.valueOf(formato(izq+der));
+					break;
+				case"-":
+					sol=String.valueOf(formato(izq-der));
+					break;
+				case"*":
+					sol=String.valueOf(formato(izq*der));
+					break;
+				}
+			}
+			else {
 			if(nodo.getValor()!="*")
 				sol+= "(";
 			sol+=izquierda.inOrden();
@@ -168,6 +190,7 @@ public class Arbol {
 			sol+=derecha.inOrden();		
 			if(nodo.getValor()!="*")
 				sol+= ")";
+			}
 		}
 		
 		return sol;
@@ -189,5 +212,19 @@ public class Arbol {
 
 	public void hacerTerminal(int nextInt) {
 		// TODO
+	}
+	
+	//Funcion para dar el formato necesario
+	public double formato(double num) {
+		
+		String str = f.format(num);
+		double sol = 0;
+		
+		if( str.indexOf(",") != -1 )
+		     str = str.replace(',','.');
+		
+		sol = Double.parseDouble(str);
+		
+		return sol;
 	}
 }
