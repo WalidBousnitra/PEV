@@ -16,7 +16,7 @@ public class Contraccion extends AlgoritmosMutacion<Integer>{
 	@Override
 	public void cromosoma(Individuo<Integer> individuo) {
 		//Haces un cambio de terminal seleccionando al azar uno de los nodos funcionales
-		individuo.getCromosoma().hacerTerminal(rand.nextInt(0,individuo.getCromosoma().getN()-individuo.getCromosoma().getNumTerminales()));
+		individuo.getCromosoma().hacerTerminal(rand.nextInt(1,individuo.getCromosoma().getN()-individuo.getCromosoma().getNumTerminales()));
 	}
 
 }

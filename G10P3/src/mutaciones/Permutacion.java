@@ -15,7 +15,7 @@ public class Permutacion extends AlgoritmosMutacion<Integer>{
 
 	@Override
 	public void cromosoma(Individuo<Integer> individuo) {
-		individuo.getCromosoma().permutarNodo(rand.nextInt(0,individuo.getCromosoma().getN()-individuo.getCromosoma().getNumTerminales()));
+		individuo.getCromosoma().permutarNodo(rand.nextInt(1,individuo.getCromosoma().getN()-individuo.getCromosoma().getNumTerminales()+1));
 	}
 
 }

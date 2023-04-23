@@ -26,11 +26,28 @@ public class Intercambio<T> extends AlgoritmosCruce<Integer>{
 		int puntoHijo1  = hijo1.getCromosoma().getN();
 		int puntoHijo2  = hijo2.getCromosoma().getN();
 		
-		Arbol aux = hijo1.getCromosoma().extraer(rand.nextInt(0,puntoHijo1));
-		Arbol aux2 = hijo1.getCromosoma().extraer(rand.nextInt(0,puntoHijo1));
+		int i1 = rand.nextInt(0,puntoHijo1);
+		int i2 = rand.nextInt(0,puntoHijo2);
+		int i3 = rand.nextInt(0,puntoHijo1);
+		int i4 = rand.nextInt(0,puntoHijo2);
 		
-		hijo1.getCromosoma().insertar(puntoHijo1, aux2);
-		hijo2.getCromosoma().insertar(puntoHijo2, aux);
+		Arbol aux = hijo1.getCromosoma().extraer(i1);
+		Arbol aux2 = hijo1.getCromosoma().extraer(i2);
+		
+		hijo1.getCromosoma().print("", hijo1.getCromosoma(), false);
+		System.out.println("\n\n\n");
+		aux.print("", aux, false);
+		System.out.println("\n\n\n");
+		hijo2.getCromosoma().print("", hijo2.getCromosoma(), false);
+		aux2.print("", aux2, false);
+		System.out.println("\n\n\n");
+		
+		hijo1.getCromosoma().insertar(i3, aux2);
+		hijo1.getCromosoma().print("", hijo1.getCromosoma(), false);
+		System.out.println("\n\n\n");
+		hijo2.getCromosoma().insertar(i4, aux);
+		hijo2.getCromosoma().print("", hijo2.getCromosoma(), false);
+		System.out.println("\n\n\n");
 		
 		hijos.add(hijo1);
 		hijos.add(hijo2);

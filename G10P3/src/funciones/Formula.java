@@ -16,6 +16,7 @@ public class Formula<T> extends Individuo<Integer>{
 											2.3056, 2.3904, 2.4795, 2.5728, 2.6706, 2.7731, 2.8803, 2.9926, 3.1101, 3.2331, 
 											3.3616, 3.4958, 3.6361, 3.7826, 3.9355, 4.0951, 4.2614, 4.4349, 4.6156, 4.8039, 
 											5.0000 };
+	
 	private double[] gx;
 	private double error;
 	
@@ -27,7 +28,7 @@ public class Formula<T> extends Individuo<Integer>{
 	// Constructor de copia
 	public Formula(Individuo<Integer> obj){
 		super(obj);
-		gx = new double[101];
+		gx = obj.gx().clone();
 	}
 	
 	//Funcion que calcula la media de error
@@ -37,7 +38,7 @@ public class Formula<T> extends Individuo<Integer>{
 		
 		//Distancia recorrida
 		int j = 0;
-		for(double i = -1.00; i< 1.00; i+=0.02) {
+		for(double i = -1.00; i<= 1.00; i+=0.02) {
 			gx[j] = formato(getCromosoma().calcular(i));
 			sum+=Math.pow(gx[j]-fx[j],2);
 			j++;
@@ -66,11 +67,23 @@ public class Formula<T> extends Individuo<Integer>{
 
 	@Override
 	public double[] gx() {
+		double sum = 0;
+		
+		//Distancia recorrida
+		int j = 0;
+		for(double i = -1.00; i<= 1.00; i+=0.02) {
+			gx[j] = formato(getCromosoma().calcular(i));
+			sum+=Math.pow(gx[j]-fx[j],2);
+			j++;
+		}
+		
+		sum  = Math.sqrt(sum);
+		error = sum;
 		return gx;
 	}
 
 	@Override
 	public double getError() {
-		return error;
+		return formato(error);
 	}
 }
