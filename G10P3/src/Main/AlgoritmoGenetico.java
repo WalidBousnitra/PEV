@@ -141,15 +141,15 @@ public class AlgoritmoGenetico<T> {
 		int D = maxP-1;
 		//Inicializacion de la poblacion / identificacion mejor individuo
 		poblacion = new ArrayList<Individuo<Integer>>(tamPoblacion);
-		Individuo<Integer> max = new Formula(minP,minP,"Completa");
+		Individuo<Integer> max = new Formula(2,2,"Completa");
 		poblacion.add(max);
 		fitness[0] = poblacion.get(0).getFitness();
 		
 		int tamGrupo = (tamPoblacion/D);
 		
-		for(int i = minP; i<=maxP; i++) {
+		for(int i = 2; i<=maxP; i++) {
 			for(int j = 0; j < tamGrupo; j++) {
-				if(!(j==0 && i==minP)) {
+				if(!(j==0 && i==2)) {
 					Individuo<Integer> nuevo = null;
 					if(j <= tamGrupo/2) {
 						nuevo = new Formula(minP,i,"Completa");
@@ -166,7 +166,7 @@ public class AlgoritmoGenetico<T> {
 				}
 			}
 		}
-
+		
 		elMejor = max;
 		posDatos = 0;
 		mejores[0] = elMejor.getFitness();

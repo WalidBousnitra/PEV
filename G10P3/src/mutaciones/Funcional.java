@@ -15,9 +15,8 @@ public class Funcional extends AlgoritmosMutacion<Integer>{
 
 	@Override
 	public void cromosoma(Individuo<Integer> individuo) {
-		//Haces un cambio de terminal seleccionando al azar uno de los nodos funcionales
-		int p = rand.nextInt(1,individuo.getCromosoma().getN()-individuo.getCromosoma().getNumTerminales()+1);
-		individuo.getCromosoma().cambioFuncion(p);
+		//Haces un cambio de funcion seleccionando al azar uno de los nodos funcionales
+		individuo.getCromosoma().cambioFuncion(rand.nextInt(1,individuo.getCromosoma().getNumFunciones()+1));
 	}
 
 }

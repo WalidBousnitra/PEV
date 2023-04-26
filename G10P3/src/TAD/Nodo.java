@@ -30,6 +30,8 @@ public class Nodo {
 	public String getValor() {	return valor;}
 	public void setTerminal() {	valor = terminales.get(rand.nextInt(0,6));}
 	public void setFuncion() {	valor = funciones.get(rand.nextInt(0,3));}
+	public void setTerminal(String s) {	while(valor==s)valor = terminales.get(rand.nextInt(0,6));}
+	public void setFuncion(String s) {	while(valor==s)valor = funciones.get(rand.nextInt(0,3));}
 	
 	//funcion de comprabacion de valor
 	public boolean isTerminal() {return terminales.contains(valor);	}

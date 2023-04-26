@@ -17,7 +17,7 @@ public class Terminal<T> extends AlgoritmosMutacion<Integer>{
 	public void cromosoma(Individuo<Integer> individuo) {
 		
 		//Haces un cambio de terminal seleccionando al azar uno de los nodos terminales
-		individuo.getCromosoma().cambioTerminal(rand.nextInt(1,individuo.getCromosoma().getNumTerminales()));
+		individuo.getCromosoma().cambioTerminal(rand.nextInt(1,individuo.getCromosoma().getNumTerminales()+1));
 	}
 
 }
