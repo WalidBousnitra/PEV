@@ -1,6 +1,4 @@
-package funciones;
-
-import Individuos.Individuo;
+package Individuo;
 
 public class Formula<T> extends Individuo<Integer>{
 	
@@ -16,6 +14,17 @@ public class Formula<T> extends Individuo<Integer>{
 											2.3056, 2.3904, 2.4795, 2.5728, 2.6706, 2.7731, 2.8803, 2.9926, 3.1101, 3.2331, 
 											3.3616, 3.4958, 3.6361, 3.7826, 3.9355, 4.0951, 4.2614, 4.4349, 4.6156, 4.8039, 
 											5.0000 };
+	private final static double[] x = {		-1.00, -0.98, -0.96, -0.94, -0.91, -0.89, -0.87, -0.85, -0.83, -0.81, 
+											-0.79, -0.77, -0.75, -0.73, -0.71, -0.69, -0.67, -0.65, -0.63, -0.61, 
+											-0.59, -0.57, -0.55, -0.53, -0.51, -0.49, -0.47, -0.45, -0.43, -0.41, 
+											-0.39, -0.37, -0.35, -0.33, -0.31, -0.29, -0.27, -0.25, -0.23, -0.21, 
+											-0.19, -0.17, -0.15, -0.13, -0.11, -0.09, -0.07, -0.05, -0.03, -0.01, 
+											0.00, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16, 0.18, 
+											0.20, 0.22, 0.24, 0.26, 0.28, 0.30, 0.32, 0.34, 0.36, 0.38, 
+											0.40, 0.42, 0.44, 0.46, 0.48, 0.50, 0.52, 0.54, 0.56, 0.58, 
+											0.60, 0.62, 0.64, 0.66, 0.68, 0.70, 0.72, 0.74, 0.76, 0.78, 
+											0.80, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98,
+											1.00 };
 	
 	private double[] gx;
 	private double error;
@@ -37,13 +46,10 @@ public class Formula<T> extends Individuo<Integer>{
 		double sum = 0;
 		
 		//Distancia recorrida
-		int j = 0;
-		for(double i = -1.00; i<= 1.00; i+=0.02) {
-			gx[j] = formato(getCromosoma().calcular(i));
-			sum+=Math.pow(gx[j]-fx[j],2);
-			j++;
+		for(int i = 0; i<= 100; i+=1) {
+			gx[i] = formato(getCromosoma().calcular(x[i]));
+			sum+=Math.pow(gx[i]-fx[i],2);
 		}
-		
 		sum  = Math.sqrt(sum);
 		error = sum;
 		return sum;
@@ -67,18 +73,7 @@ public class Formula<T> extends Individuo<Integer>{
 
 	@Override
 	public double[] gx() {
-		double sum = 0;
 		
-		//Distancia recorrida
-		int j = 0;
-		for(double i = -1.00; i<= 1.00; i+=0.02) {
-			gx[j] = formato(getCromosoma().calcular(i));
-			sum+=Math.pow(gx[j]-fx[j],2);
-			j++;
-		}
-		
-		sum  = Math.sqrt(sum);
-		error = sum;
 		return gx;
 	}
 

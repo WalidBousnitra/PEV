@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Individuos.Individuo;
-import funciones.Formula;
+import Individuo.Formula;
+import Individuo.Individuo;
 
 public class Elitismo<T> {
 

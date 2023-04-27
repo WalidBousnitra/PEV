@@ -2,8 +2,8 @@ package selecciones;
 
 import java.util.List;
 
-import Individuos.Individuo;
-import funciones.Formula;
+import Individuo.Formula;
+import Individuo.Individuo;
 
 
 public abstract class AlgoritmoSeleccion {

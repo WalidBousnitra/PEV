@@ -4,13 +4,23 @@ import java.util.Random;
 
 public class Arbol {
 	
+	//Arbol recursivo
+	//Clase nodo para incluir operaciones
 	private Nodo nodo;
 	private Arbol izquierda;
 	private Arbol derecha;
-	private int n;
+	private int n; //Num nodos
 	private int altura;
-	private int numTerminales;
-	private int numFunciones;
+	private int numTerminales; //Num nodos terminales
+	public int getAltura() {
+		return altura;
+	}
+
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+
+	private int numFunciones; //Num nodos funciones
 	private Random rand;
 	
 	//Constructor
@@ -19,10 +29,10 @@ public class Arbol {
 		Arbol obj = null;
 		switch(tipo) {
 		case "Completa":
-			obj = inicializacionCompleta(0,max);
+			obj = inicializacionCompleta(1,max);
 			break;
 		case "Creciente":
-			obj= inicializacionCreciente(0,min,max);
+			obj= inicializacionCreciente(1,min,max);
 			break;			
 		}
 		nodo = obj.nodo;
@@ -31,9 +41,10 @@ public class Arbol {
 		n = obj.n;
 		altura = obj.altura;
 		numTerminales = obj.numTerminales;
-		setNumFunciones(obj.getNumFunciones());
+		numFunciones = obj.numFunciones;
 	}
 	
+	//Metodo auxliar para depurar
 	public void print(String prefix, Arbol n, boolean isLeft) {
         if (n != null) {
             System.out.println (prefix + (isLeft ? "|__ " : "\\__ ") +  n.nodo.getValor());
@@ -44,6 +55,7 @@ public class Arbol {
 
 	
 	//Arbol solo con un solo nodo
+	//b==true nodo terminal
 	public Arbol(boolean b) {
 		nodo = new Nodo(b);
 		izquierda = null;
@@ -56,19 +68,18 @@ public class Arbol {
 	
 	//Completo
 	public Arbol inicializacionCompleta(int p, int max) {
-		if(p<max-1) {
+		if(p<max) {
 			Arbol a = new Arbol(false);
 			a.izquierda = inicializacionCompleta(p+1, max);
 			a.derecha = inicializacionCompleta(p+1, max);
 			a.n = a.izquierda.n + a.derecha.n + 1;
-			a.altura = a.izquierda.altura+1;
-			a.setNumTerminales(a.izquierda.getNumTerminales() + a.derecha.getNumTerminales());
-			a.setNumFunciones(a.izquierda.getNumFunciones() + a.derecha.getNumFunciones()+1);
+			a.altura = a.izquierda.altura + 1;
+			a.numTerminales = a.izquierda.numTerminales + a.derecha.numTerminales;
+			a.numFunciones = a.izquierda.numFunciones + a.derecha.numFunciones + 1;
 			return a;
 		}
-		else {
+		else 
 			return new Arbol(true);
-		}
 	}
 	
 	//Creciente
@@ -79,7 +90,7 @@ public class Arbol {
 			a.izquierda = inicializacionCreciente(p+1,min,max);
 			a.derecha = inicializacionCreciente(p+1,min,max);
 		}
-		else if(p<max-1) {
+		else if(p<max) {
 			a = new Arbol(rand.nextBoolean());
 			if(!a.nodo.isTerminal()) {
 				a.izquierda = inicializacionCreciente(p+1,min,max);
@@ -91,9 +102,9 @@ public class Arbol {
 		}
 		if(!a.nodo.isTerminal()) {
 			a.n = a.izquierda.n+ a.derecha.n + 1;
-			a.altura = Math.max(a.izquierda.altura, a.izquierda.altura) + 1;
+			a.altura = Math.max(a.izquierda.altura, a.derecha.altura) + 1;
 			a.numTerminales = a.izquierda.numTerminales + a.derecha.numTerminales;
-			a.setNumFunciones(a.izquierda.getNumFunciones() + a.derecha.getNumFunciones()+1);
+			a.numFunciones = a.izquierda.numFunciones + a.derecha.numFunciones + 1;
 		}
 		return a; 
 	}	
@@ -107,7 +118,7 @@ public class Arbol {
 			n = org.n;
 			altura = org.altura;
 			numTerminales = org.numTerminales;
-			setNumFunciones(org.getNumFunciones());
+			numFunciones = org.numFunciones;
 		}
 	}
 	
@@ -220,11 +231,20 @@ public class Arbol {
 	}
 	
 	//Getters y Setters necesarios
+	public Nodo getNodo() {	return nodo;}
+	public void setNodo(Nodo nodo) {this.nodo = nodo;}
+	public Arbol getIzquierda() {return izquierda;}
+	public void setIzquierda(Arbol izquierda) {	this.izquierda = izquierda;}
 	public int getN() {	return n;}
 	public void setN(int n) {this.n = n;}
 	public int getNumTerminales() {	return numTerminales;}
 	public void setNumTerminales(int numTerminales) {this.numTerminales = numTerminales;}
+	public int getNumFunciones() {return numFunciones;}
+	public void setNumFunciones(int numFunciones) {	this.numFunciones = numFunciones;}
 
+	
+	//Metodos para las mutaciones
+	
 	public void cambioTerminal(int p) {
 		if(nodo.isTerminal()) {
 			nodo.setTerminal(nodo.getValor());
@@ -237,17 +257,29 @@ public class Arbol {
 		}
 	}
 
+	public void cambioFuncion(int p) {
+		if(p==izquierda.numFunciones+1) {
+			nodo.setFuncion(nodo.getValor());
+		}
+		else if(p<=izquierda.numFunciones){
+			izquierda.cambioFuncion(p);
+		}
+		else {
+			derecha.cambioFuncion(p-(izquierda.numFunciones+1));
+		}
+	}
+	
 	public void permutarNodo(int p) {
 		if(p==izquierda.numFunciones+1) {
 			Arbol aux = new Arbol(izquierda);
 			izquierda = new Arbol(derecha);
 			derecha = aux;
 		}
-		else if(p<=izquierda.getNumFunciones()){
+		else if(p<=izquierda.numFunciones){
 			izquierda.cambioFuncion(p);
 		}
 		else {
-			derecha.cambioFuncion(p-(izquierda.getNumFunciones()+1));
+			derecha.cambioFuncion(p-(izquierda.numFunciones+1));
 		}
 	}
 
@@ -262,51 +294,15 @@ public class Arbol {
 			numFunciones = 0;
 			return;
 		}
-		else if(p<=izquierda.getNumFunciones()){
+		else if(p<=izquierda.numFunciones){
 			izquierda.hacerTerminal(p);
 		}
 		else {
-			derecha.hacerTerminal(p-(izquierda.getNumFunciones()+1));
+			derecha.hacerTerminal(p-(izquierda.numFunciones+1));
 		}
-		n = izquierda.n+derecha.n;
-		altura = Math.max(izquierda.altura, derecha.altura);
+		n = izquierda.n + derecha.n + 1;
+		altura = Math.max(izquierda.altura, derecha.altura) + 1;
 		numTerminales = izquierda.numTerminales + derecha.numTerminales;
-		setNumFunciones(izquierda.getNumFunciones()+derecha.getNumFunciones()+1);
-	}
-
-	public Arbol getIzquierda() {
-		return izquierda;
-	}
-
-	public void setIzquierda(Arbol izquierda) {
-		this.izquierda = izquierda;
-	}
-
-	public Nodo getNodo() {
-		return nodo;
-	}
-
-	public void setNodo(Nodo nodo) {
-		this.nodo = nodo;
-	}
-
-	public void cambioFuncion(int p) {
-		if(p==izquierda.numFunciones+1) {
-			nodo.setFuncion(nodo.getValor());
-		}
-		else if(p<=izquierda.getNumFunciones()){
-			izquierda.cambioFuncion(p);
-		}
-		else {
-			derecha.cambioFuncion(p-(izquierda.getNumFunciones()+1));
-		}
-	}
-
-	public int getNumFunciones() {
-		return numFunciones;
-	}
-
-	public void setNumFunciones(int numFunciones) {
-		this.numFunciones = numFunciones;
+		numFunciones = izquierda.numFunciones + derecha.numFunciones + 1;
 	}
 }

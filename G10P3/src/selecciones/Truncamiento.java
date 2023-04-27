@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 
 public class Truncamiento extends AlgoritmoSeleccion{
 

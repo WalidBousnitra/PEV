@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 
 public class TorneoProb extends AlgoritmoSeleccion{
 

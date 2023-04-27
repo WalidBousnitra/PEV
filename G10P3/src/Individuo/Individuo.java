@@ -1,4 +1,4 @@
-package Individuos;
+package Individuo;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -10,6 +10,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	//Atributos
 	private Arbol cromosoma;
 	private DecimalFormat f = new DecimalFormat("0.0000");
+	private DecimalFormat f2 = new DecimalFormat("0.00");
 	
 	public Individuo(int min ,int max, String tipo) {
 		//Inicializacion de atributos
@@ -37,6 +38,18 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	public double formato(double num) {
 		
 		String str = f.format(num);
+		double sol = 0;
+		
+		if( str.indexOf(",") != -1 )
+		     str = str.replace(',','.');
+		
+		sol = Double.parseDouble(str);
+		
+		return sol;
+	}
+public double formato2(double num) {
+		
+		String str = f2.format(num);
 		double sol = 0;
 		
 		if( str.indexOf(",") != -1 )

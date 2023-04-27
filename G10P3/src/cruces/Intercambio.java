@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 import TAD.Arbol;
 
 public class Intercambio<T> extends AlgoritmosCruce<Integer>{

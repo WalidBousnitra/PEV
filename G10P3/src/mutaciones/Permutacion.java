@@ -2,7 +2,7 @@ package mutaciones;
 
 import java.util.Random;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 
 public class Permutacion extends AlgoritmosMutacion<Integer>{
 

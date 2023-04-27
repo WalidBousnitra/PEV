@@ -24,7 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 import analisis.Parametros;
 import analisis.VentanaAnalisis;
 
@@ -140,8 +140,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         spinners[3] = new JSpinner(new SpinnerNumberModel(60,0,100,1));
         spinners[4] = new JSpinner(new SpinnerNumberModel(5,0,100,1));
         spinners[5] = new JSpinner(new SpinnerNumberModel(2,0,100,1));
-        spinners[6] = new JSpinner(new SpinnerNumberModel(2,2,100,1));
-        spinners[7] = new JSpinner(new SpinnerNumberModel(5,2,100,1));
+        spinners[6] = new JSpinner(new SpinnerNumberModel(2,2,5,1));
+        spinners[7] = new JSpinner(new SpinnerNumberModel(5,2,5,1));
         // Crear combo box para los parámetros
         String[] opciones = {"Estocástico Universal","Restos","Ranking","Ruleta","Torneo Determinista","Torneo Probabilístico","Truncamiento"};
         comboBox.add(new JComboBox<>(opciones));

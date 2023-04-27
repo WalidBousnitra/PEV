@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.*;
 import org.math.plot.*;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 
 public class GraphicPanel<T> extends JPanel{
 	
@@ -36,7 +36,8 @@ public class GraphicPanel<T> extends JPanel{
 		
 		//Eliminar generacion anterior
 		plot.removeAllPlots();
-		
+		plot.removeLegend();
+		plot.addLegend("SOUTH");
 		//trazos
 		plot.addLinePlot("Mejor absoluto", Color.blue, absolutos);
 		plot.addLinePlot("Mejor de la generación", Color.red, mejores);

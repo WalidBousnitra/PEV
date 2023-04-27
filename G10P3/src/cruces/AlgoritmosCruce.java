@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Individuos.Individuo;
-import funciones.Formula;
+import Individuo.Formula;
+import Individuo.Individuo;
 
 public abstract class AlgoritmosCruce<T>{
 	

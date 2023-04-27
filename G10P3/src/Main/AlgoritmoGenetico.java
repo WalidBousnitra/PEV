@@ -1,11 +1,13 @@
 package Main;
 
 import java.util.ArrayList;
+
 import java.util.List;
-import Individuos.Individuo;
+
+import Individuo.Formula;
+import Individuo.Individuo;
 import cruces.Intercambio;
 import elitismo.Elitismo;
-import funciones.*;
 import mutaciones.*;
 import selecciones.*;
 

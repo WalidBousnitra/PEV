@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 
 public class Ranking extends AlgoritmoSeleccion{
 	

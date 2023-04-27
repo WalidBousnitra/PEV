@@ -2,7 +2,7 @@ package mutaciones;
 
 import java.util.Random;
 
-import Individuos.Individuo;
+import Individuo.Individuo;
 
 public class Contraccion extends AlgoritmosMutacion<Integer>{
 
