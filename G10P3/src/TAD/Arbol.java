@@ -238,16 +238,16 @@ public class Arbol {
 	}
 
 	public void permutarNodo(int p) {
-		if(nodo.isTerminal() || p==izquierda.n+1) {
+		if(p==izquierda.numFunciones+1) {
 			Arbol aux = new Arbol(izquierda);
 			izquierda = new Arbol(derecha);
-			derecha = new Arbol(aux);
+			derecha = aux;
 		}
-		else if(p<=izquierda.n){
-			izquierda.permutarNodo(p);
+		else if(p<=izquierda.getNumFunciones()){
+			izquierda.cambioFuncion(p);
 		}
 		else {
-			derecha.permutarNodo(p-izquierda.n+1);
+			derecha.cambioFuncion(p-(izquierda.getNumFunciones()+1));
 		}
 	}
 

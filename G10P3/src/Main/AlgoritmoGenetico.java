@@ -146,7 +146,7 @@ public class AlgoritmoGenetico<T> {
 		fitness[0] = poblacion.get(0).getFitness();
 		
 		int tamGrupo = (tamPoblacion/D);
-		
+		int  r = 1;
 		for(int i = 2; i<=maxP; i++) {
 			for(int j = 0; j < tamGrupo; j++) {
 				if(!(j==0 && i==2)) {
@@ -157,6 +157,7 @@ public class AlgoritmoGenetico<T> {
 					else{
 						nuevo = new Formula(minP,i,"Creciente");
 					}
+					r++;
 					poblacion.add(nuevo);
 					fitness[poblacion.size()-1] = poblacion.get(poblacion.size()-1).getFitness();
 					sumFitness+=fitness[poblacion.size()-1];
@@ -164,6 +165,16 @@ public class AlgoritmoGenetico<T> {
 						max = new Formula(nuevo);
 					}
 				}
+			}
+		}
+		
+		for(int i = r; i< poblacion.size();i++) {
+			Individuo<Integer> nuevo = new Formula(minP,maxP,"Completa");
+			poblacion.add(nuevo);
+			fitness[poblacion.size()-1] = poblacion.get(poblacion.size()-1).getFitness();
+			sumFitness+=fitness[poblacion.size()-1];
+			if(max.compareTo(nuevo) == -1) {
+				max = new Formula(nuevo);
 			}
 		}
 		
