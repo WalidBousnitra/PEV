@@ -318,10 +318,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				//Datos para y actualizacion de grafica
 				List<double[]> datos = instancia.datos();
 				Individuo<Integer> mejor = instancia.getElMejor();
-				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2));
+				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2), mejor.getError());
 				grafico2.actualizar(panelVacio2, mejor.gx(), mejor.formula(),mejor.getError());
-				panelVacio.revalidate();
-				panelVacio2.revalidate();
 			}
          });
     }

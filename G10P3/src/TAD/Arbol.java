@@ -12,13 +12,6 @@ public class Arbol {
 	private int n; //Num nodos
 	private int altura;
 	private int numTerminales; //Num nodos terminales
-	public int getAltura() {
-		return altura;
-	}
-
-	public void setAltura(int altura) {
-		this.altura = altura;
-	}
 
 	private int numFunciones; //Num nodos funciones
 	private Random rand;
@@ -113,8 +106,10 @@ public class Arbol {
 	public Arbol(Arbol org) {
 		if(org != null) {
 			nodo = new Nodo(org.nodo);
+			if(!nodo.isTerminal()) {
 			this.izquierda = (org.izquierda!=null)?new Arbol(org.izquierda):null;
 			this.derecha = (org.derecha!=null)?new Arbol(org.derecha):null;
+			}
 			n = org.n;
 			altura = org.altura;
 			numTerminales = org.numTerminales;
@@ -126,15 +121,22 @@ public class Arbol {
 	public void insertar(int p, Arbol subA) {
 		if(nodo.isTerminal() || p == izquierda.n+1) {
 			nodo = new Nodo(subA.nodo);
-			izquierda = null;
-			derecha = null;
 			if(!nodo.isTerminal()) {
 				izquierda = new Arbol(subA.izquierda);
 				derecha = new Arbol(subA.derecha);
+				n = subA.n;
+				altura = subA.altura;
+				numTerminales = subA.numTerminales;
+				numFunciones = subA.numFunciones;
 			}
-			n = subA.n;
-			numTerminales = subA.numTerminales;
-			altura = subA.altura;
+			else {
+				izquierda = null;
+				derecha = null;
+				n = 1;
+				altura = 1;
+				numTerminales = 1;
+				numFunciones = 0;
+			}
 			return;
 		}
 		else if(p<=izquierda.n){
@@ -143,12 +145,48 @@ public class Arbol {
 		else {
 			derecha.insertar(p-(izquierda.n+1),subA);
 		}
-		n = izquierda.n+ derecha.n + 1;
-		altura = Math.max(izquierda.altura, izquierda.altura) + 1;
+		n = izquierda.n + derecha.n + 1;
+		altura = Math.max(izquierda.altura, derecha.altura) + 1;
 		numTerminales = izquierda.numTerminales + derecha.numTerminales;
+		numFunciones = izquierda.numFunciones + derecha.numFunciones + 1;
+	}
+	
+	public void insertarFuncion(int p, Arbol subA) {
+		if(nodo.isTerminal() || p == izquierda.numFunciones+1) {
+			nodo = new Nodo(subA.nodo);
+			izquierda = new Arbol(subA.izquierda);
+			derecha = new Arbol(subA.derecha);
+			n = subA.n;
+			altura = subA.altura;
+			numTerminales = subA.numTerminales;
+			numFunciones = subA.numFunciones;
+			return;
+		}
+		else if(p<=izquierda.numFunciones){
+			izquierda.insertarFuncion(p,subA);
+		}
+		else {
+			derecha.insertarFuncion(p-(izquierda.numFunciones+1),subA);
+		}
+		n = izquierda.n + derecha.n + 1;
+		altura = Math.max(izquierda.altura, derecha.altura) + 1;
+		numTerminales = izquierda.numTerminales + derecha.numTerminales;
+		numFunciones = izquierda.numFunciones + derecha.numFunciones + 1;
 	}
 
 	//Funcion para extrar subArbol;
+	public Arbol extraerFuncion(int p) {
+		if(p==izquierda.numFunciones+1) {
+			return new Arbol(this);
+		}
+		else if(p<=izquierda.numFunciones){
+			return izquierda.extraerFuncion(p);
+		}
+		else {
+			return derecha.extraerFuncion(p-(izquierda.numFunciones+1));
+		}
+	}
+	
 	public Arbol extraer(int p) {
 		if(nodo.isTerminal() || p==(this.izquierda.n+1)) {
 			return new Arbol(this);
@@ -237,6 +275,8 @@ public class Arbol {
 	public void setIzquierda(Arbol izquierda) {	this.izquierda = izquierda;}
 	public int getN() {	return n;}
 	public void setN(int n) {this.n = n;}
+	public int getAltura() {return altura;}
+	public void setAltura(int altura) {	this.altura = altura;}
 	public int getNumTerminales() {	return numTerminales;}
 	public void setNumTerminales(int numTerminales) {this.numTerminales = numTerminales;}
 	public int getNumFunciones() {return numFunciones;}

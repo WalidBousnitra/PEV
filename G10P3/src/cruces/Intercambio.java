@@ -24,32 +24,52 @@ public class Intercambio<T> extends AlgoritmosCruce<Integer>{
 		Individuo<Integer> hijo2 = crear(padre2);
 		
 		//puntos de corte;
-		int p1 = rand.nextInt(1,hijo1.getCromosoma().getN()+1);
-		int p2 = rand.nextInt(1,hijo2.getCromosoma().getN()+1);
+		int p1 = 0;
+		int p2 = 0;
+		Arbol aux = null;
+		Arbol aux2 = null;
 		
-		Arbol aux = hijo1.getCromosoma().extraer(p1);
-		Arbol aux2 = hijo1.getCromosoma().extraer(p2);
-		
-		hijo1.getCromosoma().print("", hijo1.getCromosoma(), false);
-		System.out.println("\n\n\n");
-		aux.print("", aux, false);
-		System.out.println("\n\n\n");
-		hijo2.getCromosoma().print("", hijo2.getCromosoma(), false);
-		aux2.print("", aux2, false);
-		System.out.println("\n\n\n");
-		
-		hijo1.getCromosoma().insertar(p1, aux2);
-		hijo1.getCromosoma().print("", hijo1.getCromosoma(), false);
-		System.out.println("\n\n\n");
-		hijo2.getCromosoma().insertar(p2, aux);
-		hijo2.getCromosoma().print("", hijo2.getCromosoma(), false);
-		System.out.println("\n\n\n");
+		if(rand.nextDouble()<=0.9) {
+			
+			p1 = getValidIndx(hijo1.getCromosoma().getNumFunciones(),hijo1.getCromosoma().getIzquierda().getNumFunciones());
+			p2 = getValidIndx(hijo2.getCromosoma().getNumFunciones(),hijo2.getCromosoma().getIzquierda().getNumFunciones());
+
+			aux = hijo1.getCromosoma().extraerFuncion(p1);
+			aux2 = hijo2.getCromosoma().extraerFuncion(p2);
+			
+			hijo1.getCromosoma().insertarFuncion(p1, aux2);
+			hijo2.getCromosoma().insertarFuncion(p2, aux);
+		}
+		else {
+			p1 = getValidIndx(hijo1.getCromosoma().getN(),hijo1.getCromosoma().getIzquierda().getN());
+			p2 = getValidIndx(hijo2.getCromosoma().getN(),hijo2.getCromosoma().getIzquierda().getN());
+
+			aux = hijo1.getCromosoma().extraer(p1);
+			aux2 = hijo2.getCromosoma().extraer(p2);
+			
+			hijo1.getCromosoma().insertar(p1, aux2);
+			hijo2.getCromosoma().insertar(p2, aux);
+		}		
 		
 		hijos.add(hijo1);
 		hijos.add(hijo2);
 		
 		return hijos;
 		
+	}
+	
+	public int getValidIndx(int tam, int tamIzq) {
+		int p = rand.nextInt(1,tam+1);
+		if(tamIzq+1 !=1) {
+			while(p==tamIzq+1) {
+				 p=rand.nextInt(1,tam+1);
+			}
+		}
+		else{
+			p = 1;
+		}
+		
+		return p;
 	}
 
 }

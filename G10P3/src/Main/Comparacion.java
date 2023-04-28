@@ -58,8 +58,6 @@ public class Comparacion<T> extends JPanel{
 		
 		//Eliminar generacion anterior
 		plot.removeAllPlots();
-		plot.removeLegend();
-		plot.addLegend("SOUTH");
 		
 		plot.addLinePlot("f(x) = x^4 + x^3 + x^2 + x + 1", x, fx);
 		plot.addLinePlot("g(x) = " + formula, x, gx);

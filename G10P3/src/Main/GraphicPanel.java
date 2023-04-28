@@ -17,15 +17,17 @@ public class GraphicPanel<T> extends JPanel{
 	private double[] mejores;
 	private double[] absolutos;
 	private double[] media;
+	private double error;
 	Plot2DPanel plot = new Plot2DPanel();
 	//Mejor individuo
 	private Individuo<Integer> mejor;
 	
-	public void actualizar(Individuo<Integer> mejor, JPanel panel, double[] mejores, double[] absolutos, double[] media) {
+	public void actualizar(Individuo<Integer> mejor, JPanel panel, double[] mejores, double[] absolutos, double[] media, double error) {
 		this.mejores = mejores;
 		this.mejor = mejor;
 		this.absolutos = absolutos;
 		this.media = media;
+		this.error = error;
 		plot.setPreferredSize(new Dimension(799,500));
 		plot.addLegend("SOUTH");
 		plot.setAxisLabels("Generaciones","Evaluación");
@@ -36,15 +38,14 @@ public class GraphicPanel<T> extends JPanel{
 		
 		//Eliminar generacion anterior
 		plot.removeAllPlots();
-		plot.removeLegend();
-		plot.addLegend("SOUTH");
+		
 		//trazos
 		plot.addLinePlot("Mejor absoluto", Color.blue, absolutos);
 		plot.addLinePlot("Mejor de la generación", Color.red, mejores);
 		plot.addLinePlot("Media de la generación", Color.green, media);
 		//Dummy para la leyenda
 		plot.addLinePlot("Ecuacion del mejor individuo: g(x) = " + mejor.formula(), Color.pink, new double[] {0});
-		plot.addLinePlot("Error: " + mejor.getError(), Color.pink, new double[] {0});
+		plot.addLinePlot("Error: " + error, Color.pink, new double[] {0});
 		
 		panel.add(plot);
 	}
