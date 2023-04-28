@@ -20,6 +20,11 @@ public class Nodo {
 			valor = funciones.get(rand.nextInt(0,3));
 	}
 	
+	//Constructor nodo invalido
+	public Nodo() {
+		valor = "E";
+	}
+	
 	//constructor de copia
 	public Nodo(Nodo valor) {
 		this.valor= valor.valor;
@@ -35,4 +40,5 @@ public class Nodo {
 	//funcion de comprabacion de valor
 	public boolean isTerminal() {return terminales.contains(valor);}
 	public boolean isX() {return valor=="x";}
+	public boolean isNull() {return valor == "E";}
 }
