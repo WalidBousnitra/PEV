@@ -18,7 +18,7 @@ public class GraphicPanel<T> extends JPanel{
 	private double[] absolutos;
 	private double[] media;
 	private double error;
-	Plot2DPanel plot = new Plot2DPanel();
+	private Plot2DPanel plot = new Plot2DPanel();
 	//Mejor individuo
 	private Individuo<Integer> mejor;
 	

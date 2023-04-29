@@ -284,7 +284,7 @@ public class Arbol {
 
 	
 	//Metodos para las mutaciones
-	
+	//Desciende por el arbol hasta llegar al nodo y genera un valor terminal distinto
 	public void cambioTerminal(int p) {
 		if(nodo.isTerminal()) {
 			nodo.setTerminal(nodo.getValor());
@@ -297,6 +297,8 @@ public class Arbol {
 		}
 	}
 
+	
+	//Desciende por el arbol hasta llegar al nodo y genera un valor funcion distinto
 	public void cambioFuncion(int p) {
 		if(p==izquierda.numFunciones+1) {
 			nodo.setFuncion(nodo.getValor());
@@ -309,6 +311,8 @@ public class Arbol {
 		}
 	}
 	
+	//Desciende por el arbol hasta llegar al nodo 
+	//Realiza Swap de los arboles izquierda y derecha
 	public void permutarNodo(int p) {
 		if(p==izquierda.numFunciones+1) {
 			Arbol aux = new Arbol(izquierda);
@@ -322,7 +326,9 @@ public class Arbol {
 			derecha.cambioFuncion(p-(izquierda.numFunciones+1));
 		}
 	}
-
+	
+	//Desciende por el arbol hasta llegar al nodo se hace terminal
+	//Asciende por el arbol recursivamente para actualizar los atributos del nodo
 	public void hacerTerminal(int p) {
 		if(p==izquierda.numFunciones+1) {
 			nodo.setTerminal();

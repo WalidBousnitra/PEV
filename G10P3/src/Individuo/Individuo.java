@@ -4,6 +4,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import TAD.Arbol;
+import bloating.PoliAndMcPhee;
 
 public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	
@@ -11,9 +12,11 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	private Arbol cromosoma;
 	private DecimalFormat f = new DecimalFormat("0.0000");
 	private DecimalFormat f2 = new DecimalFormat("0.00");
+	private PoliAndMcPhee _k;
 	
-	public Individuo(int min ,int max, String tipo) {
+	public Individuo(PoliAndMcPhee k,int min ,int max, String tipo) {
 		//Inicializacion de atributos
+		set_k(k);
 		this.cromosoma = new Arbol(min, max, tipo);
 		f.setRoundingMode(RoundingMode.DOWN);
 	}
@@ -21,6 +24,8 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	// Constructor de copia
 	public Individuo(Individuo<T> obj) {
 		this.cromosoma = new Arbol(obj.getCromosoma());
+		set_k(obj.get_k());
+		f.setRoundingMode(RoundingMode.DOWN);
 	}
 	
 	//Funciones de calculos de distintos valores
@@ -47,7 +52,8 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 		
 		return sol;
 	}
-public double formato2(double num) {
+	
+	public double formato2(double num) {
 		
 		String str = f2.format(num);
 		double sol = 0;
@@ -63,5 +69,9 @@ public double formato2(double num) {
 	//Getters y setters necesarios
 	public Arbol getCromosoma() {return cromosoma;}
 	public void setCromosoma(Arbol cromosoma) {this.cromosoma = cromosoma;}
+	public PoliAndMcPhee get_k() {	return _k;}
+	public void set_k(PoliAndMcPhee _k) {this._k = _k;}
+
+	public abstract double getFitness2();
 
 }

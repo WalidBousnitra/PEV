@@ -21,7 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
 import Individuo.Individuo;
@@ -40,8 +39,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     private JPanel panelTitulo;
     private JPanel paramsPanel;
 	private JPanel panelVacio;
-	private JPanel panelVacio2;
-	private JTabbedPane tabbedPane;
 	
 	// Para la estructura de los paneles
 	private GridBagConstraints gbcTexto;
@@ -97,7 +94,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     	// Se agrega el panel de título, el de parametros y la grafica en el panel principal
         panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
         panelPrincipal.add(paramsPanel, BorderLayout.WEST);
-        panelPrincipal.add(tabbedPane, BorderLayout.CENTER);
+        panelPrincipal.add(panelVacio, BorderLayout.CENTER);
         
         // Se agrega el panel principal a la ventana
         add(panelPrincipal);
@@ -269,26 +266,17 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     
     public void ejecutar() {
     	
-    	tabbedPane = new JTabbedPane();
-    	
 		panelVacio = new JPanel();
-		panelVacio2= new JPanel();
-		tabbedPane.addTab("Generaciones", panelVacio);
-		tabbedPane.addTab("Comparación", panelVacio2);
-    	GraphicPanel<Integer> grafico = new GraphicPanel<Integer>();
+		GraphicPanel<Integer> grafico = new GraphicPanel<Integer>();
     	Comparacion<Integer> grafico2 = new Comparacion<Integer>();
  		panelVacio.setBorder(BorderFactory.createLineBorder(Color.BLACK));
  		panelVacio.setPreferredSize(new Dimension(700, 600));
- 		panelVacio.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
- 		panelVacio2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
- 		panelVacio2.setPreferredSize(new Dimension(700, 600));
- 		panelVacio2.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0)); 
+ 		panelVacio.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         
         ejecutarButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				tamPoblacion = (Integer)spinners[1].getValue();
 				maxGeneraciones = (Integer) spinners[2].getValue();
 				probCruce = (Double.valueOf((Integer)spinners[3].getValue()))/100;
@@ -319,7 +307,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				List<double[]> datos = instancia.datos();
 				Individuo<Integer> mejor = instancia.getElMejor();
 				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2), mejor.getError());
-				grafico2.actualizar(panelVacio2, mejor.gx(), mejor.formula(),mejor.getError());
+				grafico2.actualizar(mejor.gx(), mejor.formula(),mejor.getError());
+				panelVacio.revalidate();
 			}
          });
     }

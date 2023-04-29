@@ -1,5 +1,7 @@
 package Individuo;
 
+import bloating.PoliAndMcPhee;
+
 public class Formula<T> extends Individuo<Integer>{
 	
 	//Valores f(x)
@@ -29,9 +31,10 @@ public class Formula<T> extends Individuo<Integer>{
 	private double[] gx;
 	private double error;
 	
-	public Formula(int min, int max, String tipo) {
-		super(min, max, tipo);
+	public Formula(PoliAndMcPhee k, int min, int max, String tipo) {
+		super(k,min, max, tipo);
 		gx = new double[101];
+		
 	}
 	
 	// Constructor de copia
@@ -52,6 +55,7 @@ public class Formula<T> extends Individuo<Integer>{
 		}
 		sum  = Math.sqrt(sum);
 		error = sum;
+		sum += get_k().get_k() *getCromosoma().getN();
 		return sum;
 	}
 	
@@ -80,5 +84,19 @@ public class Formula<T> extends Individuo<Integer>{
 	@Override
 	public double getError() {
 		return formato(error);
+	}
+
+	@Override
+	public double getFitness2() {
+		double sum = 0;
+		
+		//Distancia recorrida
+		for(int i = 0; i<= 100; i+=1) {
+			gx[i] = formato(getCromosoma().calcular(x[i]));
+			sum+=Math.pow(gx[i]-fx[i],2);
+		}
+		sum  = Math.sqrt(sum);
+		error = sum;
+		return sum;
 	}
 }

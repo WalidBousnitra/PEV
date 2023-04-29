@@ -6,6 +6,7 @@ import java.util.List;
 
 import Individuo.Formula;
 import Individuo.Individuo;
+import bloating.PoliAndMcPhee;
 import cruces.Intercambio;
 import elitismo.Elitismo;
 import mutaciones.*;
@@ -28,7 +29,9 @@ public class AlgoritmoGenetico<T> {
 	//Datos del Algoritmo
 	private List<Individuo<Integer>> poblacion;
 	private double[] fitness;
+	private int[] tams;
 	private Individuo<Integer> elMejor;
+	private PoliAndMcPhee k;
 
 	//Datos de la Grafica
 	private double[] mejores;
@@ -62,9 +65,11 @@ public class AlgoritmoGenetico<T> {
 		//Inicializacion de datos del algoritmo y grafica
 		this.poblacion = new ArrayList<Individuo<Integer>>();
 		this.fitness = new double[tamPoblacion];
+		this.tams = new int[tamPoblacion];
 		this.mejores = new double[maxGeneraciones];
 		this.absolutos = new double[maxGeneraciones];
 		this.media = new double[maxGeneraciones];
+		this.k = new PoliAndMcPhee();
 		
 	}
 
@@ -77,6 +82,8 @@ public class AlgoritmoGenetico<T> {
 		else {
 			iniciarPoblacion(min,max,metodoInicializacion);
 		}
+		
+		k.updateK(tamPoblacion, tams,fitness);
 		
 		//n-generaciones
 		for(int i = 1; i < maxGeneraciones; i++) {
@@ -101,10 +108,25 @@ public class AlgoritmoGenetico<T> {
 			//insercion elite
 			probElitismo.incorporar(poblacion);
 			
+			calculos2();
+			
+			//recalcular ponalizacion
+			k.updateK(tamPoblacion, tams,fitness);
+			
 			//reevaluacion
 			calculos();
 		}
 
+	}
+
+	private void calculos2() {
+		//Reevaluacion de individuos / identificacion del mejor de la generacion
+		if(posDatos<maxGeneraciones) {
+			fitness[0] = poblacion.get(0).getFitness2();
+			for(int j = 1; j < tamPoblacion; j++) {
+				fitness[j] = poblacion.get(j).getFitness2();
+			}
+		}
 	}
 
 	@SuppressWarnings({"unchecked","rawtypes"})
@@ -114,13 +136,15 @@ public class AlgoritmoGenetico<T> {
 		
 		//Inicializacion de la poblacion / identificacion mejor individuo
 		poblacion = new ArrayList<Individuo<Integer>>(tamPoblacion);
-		Individuo<Integer> max = new Formula(minP,maxP,tipo);
+		Individuo<Integer> max = new Formula(k,minP,maxP,tipo);
 		poblacion.add(max);
 		fitness[0] = poblacion.get(0).getFitness();
+		tams[0] = poblacion.get(0).getCromosoma().getN();
 		for(int i = 1; i < tamPoblacion; i++) {
-			Individuo<Integer> nuevo = new Formula(minP,maxP,tipo);
+			Individuo<Integer> nuevo = new Formula(k,minP,maxP,tipo);
 			poblacion.add(nuevo);
 			fitness[i] = poblacion.get(i).getFitness();
+			tams[i] = poblacion.get(i).getCromosoma().getN();
 			sumFitness+=fitness[i];
 			if(max.compareTo(nuevo) == -1) {
 				max = new Formula(nuevo);
@@ -143,10 +167,10 @@ public class AlgoritmoGenetico<T> {
 		int D = maxP-1;
 		//Inicializacion de la poblacion / identificacion mejor individuo
 		poblacion = new ArrayList<Individuo<Integer>>(tamPoblacion);
-		Individuo<Integer> max = new Formula(2,2,"Completa");
+		Individuo<Integer> max = new Formula(k,2,2,"Completa");
 		poblacion.add(max);
 		fitness[0] = poblacion.get(0).getFitness();
-		
+		tams[0] = poblacion.get(0).getCromosoma().getN();
 		int tamGrupo = (tamPoblacion/D);
 		int  r = 1;
 		for(int i = 2; i<=maxP; i++) {
@@ -154,14 +178,15 @@ public class AlgoritmoGenetico<T> {
 				if(!(j==0 && i==2)) {
 					Individuo<Integer> nuevo = null;
 					if(j <= tamGrupo/2) {
-						nuevo = new Formula(minP,i,"Completa");
+						nuevo = new Formula(k,minP,i,"Completa");
 					}
 					else{
-						nuevo = new Formula(minP,i,"Creciente");
+						nuevo = new Formula(k,minP,i,"Creciente");
 					}
 					r++;
 					poblacion.add(nuevo);
 					fitness[poblacion.size()-1] = poblacion.get(poblacion.size()-1).getFitness();
+					tams[poblacion.size()-1] = poblacion.get(poblacion.size()-1).getCromosoma().getN();
 					sumFitness+=fitness[poblacion.size()-1];
 					if(max.compareTo(nuevo) == -1) {
 						max = new Formula(nuevo);
@@ -171,9 +196,10 @@ public class AlgoritmoGenetico<T> {
 		}
 		
 		for(int i = r; i< poblacion.size();i++) {
-			Individuo<Integer> nuevo = new Formula(minP,maxP,"Completa");
+			Individuo<Integer> nuevo = new Formula(k,minP,maxP,"Completa");
 			poblacion.add(nuevo);
 			fitness[poblacion.size()-1] = poblacion.get(poblacion.size()-1).getFitness();
+			tams[poblacion.size()-1] = poblacion.get(poblacion.size()-1).getCromosoma().getN();
 			sumFitness+=fitness[poblacion.size()-1];
 			if(max.compareTo(nuevo) == -1) {
 				max = new Formula(nuevo);
@@ -222,10 +248,12 @@ public class AlgoritmoGenetico<T> {
 		//Reevaluacion de individuos / identificacion del mejor de la generacion
 		if(posDatos<maxGeneraciones) {
 			fitness[0] = poblacion.get(0).getFitness();
+			tams[0] = poblacion.get(0).getCromosoma().getN();
 			double sumFitness = fitness[0];
 			Individuo<Integer> max = poblacion.get(0);
 			for(int j = 1; j < tamPoblacion; j++) {
 				fitness[j] = poblacion.get(j).getFitness();
+				tams[j] = poblacion.get(j).getCromosoma().getN();
 				sumFitness += fitness[j];
 				if(max.compareTo(poblacion.get(j)) == -1) {
 					max = new Formula(poblacion.get(j));

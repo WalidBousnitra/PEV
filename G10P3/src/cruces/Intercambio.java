@@ -50,10 +50,18 @@ public class Intercambio<T> extends AlgoritmosCruce<Integer>{
 			hijo1.getCromosoma().insertar(p1, aux2);
 			hijo2.getCromosoma().insertar(p2, aux);
 		}		
-		
-		hijos.add(hijo1);
-		hijos.add(hijo2);
-		
+		if(hijo1.getFitness2()>padre1.getFitness2()) {
+			hijos.add(crear(padre1));
+		}
+		else {
+			hijos.add(hijo1);
+		}
+		if(hijo2.getFitness2()>padre2.getFitness2()) {
+			hijos.add(crear(padre2));
+		}
+		else {
+			hijos.add(hijo2);
+		}
 		return hijos;
 		
 	}
