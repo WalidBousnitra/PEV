@@ -177,6 +177,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
             }
             else if(i==0) {
             	bloating = new JCheckBox("ACTIVAR");
+            	bloating.setSelected(true);
             	paramsPanel.add(bloating);
             }
             else {
@@ -237,6 +238,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		        marcar.get(0).setSelected(true);
 		        marcar.get(1).setSelected(true);
 		        marcar.get(2).setSelected(false);
+		        bloating.setSelected(true);
 			}
         });
     }
@@ -314,7 +316,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				List<double[]> datos = instancia.datos();
 				Individuo<Integer> mejor = instancia.getElMejor();
 				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2), mejor.getError());
-				grafico2.actualizar(ventana,mejor.gx(), mejor.formula(),mejor.getError());
+				grafico2.actualizar(ventana,mejor.gx(),mejor.getError());
 				panelVacio.revalidate();
 			}
          });

@@ -66,7 +66,7 @@ public class Rango extends JFrame{
         spinner1.setPreferredSize(new Dimension(80, 25));
         spinner2 = new JSpinner(new SpinnerNumberModel(max,min,max,intervalo));
         spinner2.setPreferredSize(new Dimension(80, 25));
-        spinner3 = new JSpinner(new SpinnerNumberModel(1,0.1,10,0.1));
+        spinner3 = new JSpinner(new SpinnerNumberModel(1,1,10,1));
         spinner3.setPreferredSize(new Dimension(80, 25));
         valores.add(spinner1);
         valores.add(spinner2);
@@ -87,7 +87,7 @@ public class Rango extends JFrame{
 				double min = (Double.valueOf((Integer)spinner1.getValue()));
 				double max = (Double.valueOf((Integer)spinner2.getValue()));
 				double intervalor = (Double.valueOf((Integer)spinner3.getValue()));
-				int tam = (int) ((max-min)/intervalo+1);
+				int tam = (int) ((max-min)/intervalor+1);
 				double[] mejores = new double[tam];
 				double[] ejex = new double[tam];
 				int pos = 0;

@@ -16,7 +16,6 @@ public class Comparacion<T> extends JFrame{
 	//Mejor error
 	private double error;
 	//Formula gx;
-	private String formula;
 	private JFrame father;
 	//Valores f(x)
 	private double[] fx = {	1.0000, 0.9615, 0.9262, 0.8937, 0.8641, 0.8371, 0.8126, 0.7905, 0.7707, 0.7531, 
@@ -45,10 +44,9 @@ public class Comparacion<T> extends JFrame{
 							0.80, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98,
 							1.00 };
 	
-	public void actualizar(JFrame father,double[] gx, String formula, double error) {
+	public void actualizar(JFrame father,double[] gx, double error) {
 		this.father = father;
 		this.gx = gx;
-		this.formula = formula;
 		this.error = error;
 		setPreferredSize(new Dimension(400,400));
 		plot.setPreferredSize(new Dimension(400,400));
@@ -61,8 +59,8 @@ public class Comparacion<T> extends JFrame{
 		
 		//Eliminar generacion anterior
 		plot.removeAllPlots();
-		plot.addLinePlot("f(x) = x^4 + x^3 + x^2 + x + 1", x, fx);
-		plot.addLinePlot("g(x) = " + formula, x, gx);
+		plot.addLinePlot("f(x)", x, fx);
+		plot.addLinePlot("g(x)", x, gx);
 		plot.addLinePlot("Error = "+ error, Color.red, new double[] {0});
 		add(plot);
 		pack();

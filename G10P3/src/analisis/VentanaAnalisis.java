@@ -43,7 +43,7 @@ public class VentanaAnalisis extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new Rango(0,100,10,"cruce",datos);
+				new Rango(20,80,10,"cruce",datos);
 			}
         });
     }
@@ -56,7 +56,7 @@ public class VentanaAnalisis extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new Rango(0,100,10,"mutacion",datos);
+				new Rango(0,15,10,"mutacion",datos);
 			}
         });
     }
