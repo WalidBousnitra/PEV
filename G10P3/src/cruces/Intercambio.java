@@ -1,18 +1,22 @@
 package cruces;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
 
 import Individuo.Individuo;
+import bloating.Bloating;
 import TAD.Arbol;
 
 public class Intercambio<T> extends AlgoritmosCruce<Integer>{
 
 	private Random rand;
+	private Bloating _k;
 	
-	public Intercambio(double p) {
+	public Intercambio(double p, Bloating k) {
 		super(p);
+		_k = k;
 		rand = new Random();
 	}
 
@@ -49,17 +53,23 @@ public class Intercambio<T> extends AlgoritmosCruce<Integer>{
 			
 			hijo1.getCromosoma().insertar(p1, aux2);
 			hijo2.getCromosoma().insertar(p2, aux);
-		}		
-		if(hijo1.getFitness2()>padre1.getFitness2()) {
-			hijos.add(crear(padre1));
+		}	
+		if(_k.is_activado()) {
+			if(hijo1.getFitness2()>padre1.getFitness2()) {
+				hijos.add(crear(padre1));
+			}
+			else {
+				hijos.add(hijo1);
+			}
+			if(hijo2.getFitness2()>padre2.getFitness2()) {
+				hijos.add(crear(padre2));
+			}
+			else {
+				hijos.add(hijo2);
+			}
 		}
 		else {
 			hijos.add(hijo1);
-		}
-		if(hijo2.getFitness2()>padre2.getFitness2()) {
-			hijos.add(crear(padre2));
-		}
-		else {
 			hijos.add(hijo2);
 		}
 		return hijos;

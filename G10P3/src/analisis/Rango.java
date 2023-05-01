@@ -19,7 +19,7 @@ public class Rango extends JFrame{
 	private int max,min,intervalo;
 	private String caso;
 	private Parametros datos;
-	private JSpinner spinner1,spinner2;
+	private JSpinner spinner1,spinner2,spinner3;
 
 	public Rango(int min,int max, int intervalo, String caso, Parametros datos) {
 		super("Rango del valor");
@@ -28,7 +28,6 @@ public class Rango extends JFrame{
 		this.intervalo = intervalo;
 		this.caso = caso;
 		this.datos = datos;
-		setSize(250, 360);
         setLocationRelativeTo(null);
         
         initGUI();
@@ -43,7 +42,7 @@ public class Rango extends JFrame{
         boton();        
         
         //ajustes ventana
-        setSize(300, 200);
+        setSize(400, 200);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -67,8 +66,11 @@ public class Rango extends JFrame{
         spinner1.setPreferredSize(new Dimension(80, 25));
         spinner2 = new JSpinner(new SpinnerNumberModel(max,min,max,intervalo));
         spinner2.setPreferredSize(new Dimension(80, 25));
+        spinner3 = new JSpinner(new SpinnerNumberModel(1,0.1,10,0.1));
+        spinner3.setPreferredSize(new Dimension(80, 25));
         valores.add(spinner1);
         valores.add(spinner2);
+        valores.add(spinner3);
         add(valores, BorderLayout.CENTER);
     }
     
@@ -84,6 +86,7 @@ public class Rango extends JFrame{
 				setVisible(false);
 				double min = (Double.valueOf((Integer)spinner1.getValue()));
 				double max = (Double.valueOf((Integer)spinner2.getValue()));
+				double intervalor = (Double.valueOf((Integer)spinner3.getValue()));
 				int tam = (int) ((max-min)/intervalo+1);
 				double[] mejores = new double[tam];
 				double[] ejex = new double[tam];
@@ -93,7 +96,7 @@ public class Rango extends JFrame{
 					tam = (int) ((max-min+0.1)/0.1)+1;
 					min/=100;
 					max/=100;
-					for(double i = min ; i <= max; i=i+Double.valueOf(intervalo)/100) {
+					for(double i = min ; i <= max; i=i+intervalor/100) {
 						AlgoritmoGenetico<Integer> instancia = 
 								new AlgoritmoGenetico<Integer>(	datos.getTamPoblacion(),
 										datos.getMin(),datos.getMax(),
@@ -102,7 +105,8 @@ public class Rango extends JFrame{
 										datos.getProbElitismo(),
 										datos.getMetodoInicializacion(), i, 
 										datos.getMetodoSeleccion(),
-										datos.getMetodoMutacion(), datos.getProbMutacion());
+										datos.getMetodoMutacion(), datos.getProbMutacion(),
+										datos.isBloatActivado());
 						instancia.run();
 						mejores[pos] = instancia.getElMejor().getFitness();
 						ejex[pos] = i;
@@ -113,7 +117,7 @@ public class Rango extends JFrame{
 					tam = (int) ((max-min+0.1)/0.1)+1;
 					min/=100;
 					max/=100;
-					for(double i = min ; i <= max; i=i+ Double.valueOf(intervalo)/100) {
+					for(double i = min ; i <= max; i=i+ intervalor/100) {
 						AlgoritmoGenetico<Integer> instancia = 
 								new AlgoritmoGenetico<Integer>(	datos.getTamPoblacion(),
 										datos.getMin(),datos.getMax(),
@@ -122,7 +126,8 @@ public class Rango extends JFrame{
 										datos.getProbElitismo(),
 										datos.getMetodoInicializacion(), datos.getProbCruce(), 
 										datos.getMetodoSeleccion(),
-										datos.getMetodoMutacion(), i);
+										datos.getMetodoMutacion(), i,
+										datos.isBloatActivado());
 						instancia.run();
 						mejores[pos] = instancia.getElMejor().getFitness();
 						ejex[pos] = i;
@@ -130,7 +135,7 @@ public class Rango extends JFrame{
 					}
 					break;
 				case"poblacion":
-					for(int i = (int) min ; i <= max; i=i+intervalo ) {
+					for(int i = (int) min ; i <= max; i=i+(int)intervalor ) {
 						AlgoritmoGenetico<Integer> instancia = 
 								new AlgoritmoGenetico<Integer>(	i,
 										datos.getMin(),datos.getMax(),
@@ -139,7 +144,8 @@ public class Rango extends JFrame{
 										datos.getProbElitismo(),
 										datos.getMetodoInicializacion(), datos.getProbCruce(), 
 										datos.getMetodoSeleccion(),
-										datos.getMetodoMutacion(), datos.getProbMutacion());
+										datos.getMetodoMutacion(), datos.getProbMutacion(),
+										datos.isBloatActivado());
 						instancia.run();
 						mejores[pos] = instancia.getElMejor().getFitness();
 						ejex[pos] = i;

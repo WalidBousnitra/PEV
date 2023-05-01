@@ -1,12 +1,10 @@
 package Main;
 
 import java.util.ArrayList;
-
 import java.util.List;
-
 import Individuo.Formula;
 import Individuo.Individuo;
-import bloating.PoliAndMcPhee;
+import bloating.Bloating;
 import cruces.Intercambio;
 import elitismo.Elitismo;
 import mutaciones.*;
@@ -31,7 +29,7 @@ public class AlgoritmoGenetico<T> {
 	private double[] fitness;
 	private int[] tams;
 	private Individuo<Integer> elMejor;
-	private PoliAndMcPhee k;
+	private Bloating k;
 
 	//Datos de la Grafica
 	private double[] mejores;
@@ -47,7 +45,8 @@ public class AlgoritmoGenetico<T> {
 							double probElitismo,
 							String metodoInicializacion, double probCruce, 
 							String metodoSeleccion,
-							String metodoMutacion, double probMutacion) {
+							String metodoMutacion, double probMutacion,
+							boolean bloatActivado) {
 		
 		//Inicializacion de parametros
 		this.tamPoblacion =  tamPoblacion;
@@ -58,7 +57,8 @@ public class AlgoritmoGenetico<T> {
 		this.marcados= marcados;
 		this.probElitismo = new Elitismo<Integer>(marcados[2],probElitismo*tamPoblacion,tamPoblacion);
 		//Inicializacion de los distintos metodos cruce/seleccion/mutacion
-		this.cruce = new Intercambio<Integer>(probCruce);
+		this.k = new Bloating(bloatActivado);
+		this.cruce = new Intercambio<Integer>(probCruce,k);
 		this.seleccion = iniciarSeleccion(metodoSeleccion);
 		this.mutacion = iniciarMutacion(metodoMutacion,probMutacion);
 
@@ -68,9 +68,7 @@ public class AlgoritmoGenetico<T> {
 		this.tams = new int[tamPoblacion];
 		this.mejores = new double[maxGeneraciones];
 		this.absolutos = new double[maxGeneraciones];
-		this.media = new double[maxGeneraciones];
-		this.k = new PoliAndMcPhee();
-		
+		this.media = new double[maxGeneraciones];		
 	}
 
 	public void run() {
@@ -83,7 +81,7 @@ public class AlgoritmoGenetico<T> {
 			iniciarPoblacion(min,max,metodoInicializacion);
 		}
 		
-		k.updateK(tamPoblacion, tams,fitness);
+		k.PoliAndMcPhee(tamPoblacion, tams,fitness);
 		
 		//n-generaciones
 		for(int i = 1; i < maxGeneraciones; i++) {
@@ -111,7 +109,7 @@ public class AlgoritmoGenetico<T> {
 			calculos2();
 			
 			//recalcular ponalizacion
-			k.updateK(tamPoblacion, tams,fitness);
+			k.PoliAndMcPhee(tamPoblacion, tams,fitness);
 			
 			//reevaluacion
 			calculos();

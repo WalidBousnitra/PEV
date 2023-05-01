@@ -8,9 +8,10 @@ public class Parametros {
 	private double probCruce,probMutacion,probElitismo;
 	private String metodoMutacion,metodoSeleccion,metodoInicializacion;
 	private boolean[] marcados;
+	private boolean bloatActivado;
 	
 	public Parametros(int tamPoblacion, int min, int max, int maxGeneraciones, boolean[] marcados, double probElitismo,
-			String metodoInicializacion, double probCruce, String metodoSeleccion, String metodoMutacion, double probMutacion) {
+			String metodoInicializacion, double probCruce, String metodoSeleccion, String metodoMutacion, double probMutacion, boolean bloatActivado) {
 		this.tamPoblacion = tamPoblacion;
 		this.min = min;
 		this.max = max;
@@ -22,6 +23,7 @@ public class Parametros {
 		this.metodoSeleccion = metodoSeleccion;
 		this.metodoMutacion = metodoMutacion;
 		this.probMutacion = probMutacion;
+		this.bloatActivado = bloatActivado;
 	}
 
 	//Gentters necesarios
@@ -36,5 +38,6 @@ public class Parametros {
 	public String getMetodoSeleccion() {return metodoSeleccion;}
 	public String getMetodoInicializacion() {return metodoInicializacion;}
 	public boolean[] getMarcados() {return marcados;}
+	public boolean isBloatActivado() {return bloatActivado;}
 
 }

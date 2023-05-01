@@ -44,15 +44,16 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	private GridBagConstraints gbcTexto;
 	
 	// Componentes para los parametros
-	private String[] texto = {"dummy","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
+	private String[] texto = {"Control del Bloating:","Tamaño de la población:","Número de generaciones:","Probabilidad de Cruce:",
 			"Probabiliad de Mutación:","Probabilidad de elitismo:","Profundidad Cromosoma","Método de Selección:","Método de Inicialización:","Método de Mutación:"};
 	private JSpinner[] spinners;
 	private List<JComboBox<String>> comboBox;
-    private List<JCheckBox> marcar = new ArrayList<JCheckBox>(3);
+    private List<JCheckBox> marcar = new ArrayList<JCheckBox>(4);
+    private JCheckBox bloating;
     private JButton ejecutarButton;
     private JButton reset;
     private JButton analisis;
-    
+    private JFrame ventana;    
     
     // para conseguir los praametros en el analisis
     private int tamPoblacion,min,max,maxGeneraciones;
@@ -69,7 +70,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
     	
         setTitle("Ventana Principal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        ventana = this;
         // Panel principal
         panelPrincipal = new JPanel(new BorderLayout());
         panelPrincipal.setPreferredSize(new Dimension(1200, 600));
@@ -147,7 +148,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
         String[] opciones3 = {"Terminal","Funcional","Permutación","Contracción"};
         comboBox.add(new JComboBox<>(opciones3));
         
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 0; i <= 6; i++) {
             JLabel labelFila = new JLabel(texto[i]);
             gbcTexto.gridy = i;
             paramsPanel.add(labelFila, gbcTexto);
@@ -173,6 +174,10 @@ public class AlgoritmoGeneticoGUI extends JFrame{
                 panelElitismo.add(spinners[i+1], gbcTexto);
                 paramsPanel.add(panelElitismo, gbcTexto);
             
+            }
+            else if(i==0) {
+            	bloating = new JCheckBox("ACTIVAR");
+            	paramsPanel.add(bloating);
             }
             else {
             	paramsPanel.add(spinners[i], gbcTexto);
@@ -258,7 +263,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 						getProbElitismo(),
 						getMetodoInicializacion(), getProbCruce(), 
 						getMetodoSeleccion(),
-						getMetodoMutacion(), getProbMutacion());
+						getMetodoMutacion(), getProbMutacion(),
+						isBloating());
 				new VentanaAnalisis(datos);
 			}
         });
@@ -299,7 +305,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 														probElitismo,
 														metodoInicializacion, probCruce, 
 														metodoSeleccion,
-														metodoMutacion, probMutacion);
+														metodoMutacion, probMutacion,
+														bloating.isSelected());
 			
 				//Ejecucion del algoritmo
 				instancia.run();
@@ -307,7 +314,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 				List<double[]> datos = instancia.datos();
 				Individuo<Integer> mejor = instancia.getElMejor();
 				grafico.actualizar(mejor, panelVacio, datos.get(0), datos.get(1), datos.get(2), mejor.getError());
-				grafico2.actualizar(mejor.gx(), mejor.formula(),mejor.getError());
+				grafico2.actualizar(ventana,mejor.gx(), mejor.formula(),mejor.getError());
 				panelVacio.revalidate();
 			}
          });
@@ -329,5 +336,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		for(int i = 0; i<3 ;i ++) marcados[i] =  marcar.get(i).isSelected();
 		return marcados;
 	}
+	public boolean isBloating() {return bloating.isSelected();}
 
 }

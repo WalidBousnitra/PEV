@@ -42,4 +42,18 @@ public abstract class AlgoritmosMutacion<T>{
 	public void actGen() {
 		generaciones++;
 	}
+	
+	public int getValidIndx(int tam, int tamIzq) {
+		int p = rand.nextInt(1,tam+1);
+		if(tamIzq+1 !=1) {
+			while(p==tamIzq+1) {
+				 p=rand.nextInt(1,tam+1);
+			}
+		}
+		else{
+			p = -1;
+		}
+		
+		return p;
+	}
 }

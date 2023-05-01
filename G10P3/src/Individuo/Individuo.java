@@ -1,10 +1,11 @@
 package Individuo;
 
 import java.math.RoundingMode;
+
 import java.text.DecimalFormat;
 
 import TAD.Arbol;
-import bloating.PoliAndMcPhee;
+import bloating.Bloating;
 
 public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	
@@ -12,9 +13,9 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	private Arbol cromosoma;
 	private DecimalFormat f = new DecimalFormat("0.0000");
 	private DecimalFormat f2 = new DecimalFormat("0.00");
-	private PoliAndMcPhee _k;
+	private Bloating _k;
 	
-	public Individuo(PoliAndMcPhee k,int min ,int max, String tipo) {
+	public Individuo(Bloating k,int min ,int max, String tipo) {
 		//Inicializacion de atributos
 		set_k(k);
 		this.cromosoma = new Arbol(min, max, tipo);
@@ -69,8 +70,8 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	//Getters y setters necesarios
 	public Arbol getCromosoma() {return cromosoma;}
 	public void setCromosoma(Arbol cromosoma) {this.cromosoma = cromosoma;}
-	public PoliAndMcPhee get_k() {	return _k;}
-	public void set_k(PoliAndMcPhee _k) {this._k = _k;}
+	public Bloating get_k() {	return _k;}
+	public void set_k(Bloating _k) {this._k = _k;}
 
 	public abstract double getFitness2();
 

@@ -1,6 +1,6 @@
 package Individuo;
 
-import bloating.PoliAndMcPhee;
+import bloating.Bloating;
 
 public class Formula<T> extends Individuo<Integer>{
 	
@@ -31,7 +31,7 @@ public class Formula<T> extends Individuo<Integer>{
 	private double[] gx;
 	private double error;
 	
-	public Formula(PoliAndMcPhee k, int min, int max, String tipo) {
+	public Formula(Bloating k, int min, int max, String tipo) {
 		super(k,min, max, tipo);
 		gx = new double[101];
 		

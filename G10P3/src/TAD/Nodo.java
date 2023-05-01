@@ -19,6 +19,9 @@ public class Nodo {
 		else
 			valor = funciones.get(rand.nextInt(0,3));
 	}
+	public Nodo(String e) {
+		valor = e;
+	}
 	
 	//Constructor nodo invalido
 	public Nodo() {
@@ -39,6 +42,10 @@ public class Nodo {
 	
 	//funcion de comprabacion de valor
 	public boolean isTerminal() {return terminales.contains(valor);}
+	public boolean notFuncional() {return !funciones.contains(valor) && valor!="x";}
 	public boolean isX() {return valor=="x";}
 	public boolean isNull() {return valor == "E";}
+	public boolean negativo() {
+		return valor == "-2" || valor == "-1";
+	}
 }

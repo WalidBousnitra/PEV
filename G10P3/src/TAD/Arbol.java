@@ -1,6 +1,7 @@
 package TAD;
 
 import java.util.Random;
+import java.util.Stack;
 
 public class Arbol {
 	
@@ -231,12 +232,29 @@ public class Arbol {
 		return sol;
 	}
 	
+	public Stack<String> apilar() {
+		Stack<String> sol = new Stack<>();
+		if(nodo.isTerminal()) {
+			sol.add(nodo.getValor());
+		}
+		else {
+			sol.addAll(izquierda.apilar());
+			sol.add(nodo.getValor());
+			sol.addAll(derecha.apilar());
+		}
+		
+		return sol;
+	}
+	
 	//recorrido en orden para construir formula de forma compacta
 	public String inOrden() {
 		
 		String sol = "";
 		if(nodo.isTerminal()) {
-			sol+=nodo.getValor();
+			if(!nodo.negativo())
+				sol+=nodo.getValor();
+			else
+				sol+="("+nodo.getValor()+")";
 		}	
 		else{
 			if(izquierda.nodo.isTerminal() && !izquierda.nodo.isX() && derecha.nodo.isTerminal() && !derecha.nodo.isX()) {
