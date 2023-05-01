@@ -39,10 +39,10 @@ public class Bloating {
 	        }
 	        var /= (x.length - 1);
 	        if(cov==0 || var == 0) {
-	        	_k=0;
+	        	_k = 0;
 	        }
 	        else
-	        	_k =  cov/var;
+	        	_k = cov/var;
 		}
 	}
 }

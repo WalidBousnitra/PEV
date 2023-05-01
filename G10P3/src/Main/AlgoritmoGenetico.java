@@ -2,6 +2,8 @@ package Main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import Individuo.Formula;
 import Individuo.Individuo;
 import bloating.Bloating;
@@ -106,25 +108,41 @@ public class AlgoritmoGenetico<T> {
 			//insercion elite
 			probElitismo.incorporar(poblacion);
 			
-			calculos2();
-			
-			//recalcular ponalizacion
-			k.PoliAndMcPhee(tamPoblacion, tams,fitness);
+			if(k.is_activado()) {
+				double media = calculos2();
+				//recalcular ponalizacion
+				k.PoliAndMcPhee(tamPoblacion, tams,fitness);
+				if(i>=maxGeneraciones/3) {
+					criba(media);
+				}
+			}
 			
 			//reevaluacion
 			calculos();
 		}
 
 	}
-
-	private void calculos2() {
-		//Reevaluacion de individuos / identificacion del mejor de la generacion
-		if(posDatos<maxGeneraciones) {
-			fitness[0] = poblacion.get(0).getFitness2();
-			for(int j = 1; j < tamPoblacion; j++) {
-				fitness[j] = poblacion.get(j).getFitness2();
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void criba(double media) {
+		Random rand = new Random();
+		for(int i = 0; i<tamPoblacion;i++) {
+			if(poblacion.get(i).getCromosoma().getN()>media && rand.nextDouble()<=0.5) {
+				poblacion.remove(i);
+				poblacion.add(new Formula(elMejor));
 			}
 		}
+	}
+
+	private double calculos2() {
+		//Reevaluacion de individuos / identificacion del mejor de la generacion
+		double sol =0 ;
+		for(int j = 0; j < tamPoblacion; j++) {
+			fitness[j] = poblacion.get(j).getFitness2();
+			sol+=poblacion.get(j).getCromosoma().getN();
+		}
+		
+		return sol/tamPoblacion;
 	}
 
 	@SuppressWarnings({"unchecked","rawtypes"})

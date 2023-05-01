@@ -13,7 +13,8 @@ public class Terminal<T> extends AlgoritmosMutacion<Integer>{
 		
 		//Haces un cambio de terminal seleccionando al azar uno de los nodos terminales
 		int p = getValidIndx(individuo.getCromosoma().getNumTerminales(),individuo.getCromosoma().getIzquierda().getNumTerminales());
-		individuo.getCromosoma().cambioTerminal(p);
+		if(p!=-1)
+			individuo.getCromosoma().cambioTerminal(p);
 	}
 
 }
