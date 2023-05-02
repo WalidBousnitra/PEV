@@ -12,6 +12,7 @@ public class Funcional extends AlgoritmosMutacion<Integer>{
 	public void cromosoma(Individuo<Integer> individuo) {
 		//Haces un cambio de funcion seleccionando al azar uno de los nodos funcionales
 		int p = getValidIndx(individuo.getCromosoma().getNumFunciones(),individuo.getCromosoma().getIzquierda().getNumFunciones());
-		individuo.getCromosoma().cambioFuncion(p);
+		if(p!=-1)
+			individuo.getCromosoma().cambioFuncion(p);
 	}
 }

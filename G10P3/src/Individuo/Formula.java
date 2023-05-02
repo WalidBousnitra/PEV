@@ -40,7 +40,7 @@ public class Formula<T> extends Individuo<Integer>{
 	// Constructor de copia
 	public Formula(Individuo<Integer> obj){
 		super(obj);
-		gx = obj.gx().clone();
+		gx = obj.gx();
 	}
 	
 	//Funcion que calcula la media de error
@@ -55,7 +55,6 @@ public class Formula<T> extends Individuo<Integer>{
 		}
 		sum  = Math.sqrt(sum);
 		error = sum;
-		sum += get_k().get_k() *getCromosoma().getN();
 		return sum;
 	}
 	
@@ -89,7 +88,6 @@ public class Formula<T> extends Individuo<Integer>{
 	@Override
 	public double getFitness2() {
 		double sum = 0;
-		
 		//Distancia recorrida
 		for(int i = 0; i<= 100; i+=1) {
 			gx[i] = formato(getCromosoma().calcular(x[i]));
@@ -97,6 +95,7 @@ public class Formula<T> extends Individuo<Integer>{
 		}
 		sum  = Math.sqrt(sum);
 		error = sum;
+		sum += get_k().get_k() *getCromosoma().getN();
 		return sum;
 	}
 }

@@ -1,7 +1,6 @@
 package selecciones;
 
 import java.util.List;
-
 import Individuo.Formula;
 import Individuo.Individuo;
 

@@ -50,6 +50,7 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 	private List<JComboBox<String>> comboBox;
     private List<JCheckBox> marcar = new ArrayList<JCheckBox>(4);
     private JCheckBox bloating;
+    private JCheckBox poliM;
     private JButton ejecutarButton;
     private JButton reset;
     private JButton analisis;
@@ -176,9 +177,14 @@ public class AlgoritmoGeneticoGUI extends JFrame{
             
             }
             else if(i==0) {
+            	JPanel panelBloating = new JPanel();
+            	panelBloating.setLayout(new GridLayout(0, 2, 0, 0));
             	bloating = new JCheckBox("ACTIVAR");
             	bloating.setSelected(true);
-            	paramsPanel.add(bloating);
+            	poliM = new JCheckBox("Po&Mc");
+            	panelBloating.add(bloating);
+            	panelBloating.add(poliM);
+            	paramsPanel.add(panelBloating);
             }
             else {
             	paramsPanel.add(spinners[i], gbcTexto);
@@ -266,7 +272,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 						getMetodoInicializacion(), getProbCruce(), 
 						getMetodoSeleccion(),
 						getMetodoMutacion(), getProbMutacion(),
-						isBloating());
+						isBloating(),
+						isPoliM());
 				new VentanaAnalisis(datos);
 			}
         });
@@ -308,7 +315,8 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 														metodoInicializacion, probCruce, 
 														metodoSeleccion,
 														metodoMutacion, probMutacion,
-														bloating.isSelected());
+														bloating.isSelected(),
+														poliM.isSelected());
 			
 				//Ejecucion del algoritmo
 				instancia.run();
@@ -339,5 +347,6 @@ public class AlgoritmoGeneticoGUI extends JFrame{
 		return marcados;
 	}
 	public boolean isBloating() {return bloating.isSelected();}
+	public boolean isPoliM() {return poliM.isSelected();}
 
 }

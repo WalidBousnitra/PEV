@@ -106,7 +106,8 @@ public class Rango extends JFrame{
 										datos.getMetodoInicializacion(), i, 
 										datos.getMetodoSeleccion(),
 										datos.getMetodoMutacion(), datos.getProbMutacion(),
-										datos.isBloatActivado());
+										datos.isBloatActivado(),
+										datos.isPoliM());
 						instancia.run();
 						mejores[pos] = instancia.getElMejor().getFitness();
 						ejex[pos] = i;
@@ -127,7 +128,8 @@ public class Rango extends JFrame{
 										datos.getMetodoInicializacion(), datos.getProbCruce(), 
 										datos.getMetodoSeleccion(),
 										datos.getMetodoMutacion(), i,
-										datos.isBloatActivado());
+										datos.isBloatActivado(),
+										datos.isPoliM());
 						instancia.run();
 						mejores[pos] = instancia.getElMejor().getFitness();
 						ejex[pos] = i;
@@ -145,7 +147,8 @@ public class Rango extends JFrame{
 										datos.getMetodoInicializacion(), datos.getProbCruce(), 
 										datos.getMetodoSeleccion(),
 										datos.getMetodoMutacion(), datos.getProbMutacion(),
-										datos.isBloatActivado());
+										datos.isBloatActivado(),
+										datos.isPoliM());
 						instancia.run();
 						mejores[pos] = instancia.getElMejor().getFitness();
 						ejex[pos] = i;
