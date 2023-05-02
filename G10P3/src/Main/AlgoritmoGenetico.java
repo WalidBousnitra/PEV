@@ -94,9 +94,10 @@ public class AlgoritmoGenetico<T> {
 			
 			//seleccion de poblacion
 			if(k.is_activado()) {
-				calculos2();
 				//recalcular ponalizacion
 				k.PoliAndMcPhee(tamPoblacion, tams,fitness);
+				
+				calculos2();
 			}
 			
 			poblacion = seleccion.seleccionar(poblacion,fitness);

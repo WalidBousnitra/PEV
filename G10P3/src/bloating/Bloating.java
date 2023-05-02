@@ -29,10 +29,10 @@ public class Bloating {
 	        meanX /= n;
 	        meanY /= n;
 			if(!_poliM) {
-				if(meanX > _tam)
-					_k=0.9;
+				if(meanX > _tam*2)
+					_k=0.5;
 				else
-					_k=0;
+					_k=-0.5;
 			}
 			else{
 		
@@ -54,7 +54,9 @@ public class Bloating {
 		        }
 		        else
 		        	_k = cov/var;
+		        
 			}
+			System.out.println(meanX);
 		}
 	}
 }
