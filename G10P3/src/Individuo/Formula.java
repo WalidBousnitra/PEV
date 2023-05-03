@@ -29,7 +29,6 @@ public class Formula<T> extends Individuo<Integer>{
 											1.00 };
 	
 	private double[] gx;
-	private double error;
 	
 	public Formula(Bloating k, int min, int max, String tipo) {
 		super(k,min, max, tipo);
@@ -50,11 +49,11 @@ public class Formula<T> extends Individuo<Integer>{
 		
 		//Distancia recorrida
 		for(int i = 0; i<= 100; i+=1) {
-			gx[i] = formato(getCromosoma().calcular(x[i]));
+			gx[i] = getCromosoma().calcular(x[i]);
 			sum+=Math.pow(gx[i]-fx[i],2);
 		}
 		sum  = Math.sqrt(sum);
-		error = sum;
+		setError(sum);
 		return sum;
 	}
 	
@@ -66,9 +65,11 @@ public class Formula<T> extends Individuo<Integer>{
 	//Comparador para de individuos
 	@Override
 	public int compareTo(Individuo<Integer> o) {
-		if(o.getFitness()== this.getFitness())
+		double fitobj = o.getError();
+		double fit = getError();;
+		if(fitobj== fit)
 			return 0;
-		else if(o.getFitness()< this.getFitness())
+		else if(fitobj<fit)
 			return -1;
 		else 
 			return 1;
@@ -81,11 +82,6 @@ public class Formula<T> extends Individuo<Integer>{
 	}
 
 	@Override
-	public double getError() {
-		return formato(error);
-	}
-
-	@Override
 	public double getFitness2() {
 		double sum = 0;
 		//Distancia recorrida
@@ -94,7 +90,7 @@ public class Formula<T> extends Individuo<Integer>{
 			sum+=Math.pow(gx[i]-fx[i],2);
 		}
 		sum  = Math.sqrt(sum);
-		error = sum;
+		setError(sum);
 		sum += get_k().get_k() *getCromosoma().getN();
 		return sum;
 	}

@@ -29,14 +29,14 @@ public class Bloating {
 	        meanX /= n;
 	        meanY /= n;
 			if(!_poliM) {
-				if(meanX > _tam*2)
-					_k=0.5;
+				if(meanX > _tam)
+					_k=0.25;
 				else
-					_k=-0.5;
+					_k=-0.25;
 			}
 			else{
 		
-		        // Calcular la covarianza
+		        // Calcular la covarianza 
 		        double cov = 0.0;
 		        for (int i = 0; i < n; i++) {
 		            cov += (x[i] - meanX) * (y[i] - meanY);

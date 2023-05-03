@@ -14,12 +14,14 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	private DecimalFormat f = new DecimalFormat("0.0000");
 	private DecimalFormat f2 = new DecimalFormat("0.00");
 	private Bloating _k;
+	private double error;
 	
 	public Individuo(Bloating k,int min ,int max, String tipo) {
 		//Inicializacion de atributos
 		set_k(k);
 		this.cromosoma = new Arbol(min, max, tipo);
 		f.setRoundingMode(RoundingMode.DOWN);
+		error=0;
 	}
 	
 	// Constructor de copia
@@ -27,6 +29,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 		this.cromosoma = new Arbol(obj.getCromosoma());
 		set_k(obj.get_k());
 		f.setRoundingMode(RoundingMode.DOWN);
+		error = obj.getError();
 	}
 	
 	//Funciones de calculos de distintos valores
@@ -38,7 +41,10 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	public abstract double getValor();
 	public abstract String formula();
 	public abstract double[] gx();
-	public abstract double getError();
+	
+	public double getError() {
+		return formato(error);
+	}
 	
 	//Funcion para dar el formato necesario
 	public double formato(double num) {
@@ -72,7 +78,7 @@ public abstract class Individuo<T> implements Comparable<Individuo<T>>{
 	public void setCromosoma(Arbol cromosoma) {this.cromosoma = cromosoma;}
 	public Bloating get_k() {	return _k;}
 	public void set_k(Bloating _k) {this._k = _k;}
-
 	public abstract double getFitness2();
+	public void setError(double error) {this.error = error;	}
 
 }

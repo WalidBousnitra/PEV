@@ -84,8 +84,6 @@ public class AlgoritmoGenetico<T> {
 			iniciarPoblacion(min,max,metodoInicializacion);
 		}
 		
-		k.PoliAndMcPhee(tamPoblacion, tams,fitness);
-		
 		//n-generaciones
 		for(int i = 1; i < maxGeneraciones; i++) {
 			

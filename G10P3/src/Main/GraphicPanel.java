@@ -46,7 +46,7 @@ public class GraphicPanel<T> extends JPanel{
 		//Dummy para la leyenda
 		plot.addLinePlot("G(x) = " + mejor.formula(), Color.pink, new double[] {0});
 		plot.addLinePlot("Error: " + error + "    Profundidad: "+ mejor.getCromosoma().getAltura(), Color.pink, new double[] {0});
-		
+		System.out.println(mejor.formula());
 		panel.add(plot);
 	}
 }
